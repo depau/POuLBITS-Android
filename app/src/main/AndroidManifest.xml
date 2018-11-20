@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="eu.depau.poulbits">
+          package="org.poul.bits">
 
     <application
             android:allowBackup="true"
@@ -10,7 +10,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
-                android:name=".activities.MainActivity"
+                android:name="org.poul.bits.android.activities.MainActivity"
                 android:label="@string/app_name"
                 android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".widgets.HeadquartersStatusWidgetBase">
+        <receiver android:name="org.poul.bits.android.widgets.HeadquartersStatusWidgetBase">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>
@@ -29,6 +29,11 @@
                     android:name="android.appwidget.provider"
                     android:resource="@xml/headquarters_status_horizontal_widget_info"/>
         </receiver>
+
+        <service
+                android:name="org.poul.bits.android.services.BitsUpdateService"
+                android:exported="false">
+        </service>
     </application>
 
 </manifest>

@@ -1,8 +1,8 @@
 package org.poul.bits.android.model
 
 import android.os.Parcel
-import org.poul.bits.android.commons.KParcelable
-import org.poul.bits.android.commons.parcelableCreator
+import eu.depau.commons.android.kotlin.KParcelable
+import eu.depau.commons.android.kotlin.parcelableCreator
 import java.util.*
 
 data class BitsTemperatureData(

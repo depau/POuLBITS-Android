@@ -1,4 +1,4 @@
-package org.poul.bits.android.commons.ktexts
+package eu.depau.commons.android.kotlin.ktexts
 
 import android.app.Notification
 import android.os.Build

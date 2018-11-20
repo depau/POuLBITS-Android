@@ -9,8 +9,8 @@ import org.poul.bits.R
 import org.poul.bits.android.broadcasts.BitsStatusReceivedBroadcast
 import org.poul.bits.android.controllers.bitsclient.IBitsClient
 import org.poul.bits.android.controllers.bitsclient.impl.BitsJsonV3Client
-import org.poul.bits.android.commons.ktexts.buildCompat
-import org.poul.bits.android.commons.ktexts.getNotificationBuilder
+import eu.depau.commons.android.kotlin.ktexts.buildCompat
+import eu.depau.commons.android.kotlin.ktexts.getNotificationBuilder
 
 private const val ACTION_RETRIEVE_STATUS = "org.poul.bits.android.services.action.ACTION_RETRIEVE_STATUS"
 private const val CHANNEL_RETRIEVE_STATUS = "org.poul.bits.android.notification.CHANNEL_RETRIEVE_STATUS"

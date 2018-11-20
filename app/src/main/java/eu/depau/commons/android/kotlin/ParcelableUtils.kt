@@ -1,4 +1,4 @@
-package org.poul.bits.android.commons
+package eu.depau.commons.android.kotlin
 
 import android.os.Parcel
 import android.os.Parcelable

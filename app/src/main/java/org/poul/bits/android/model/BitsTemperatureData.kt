@@ -1,5 +1,8 @@
 package org.poul.bits.android.model
 
+import android.os.Parcel
+import org.poul.bits.android.commons.KParcelable
+import org.poul.bits.android.commons.parcelableCreator
 import java.util.*
 
 data class BitsTemperatureData(
@@ -7,4 +10,23 @@ data class BitsTemperatureData(
     val sensorId: Long,
     val modifiedBy: String,
     val lastModified: Date
-)
+) : KParcelable {
+    constructor(parcel: Parcel) : this(
+        value = parcel.readDouble(),
+        sensorId = parcel.readLong(),
+        modifiedBy = parcel.readString()!!,
+        lastModified = parcel.readSerializable() as Date
+    )
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeDouble(value)
+        parcel.writeLong(sensorId)
+        parcel.writeString(modifiedBy)
+        parcel.writeSerializable(lastModified)
+    }
+
+    companion object {
+        @JvmField
+        val CREATOR = parcelableCreator(::BitsTemperatureData)
+    }
+}

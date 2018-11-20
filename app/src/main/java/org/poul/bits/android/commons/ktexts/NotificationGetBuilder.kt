@@ -1,4 +1,4 @@
-package org.poul.bits.android.ktexts
+package org.poul.bits.android.commons.ktexts
 
 import android.app.Notification
 import android.content.Context

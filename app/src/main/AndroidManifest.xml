@@ -15,14 +15,16 @@
                 android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.VIEW"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <receiver android:name="org.poul.bits.android.ui.widgets.HeadquartersStatusWidgetBase">
+        <receiver android:name="org.poul.bits.android.ui.widgets.HeadquartersStatusHorizontalWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="org.poul.bits.android.broadcasts.action.BITS_STATUS_RECEIVED"/>
             </intent-filter>
 
             <meta-data
@@ -31,7 +33,7 @@
         </receiver>
 
         <service
-                android:name="org.poul.bits.android.services.BitsUpdateService"
+                android:name="org.poul.bits.android.services.BitsRetrieveStatusService"
                 android:exported="false">
         </service>
     </application>

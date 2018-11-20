@@ -1,4 +1,4 @@
-package org.poul.bits.android.activities
+package org.poul.bits.android.ui.activities
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar

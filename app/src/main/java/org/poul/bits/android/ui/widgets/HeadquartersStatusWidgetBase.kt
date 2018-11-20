@@ -1,4 +1,4 @@
-package org.poul.bits.android.widgets
+package org.poul.bits.android.ui.widgets
 
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider

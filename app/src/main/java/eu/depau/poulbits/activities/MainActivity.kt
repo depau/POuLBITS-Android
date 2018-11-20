@@ -1,10 +1,11 @@
-package eu.depau.poulbits
+package eu.depau.poulbits.activities
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import eu.depau.poulbits.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {

@@ -1,4 +1,4 @@
-package eu.depau.poulbits.services.enum
+package eu.depau.poulbits.model.enum
 
 enum class BitsStatus {
     OPEN, CLOSED

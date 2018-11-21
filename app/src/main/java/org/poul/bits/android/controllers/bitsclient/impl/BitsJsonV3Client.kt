@@ -8,6 +8,14 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.RestTemplate
 
 class BitsJsonV3Client : IBitsClient {
+    private val restTemplate = RestTemplate().also {
+        it.messageConverters = listOf(
+            MappingJackson2HttpMessageConverter().also { mapping ->
+                mapping.supportedMediaTypes = listOf(MediaType.APPLICATION_JSON)
+            }
+        )
+    }
+
     override fun downloadData(): BitsData {
         val url = "https://bits.poul.org/data"
         return restTemplate.getForObject(url, BitsJsonDTO::class.java).toBitsData()

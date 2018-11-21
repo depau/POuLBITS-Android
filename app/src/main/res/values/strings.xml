@@ -98,4 +98,8 @@
     </string>
     <string name="channel_bits_retrieving_status_name">B.I.T.S. status update service</string>
     <string name="updating_bits_desc">Retrieving headquarters state from server</string>
+    <string name="poul_logo_img_desc">POuL logo</string>
+    <string name="headquarters_open">HQs OPEN</string>
+    <string name="headquarters_closed">HQs CLOSED</string>
+    <string name="headquarters_gialla">HQs GIALLA</string>
 </resources>

@@ -22,7 +22,14 @@ class MainActivity : AppCompatActivity() {
 
     private val bitsDataReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
-            app_bar.snackbar("Received bits intent")
+            when (intent.action) {
+                BitsStatusReceivedBroadcast.ACTION -> {
+                    updateGuiWithStatusData(
+                        intent.getParcelableExtra(BitsStatusReceivedBroadcast.BITS_DATA)
+                    )
+                    stopRefresh()
+                }
+            }
         }
     }
     private val bitsDataIntentFilter = IntentFilter(BitsStatusReceivedBroadcast.ACTION)
@@ -39,6 +46,36 @@ class MainActivity : AppCompatActivity() {
             resources.getDimensionPixelSize(R.dimen.refresher_offset),
             resources.getDimensionPixelSize(R.dimen.refresher_offset_end)
         )
+
+        swiperefreshlayout.setOnRefreshListener {
+            startRefresh()
+        }
+
+        startRefresh()
+    }
+
+    fun startRefresh() {
+        swiperefreshlayout.isRefreshing = true
+        BitsRetrieveStatusService.startActionRetrieveStatus(this)
+    }
+
+    fun stopRefresh() {
+        swiperefreshlayout.isRefreshing = false
+    }
+
+    fun updateGuiWithStatusData(bitsData: BitsData) {
+        extended_fab.text = when (bitsData.status) {
+            BitsStatus.OPEN -> getString(R.string.headquarters_open)
+            BitsStatus.CLOSED -> getString(R.string.headquarters_closed)
+        }
+
+        val buttonColor = when (bitsData.status) {
+            BitsStatus.OPEN -> R.color.colorHQsOpen
+            BitsStatus.CLOSED -> R.color.colorHQsClosed
+        }
+
+        extended_fab.backgroundTintList = resources.getColorStateList(buttonColor)
+//        extended_fab.background
     }
 
     override fun onResume() {

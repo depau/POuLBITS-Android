@@ -21,7 +21,7 @@ data class BitsData(
         lastModified = parcel.readSerializable() as Date,
         temperature = parcel.readParcelable<BitsTemperatureData>(BitsTemperatureData::class.java.classLoader)!!,
         message = parcel.readParcelable<BitsMessage>(BitsMessage::class.java.classLoader)!!,
-        temperatureHistory = (parcel.readParcelableArray(BitsTemperatureData::class.java.classLoader) as Array<BitsTemperatureData>).asList()
+        temperatureHistory = parcel.readParcelableArray(BitsTemperatureData::class.java.classLoader)!!.map { it as BitsTemperatureData }
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

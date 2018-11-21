@@ -53,7 +53,7 @@ class BitsRetrieveStatusService : IntentService("BitsRetrieveStatusService") {
     private fun handleActionRetrieveStatus() {
         startForeground(FOREGROUND_RETRIEVE_STATUS_ID, getForegroundNotification())
         val data = bitsClient.downloadData()
-        BitsStatusReceivedBroadcast.localBroadcast(this, data)
+        BitsStatusReceivedBroadcast.broadcast(this, data)
         stopForeground(true)
     }
 

@@ -1,11 +1,14 @@
 package org.poul.bits.android.controllers.bitsclient.dto.v3.json
 
+import com.fasterxml.jackson.annotation.JsonFormat
+import com.fasterxml.jackson.annotation.JsonProperty
 import java.util.*
 
-class BitsJsonStatusDTO(
-    var value: String?,
-    var modifiedBy: String?,
-    var timestamp: Date?
-) {
-    constructor() : this(null, null, null)
-}
+data class BitsJsonStatusDTO(
+    @JsonProperty("value") val value: String,
+    @JsonProperty("modifiedby") val modifiedBy: String,
+
+    @JsonProperty("timestamp")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    val timestamp: Date
+)

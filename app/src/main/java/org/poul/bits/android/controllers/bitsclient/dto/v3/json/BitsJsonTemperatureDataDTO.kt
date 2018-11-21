@@ -1,15 +1,21 @@
 package org.poul.bits.android.controllers.bitsclient.dto.v3.json
 
+import com.fasterxml.jackson.annotation.JsonFormat
+import com.fasterxml.jackson.annotation.JsonProperty
 import org.poul.bits.android.controllers.bitsclient.dto.v3.IBitsTemperatureDTO
 import org.poul.bits.android.model.BitsTemperatureData
 import java.util.*
 
 data class BitsJsonTemperatureDataDTO(
-    val value: Double,
-    val sensor: Long,
-    val modifiedBy: String,
+    @JsonProperty("value") val value: Double,
+    @JsonProperty("sensor") val sensor: Long,
+    @JsonProperty("modifiedby") val modifiedBy: String,
+
+    @JsonProperty("timestamp")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     val timestamp: Date
-): IBitsTemperatureDTO {
+
+) : IBitsTemperatureDTO {
 
     override fun toBitsTemperature(): BitsTemperatureData {
         return BitsTemperatureData(

@@ -97,4 +97,5 @@
         headquarters status.
     </string>
     <string name="channel_bits_retrieving_status_name">B.I.T.S. status update service</string>
+    <string name="updating_bits_desc">Retrieving headquarters state from server</string>
 </resources>

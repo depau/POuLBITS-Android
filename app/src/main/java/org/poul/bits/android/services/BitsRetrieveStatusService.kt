@@ -44,7 +44,7 @@ class BitsRetrieveStatusService : IntentService("BitsRetrieveStatusService") {
     }
 
     private fun getForegroundNotification(): Notification {
-        return getNotificationBuilder(this, CHANNEL_BITS_RETRIEVE_STATUS)
+        return getNotificationBuilder(CHANNEL_BITS_RETRIEVE_STATUS)
             .setContentTitle(getString(R.string.updating_bits_status))
             .setContentText(getString(R.string.updating_bits_desc))
             .buildCompat()

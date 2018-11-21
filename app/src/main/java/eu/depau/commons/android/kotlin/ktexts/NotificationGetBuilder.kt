@@ -5,9 +5,9 @@ import android.content.Context
 import android.os.Build
 
 @Suppress("DEPRECATION")
-fun getNotificationBuilder(context: Context, channel: String): Notification.Builder {
+fun Context.getNotificationBuilder(channel: String): Notification.Builder {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-        Notification.Builder(context, channel)
+        Notification.Builder(this, channel)
     else
-        Notification.Builder(context)
+        Notification.Builder(this)
 }

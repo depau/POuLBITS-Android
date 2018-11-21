@@ -8,12 +8,13 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import eu.depau.commons.android.kotlin.ktexts.snackbar
-import eu.depau.commons.android.kotlin.ktexts.toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import org.poul.bits.R
 import org.poul.bits.android.broadcasts.BitsStatusReceivedBroadcast
+import org.poul.bits.android.misc.playGialla
+import org.poul.bits.android.model.BitsData
+import org.poul.bits.android.model.enum.BitsStatus
 import org.poul.bits.android.services.BitsRetrieveStatusService
 
 
@@ -31,8 +32,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
         extended_fab.setOnClickListener { view ->
-            BitsRetrieveStatusService.startActionRetrieveStatus(this)
-            toast("Service started")
+            playGialla()
         }
         swiperefreshlayout.setProgressViewOffset(
             false,

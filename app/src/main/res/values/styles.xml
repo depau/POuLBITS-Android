@@ -1,17 +1,47 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:textViewStyle">@style/OpenSansTextViewTheme</item>
+        <item name="buttonStyle">@style/OpenSansButtonTheme</item>
     </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark"/>
+
+    <style name="OpenSansTextViewTheme" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/opensans</item>
+    </style>
+
+    <style name="OpenSansButtonTheme" parent="Base.TextAppearance.MaterialComponents.Button">
+        <item name="android:fontFamily">@font/opensans</item>
+    </style>
+
+    <style name="OpenSansUnelevatedButtonTheme" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:background">@color/colorFloatingActionButton</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="TitleTextAppearanceBase" parent="android:TextAppearance">
+        <item name="android:fontFamily">@font/opensans</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="CollapsedTitleTextAppearance" parent="TitleTextAppearanceBase">
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="ExpandedTitleTextAppearance" parent="TitleTextAppearanceBase">
+        <item name="android:textSize">32sp</item>
+    </style>
 </resources>

@@ -1,23 +1,48 @@
 package org.poul.bits.android.ui.activities
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import org.poul.bits.R
+import androidx.appcompat.app.AppCompatActivity
+import eu.depau.commons.android.kotlin.ktexts.snackbar
+import eu.depau.commons.android.kotlin.ktexts.toast
 import kotlinx.android.synthetic.main.activity_main.*
+import org.poul.bits.R
+import org.poul.bits.android.broadcasts.BitsStatusReceivedBroadcast
+import org.poul.bits.android.services.BitsRetrieveStatusService
+
 
 class MainActivity : AppCompatActivity() {
+
+    private val bitsDataReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            app_bar.snackbar("Received bits intent")
+        }
+    }
+    private val bitsDataIntentFilter = IntentFilter(BitsStatusReceivedBroadcast.ACTION)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+        extended_fab.setOnClickListener { view ->
+            BitsRetrieveStatusService.startActionRetrieveStatus(this)
+            toast("Service started")
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        registerReceiver(bitsDataReceiver, bitsDataIntentFilter)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        unregisterReceiver(bitsDataReceiver)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

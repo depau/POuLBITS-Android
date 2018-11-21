@@ -2,7 +2,6 @@ package org.poul.bits.android.broadcasts
 
 import android.content.Context
 import android.content.Intent
-import android.support.v4.content.LocalBroadcastManager
 import org.poul.bits.android.model.BitsData
 
 object BitsStatusReceivedBroadcast {
@@ -15,7 +14,7 @@ object BitsStatusReceivedBroadcast {
     }
 
     fun localBroadcast(context: Context, data: BitsData) {
-        LocalBroadcastManager
+        androidx.localbroadcastmanager.content.LocalBroadcastManager
             .getInstance(context)
             .sendBroadcast(getIntent(data))
     }

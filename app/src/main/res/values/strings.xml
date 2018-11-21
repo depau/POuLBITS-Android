@@ -93,4 +93,8 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="updating_bits_status">Updating B.I.T.S. status</string>
+    <string name="channel_bits_retrieving_status_description">Displayed while the app is running in background to retrieve the
+        headquarters status.
+    </string>
+    <string name="channel_bits_retrieving_status_name">B.I.T.S. status update service</string>
 </resources>

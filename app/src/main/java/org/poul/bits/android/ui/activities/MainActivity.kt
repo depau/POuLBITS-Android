@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import eu.depau.commons.android.kotlin.ktexts.snackbar
 import eu.depau.commons.android.kotlin.ktexts.toast
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_main.*
 import org.poul.bits.R
 import org.poul.bits.android.broadcasts.BitsStatusReceivedBroadcast
 import org.poul.bits.android.services.BitsRetrieveStatusService
@@ -33,6 +34,11 @@ class MainActivity : AppCompatActivity() {
             BitsRetrieveStatusService.startActionRetrieveStatus(this)
             toast("Service started")
         }
+        swiperefreshlayout.setProgressViewOffset(
+            false,
+            resources.getDimensionPixelSize(R.dimen.refresher_offset),
+            resources.getDimensionPixelSize(R.dimen.refresher_offset_end)
+        )
     }
 
     override fun onResume() {

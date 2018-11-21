@@ -1,14 +1,15 @@
 package org.poul.bits.android.controllers.bitsclient.impl
 
 import org.poul.bits.android.controllers.bitsclient.IBitsClient
+import org.poul.bits.android.controllers.bitsclient.dto.v3.json.BitsJsonDTO
 import org.poul.bits.android.model.BitsData
-import org.poul.bits.android.controllers.bitsclient.dto.v3.json.BitsJsonDataDTO
+import org.springframework.http.MediaType
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.web.client.RestTemplate
 
 class BitsJsonV3Client : IBitsClient {
     override fun downloadData(): BitsData {
         val url = "https://bits.poul.org/data"
-        val restTemplate = RestTemplate()
-        return restTemplate.getForObject(url, BitsJsonDataDTO::class.java).toBitsData()
+        return restTemplate.getForObject(url, BitsJsonDTO::class.java).toBitsData()
     }
 }

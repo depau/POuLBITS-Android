@@ -1,21 +1,22 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="@dimen/widget_margin"
-                android:background="#09C">
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/widget_fab_container"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
 
-    <TextView
-            android:id="@+id/appwidget_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="@string/appwidget_text"
-            android:textColor="#ffffff"
-            android:textSize="24sp"
-            android:textStyle="bold|italic"
-            android:layout_margin="8dp"
-            android:contentDescription="@string/appwidget_text"
-            android:background="#09C"/>
-
-</RelativeLayout>
+    <Button
+            android:id="@+id/widget_fab"
+            style="@style/OpenSansUnelevatedButtonTheme"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cornerRadius="56dp"
+            android:padding="@dimen/fab_margin"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:backgroundTint="@color/colorFloatingActionButton"
+            android:text="@string/headquarters_gialla"/>
+</LinearLayout>

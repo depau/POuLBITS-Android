@@ -8,6 +8,7 @@ import android.content.Intent
 import android.widget.RemoteViews
 import org.poul.bits.R
 import org.poul.bits.android.broadcasts.BitsStatusReceivedBroadcast
+import org.poul.bits.android.misc.getTextForStatus
 import org.poul.bits.android.model.BitsData
 import org.poul.bits.android.services.BitsRetrieveStatusService
 
@@ -54,10 +55,10 @@ abstract class HeadquartersStatusWidgetBase : AppWidgetProvider() {
         appWidgetId: Int,
         bitsData: BitsData
     ) {
-        val widgetText = context.getString(R.string.appwidget_text)
+        val widgetText = context.getTextForStatus(bitsData.status)
         // Construct the RemoteViews object
         val views = RemoteViews(context.packageName, layoutId)
-        views.setTextViewText(R.id.appwidget_text, widgetText)
+        views.setTextViewText(R.id.widget_fab, widgetText)
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views)

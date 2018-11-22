@@ -11,7 +11,7 @@ data class BitsJsonMessageDTO(
     @JsonProperty("value") val value: String,
 
     @JsonProperty("timestamp")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = JSON_TIME_FORMAT, timezone = JSON_TIMEZONE)
     val timestamp: Date
 
 ) : IBitsMessageDTO {

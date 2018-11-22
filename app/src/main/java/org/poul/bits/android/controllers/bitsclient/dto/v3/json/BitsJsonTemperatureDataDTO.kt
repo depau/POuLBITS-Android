@@ -12,7 +12,7 @@ data class BitsJsonTemperatureDataDTO(
     @JsonProperty("modifiedby") val modifiedBy: String,
 
     @JsonProperty("timestamp")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = JSON_TIME_FORMAT, timezone = JSON_TIMEZONE)
     val timestamp: Date
 
 ) : IBitsTemperatureDTO {

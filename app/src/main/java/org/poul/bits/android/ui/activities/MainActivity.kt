@@ -12,9 +12,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import org.poul.bits.R
 import org.poul.bits.android.broadcasts.BitsStatusReceivedBroadcast
+import org.poul.bits.android.misc.getColorForStatus
+import org.poul.bits.android.misc.getTextForStatus
 import org.poul.bits.android.misc.playGialla
 import org.poul.bits.android.model.BitsData
-import org.poul.bits.android.model.enum.BitsStatus
 import org.poul.bits.android.services.BitsRetrieveStatusService
 
 
@@ -38,9 +39,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
         extended_fab.setOnClickListener { view ->
             playGialla()
         }
+
         swiperefreshlayout.setProgressViewOffset(
             false,
             resources.getDimensionPixelSize(R.dimen.refresher_offset),
@@ -64,18 +67,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun updateGuiWithStatusData(bitsData: BitsData) {
-        extended_fab.text = when (bitsData.status) {
-            BitsStatus.OPEN -> getString(R.string.headquarters_open)
-            BitsStatus.CLOSED -> getString(R.string.headquarters_closed)
-        }
-
-        val buttonColor = when (bitsData.status) {
-            BitsStatus.OPEN -> R.color.colorHQsOpen
-            BitsStatus.CLOSED -> R.color.colorHQsClosed
-        }
-
-        extended_fab.backgroundTintList = resources.getColorStateList(buttonColor)
-//        extended_fab.background
+        extended_fab.text = getTextForStatus(bitsData.status)
+        extended_fab.backgroundTintList = resources.getColorStateList(getColorForStatus(bitsData.status))
     }
 
     override fun onResume() {

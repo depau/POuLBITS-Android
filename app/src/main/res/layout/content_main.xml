@@ -63,6 +63,29 @@
                         android:id="@+id/message_card_textview"/>
 
             </com.google.android.material.card.MaterialCardView>
+
+
+            <com.google.android.material.card.MaterialCardView
+                    style="@style/PresenceCardViewStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/mtrl_card_spacing"
+                    android:layout_marginTop="@dimen/mtrl_card_spacing"
+                    android:layout_marginRight="@dimen/mtrl_card_spacing"
+                    app:cardElevation="@dimen/card_elevation"
+                    android:id="@+id/presence_card">
+
+                <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/card_padding"
+                        android:id="@+id/presence_card_imageview"
+                        android:scaleType="fitStart"
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/poul_presence_heatmap_image_desc"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
         </LinearLayout>
 
 

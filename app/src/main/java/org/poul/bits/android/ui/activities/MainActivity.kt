@@ -11,12 +11,15 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.squareup.picasso.MemoryPolicy
+import com.squareup.picasso.Picasso
 import eu.depau.commons.android.kotlin.ktexts.SimpleHtml.accent
 import eu.depau.commons.android.kotlin.ktexts.SimpleHtml.bold
 import eu.depau.commons.android.kotlin.ktexts.SimpleHtml.br
 import eu.depau.commons.android.kotlin.ktexts.SimpleHtml.esc
 import eu.depau.commons.android.kotlin.ktexts.SimpleHtml.italic
 import eu.depau.commons.android.kotlin.ktexts.getColorStateListCompat
+import eu.depau.commons.android.kotlin.ktexts.snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import org.poul.bits.R
@@ -29,6 +32,7 @@ import org.poul.bits.android.model.BitsMessage
 import org.poul.bits.android.model.enum.BitsStatus
 import org.poul.bits.android.services.BitsRetrieveStatusService
 
+const val PRESENCE_IMG_URL = "https://bits.poul.org/bits_presence.png"
 
 class MainActivity : AppCompatActivity() {
 
@@ -53,6 +57,7 @@ class MainActivity : AppCompatActivity() {
 
         status_card.visibility = View.GONE
         message_card.visibility = View.GONE
+        presence_card.visibility = View.GONE
 
         extended_fab.setOnClickListener { view ->
             playGialla()
@@ -73,11 +78,31 @@ class MainActivity : AppCompatActivity() {
 
     fun startRefresh() {
         swiperefreshlayout.isRefreshing = true
+        loadPresenceImage()
         BitsRetrieveStatusService.startActionRetrieveStatus(this)
     }
 
     fun stopRefresh() {
         swiperefreshlayout.isRefreshing = false
+    }
+
+    fun loadPresenceImage() {
+        Picasso.get()
+            .load(PRESENCE_IMG_URL)
+            .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
+            .into(presence_card_imageview, object : com.squareup.picasso.Callback {
+                override fun onSuccess() = onPresenceImageLoad()
+                override fun onError(e: Exception?) = onPresenceImageLoadError(e)
+            })
+    }
+
+    fun onPresenceImageLoad() {
+        presence_card.visibility = View.VISIBLE
+    }
+
+    fun onPresenceImageLoadError(e: Exception? = null) {
+        presence_card.visibility = View.GONE
+        presence_card_imageview.snackbar(getString(R.string.presence_load_error_snackbar))
     }
 
     fun updateGuiWithStatusData(bitsData: BitsData) {
@@ -125,7 +150,8 @@ class MainActivity : AppCompatActivity() {
             message_card.visibility = View.VISIBLE
         }
 
-        val sentTime = esc(DateUtils.getRelativeTimeSpanString(
+        val sentTime = esc(
+            DateUtils.getRelativeTimeSpanString(
                 bitsData.lastModified.time,
                 System.currentTimeMillis(),
                 0L,

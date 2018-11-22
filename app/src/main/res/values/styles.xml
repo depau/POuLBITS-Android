@@ -47,4 +47,8 @@
         <item name="android:textSize">32sp</item>
         <item name="android:textColor">@android:color/transparent</item>
     </style>
+
+    <style name="PresenceCardViewStyle" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/black</item>
+    </style>
 </resources>

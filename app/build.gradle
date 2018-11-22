@@ -42,4 +42,5 @@ dependencies {
     implementation 'org.springframework.android:spring-android-rest-template:2.0.0.M4'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.7'
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.7"
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }

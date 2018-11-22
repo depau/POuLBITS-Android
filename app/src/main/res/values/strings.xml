@@ -106,4 +106,6 @@
     <string name="closed_by">Closed by</string>
     <string name="last_changed">Last changed</string>
     <string name="last_msg_from">Last message from</string>
+    <string name="poul_presence_heatmap_image_desc">POuL presence heatmap</string>
+    <string name="presence_load_error_snackbar">Unable to load presence heatmap</string>
 </resources>

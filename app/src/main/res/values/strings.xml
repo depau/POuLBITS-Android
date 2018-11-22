@@ -102,4 +102,8 @@
     <string name="headquarters_open">HQs OPEN</string>
     <string name="headquarters_closed">HQs CLOSED</string>
     <string name="headquarters_gialla">HQs GIALLA</string>
+    <string name="opened_by">Opened by</string>
+    <string name="closed_by">Closed by</string>
+    <string name="last_changed">Last changed</string>
+    <string name="last_msg_from">Last message from</string>
 </resources>

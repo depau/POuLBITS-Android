@@ -87,6 +87,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun loadPresenceImage() {
+        presence_card.visibility = View.GONE
         Picasso.get()
             .load(PRESENCE_IMG_URL)
             .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)

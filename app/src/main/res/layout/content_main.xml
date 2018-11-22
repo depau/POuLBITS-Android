@@ -17,12 +17,33 @@
             android:background="@color/colorBackground"
     >
 
-        <TextView
-                android:layout_width="wrap_content"
+        <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/text_margin"
                 android:background="@color/colorBackground"
-                android:text="@string/large_text"/>
+                android:layout_marginTop="@dimen/text_margin"
+                android:paddingTop="@dimen/fab_margin"
+        >
+            <com.google.android.material.card.MaterialCardView
+                    style="@style/Widget.MaterialComponents.CardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/mtrl_card_spacing"
+                    android:layout_marginTop="@dimen/mtrl_card_spacing"
+                    android:layout_marginRight="@dimen/mtrl_card_spacing"
+                    app:cardElevation="@dimen/card_elevation"
+                    android:minHeight="200dp">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/card_padding"
+                        android:text="Prova"
+                />
+
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
 
     </androidx.core.widget.NestedScrollView>
 

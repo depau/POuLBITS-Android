@@ -108,6 +108,9 @@ abstract class HeadquartersStatusWidgetBase : AppWidgetProvider() {
         views.setInt(R.id.widget_fab, "setBackgroundResource", bgDrawable)
         views.setInt(R.id.widget_fab_refresh, "setBackgroundResource", bgDrawable)
 
+        views.setTextViewText(R.id.widget_status_card_textview, MainActivity.getStatusCardText(context, bitsData))
+        views.setTextViewText(R.id.widget_message_card_textview, MainActivity.getMessageCardText(context, bitsData.message))
+
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views)
     }

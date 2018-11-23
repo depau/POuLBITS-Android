@@ -2,6 +2,7 @@ package eu.depau.commons.android.kotlin.ktexts
 
 import android.content.Context
 import android.text.Html
+import androidx.core.content.ContextCompat
 
 object SimpleHtml {
     val br = "<br>"
@@ -41,6 +42,7 @@ object SimpleHtml {
     }
 
     fun color(text: String, color: String) = font(text, color = color)
+    fun color(context: Context, text: String, colorId: Int) = font(text, color = ContextCompat.getColor(context, colorId).toHexColor())
     fun size(text: String, size: String) = font(text, size = size)
 
     fun Context.accent(text: String) = color(text, getAccentColor().toHexColor())

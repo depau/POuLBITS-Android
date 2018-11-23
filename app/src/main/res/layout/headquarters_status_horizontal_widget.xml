@@ -1,23 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        android:theme="@style/AppTheme"
         android:id="@+id/widget_layout"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/widget_top_offset">
+        android:gravity="center"
+        android:orientation="vertical">
 
     <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/widget_fab_offset"
+            android:layout_marginBottom="@dimen/widget_vertical_spacing"
+            android:layout_marginLeft="@dimen/widget_fab_horizontal_margin"
+            android:layout_marginRight="@dimen/widget_fab_horizontal_margin"
             android:orientation="horizontal">
 
         <Button
                 android:id="@+id/widget_fab"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:layout_marginRight="5dp"
                 android:layout_marginEnd="5dp"
+                android:paddingLeft="@dimen/card_padding"
+                android:paddingRight="@dimen/card_padding"
 
                 android:background="@drawable/widget_fab_gialla"
                 android:textColor="@color/white"
@@ -25,7 +33,7 @@
 
         <RelativeLayout
                 android:id="@+id/widget_fab_refresh"
-                android:layout_width="100dp"
+                android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:padding="@dimen/widget_fab_margin"
@@ -56,16 +64,32 @@
             />
 
         </RelativeLayout>
-
-        <!--<ImageButton-->
-        <!--android:id="@+id/widget_fab_refresh"-->
-        <!--android:layout_weight="1"-->
-        <!--android:layout_width="100dp"-->
-        <!--android:layout_height="50dp"-->
-        <!--android:padding="@dimen/fab_margin"-->
-        <!--android:src="@drawable/ic_refresh_white_24dp"-->
-        <!--android:background="@drawable/widget_fab_gialla"-->
-        <!--android:contentDescription="@string/refresh"/>-->
-
     </LinearLayout>
+
+    <TextView
+            android:id="@+id/widget_status_card_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/widget_card_height"
+            android:textAlignment="center"
+            android:layout_marginTop="@dimen/widget_vertical_spacing"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:background="@drawable/widget_card_bg"
+            android:padding="@dimen/card_padding"
+            android:text="@string/no_information"/>
+
+    <TextView
+            android:id="@+id/widget_message_card_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/widget_card_height"
+            android:textAlignment="center"
+            android:layout_marginTop="@dimen/widget_vertical_spacing"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:background="@drawable/widget_card_bg"
+            android:padding="@dimen/card_padding"
+            android:text="@string/no_information"/>
+
 </LinearLayout>

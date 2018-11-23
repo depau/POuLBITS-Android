@@ -1,6 +1,5 @@
 package org.poul.bits.android.misc
 
-import android.annotation.SuppressLint
 import android.content.Context
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
@@ -14,7 +13,6 @@ import java.util.*
 const val WIDGET_PREFS_FILE = "hq_widget"
 const val WIDGET_PREFS_MODE = 0
 
-@SuppressLint("ApplySharedPref")
 class WidgetSharedPrefsHelper(val context: Context) {
     private val sharedPrefs = context.getSharedPreferences(WIDGET_PREFS_FILE, WIDGET_PREFS_MODE)
     private val jackson = jacksonObjectMapper().configure(SerializationFeature.INDENT_OUTPUT, false)
@@ -30,7 +28,7 @@ class WidgetSharedPrefsHelper(val context: Context) {
     var loading: Boolean
         get() = sharedPrefs.getBoolean("loading", false)
         set(value) {
-            sharedPrefs.edit().putBoolean("loading", value).commit()
+            sharedPrefs.edit().putBoolean("loading", value).apply()
         }
 
     var bitsData: BitsData
@@ -45,6 +43,6 @@ class WidgetSharedPrefsHelper(val context: Context) {
         }
         set(value) {
             val json = jackson.writeValueAsString(value)
-            sharedPrefs.edit().putString("bits_data", json).commit()
+            sharedPrefs.edit().putString("bits_data", json).apply()
         }
 }

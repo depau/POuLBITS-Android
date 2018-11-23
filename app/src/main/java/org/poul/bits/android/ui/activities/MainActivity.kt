@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.text.Html
+import android.text.Spanned
 import android.text.format.DateUtils
 import android.view.Menu
 import android.view.MenuItem
@@ -14,9 +15,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
-import eu.depau.commons.android.kotlin.ktexts.SimpleHtml.accent
 import eu.depau.commons.android.kotlin.ktexts.SimpleHtml.bold
 import eu.depau.commons.android.kotlin.ktexts.SimpleHtml.br
+import eu.depau.commons.android.kotlin.ktexts.SimpleHtml.color
 import eu.depau.commons.android.kotlin.ktexts.SimpleHtml.esc
 import eu.depau.commons.android.kotlin.ktexts.SimpleHtml.italic
 import eu.depau.commons.android.kotlin.ktexts.getColorStateListCompat
@@ -138,29 +139,8 @@ class MainActivity : AppCompatActivity() {
     fun updateStatusCardWithStatusData(bitsData: BitsData) {
         status_card.visibility = View.VISIBLE
 
-        val openedclosed = esc(
-            getString(
-                when (bitsData.status) {
-                    BitsStatus.OPEN -> R.string.opened_from
-                    BitsStatus.CLOSED -> R.string.closed_from
-                    else -> R.string.headquarters_gialla
-                }
-            )
-        )
-
-        val changedTime = esc(
-            DateUtils.getRelativeTimeSpanString(
-                bitsData.lastModified.time,
-                System.currentTimeMillis(),
-                0L,
-                DateUtils.FORMAT_ABBREV_ALL
-            ) as String
-        )
-
-        status_card_textview.text = Html.fromHtml(
-            "$openedclosed ${bold(accent(esc(bitsData.modifiedBy)))}<br>" +
-                    "${getString(R.string.last_changed)} ${bold(accent(changedTime))}"
-        )
+        val text = getStatusCardText(this, bitsData)
+        status_card_textview.text = text
     }
 
     fun updateMessageCardWithMessage(bitsData: BitsMessage) {
@@ -173,19 +153,7 @@ class MainActivity : AppCompatActivity() {
             message_card.visibility = View.VISIBLE
         }
 
-        val sentTime = esc(
-            DateUtils.getRelativeTimeSpanString(
-                bitsData.lastModified.time,
-                System.currentTimeMillis(),
-                0L,
-                DateUtils.FORMAT_ABBREV_ALL
-            ) as String
-        )
-
-        message_card_textview.text = Html.fromHtml(
-            "${getString(R.string.last_msg_from)} ${bold(accent(esc(bitsData.user)))}, ${bold(accent(sentTime))} $br" +
-                    italic("“${esc(bitsData.message)}”")
-        )
+        message_card_textview.text = getMessageCardText(this, bitsData)
     }
 
     override fun onResume() {
@@ -213,6 +181,68 @@ class MainActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    companion object {
+        fun getStatusCardText(context: Context, bitsData: BitsData): Spanned {
+            val openedclosed = esc(
+                context.getString(
+                    when (bitsData.status) {
+                        BitsStatus.OPEN -> R.string.opened_from
+                        BitsStatus.CLOSED -> R.string.closed_from
+                        else -> R.string.headquarters_gialla
+                    }
+                )
+            )
+
+            val changedTime = esc(
+                DateUtils.getRelativeTimeSpanString(
+                    bitsData.lastModified.time,
+                    System.currentTimeMillis(),
+                    0L,
+                    DateUtils.FORMAT_ABBREV_ALL
+                ) as String
+            )
+
+            return Html.fromHtml(
+                "$openedclosed ${bold(color(context, esc(bitsData.modifiedBy), R.color.colorAccent))}<br>" +
+                        "${context.getString(R.string.last_changed)} ${bold(
+                            color(
+                                context,
+                                changedTime,
+                                R.color.colorAccent
+                            )
+                        )}"
+            )!!
+        }
+
+        fun getMessageCardText(context: Context, bitsData: BitsMessage): Spanned {
+            val sentTime = esc(
+                DateUtils.getRelativeTimeSpanString(
+                    bitsData.lastModified.time,
+                    System.currentTimeMillis(),
+                    0L,
+                    DateUtils.FORMAT_ABBREV_ALL
+                ) as String
+            )
+
+            return Html.fromHtml(
+                "${context.getString(R.string.last_msg_from)} ${bold(
+                    color(
+                        context,
+                        esc(bitsData.user),
+                        R.color.colorAccent
+                    )
+                )}, ${bold(
+                    color(
+                        context,
+                        esc(sentTime),
+                        R.color.colorAccent
+                    )
+                )} $br" +
+                        italic("“${esc(bitsData.message)}”")
+            )!!
         }
     }
 }

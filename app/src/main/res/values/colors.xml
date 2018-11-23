@@ -15,4 +15,7 @@
 
     <color name="colorHQsClosed">#d32f2f</color>
     <color name="colorHQsClosedPressed">#691717</color>
+
+    <color name="widgetCardColor">#282828</color>
+    <color name="widgetCardStrokeColor">#1d1d1d</color>
 </resources>

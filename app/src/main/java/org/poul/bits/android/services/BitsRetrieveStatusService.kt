@@ -10,13 +10,14 @@ import android.util.Log
 import eu.depau.commons.android.kotlin.ktexts.buildCompat
 import eu.depau.commons.android.kotlin.ktexts.getNotificationBuilder
 import eu.depau.commons.android.kotlin.ktexts.registerNotificationChannel
+import eu.depau.commons.android.kotlin.ktexts.startForegroundServiceCompat
 import org.poul.bits.R
 import org.poul.bits.android.broadcasts.BitsStatusErrorBroadcast
 import org.poul.bits.android.broadcasts.BitsStatusReceivedBroadcast
 import org.poul.bits.android.controllers.bitsclient.IBitsClient
 import org.poul.bits.android.controllers.bitsclient.impl.BitsJsonV3Client
 
-private const val ACTION_RETRIEVE_STATUS = "org.poul.bits.android.services.action.ACTION_RETRIEVE_STATUS"
+internal const val ACTION_RETRIEVE_STATUS = "org.poul.bits.android.services.action.ACTION_RETRIEVE_STATUS"
 
 private const val FOREGROUND_RETRIEVE_STATUS_ID = 4389
 
@@ -73,11 +74,7 @@ class BitsRetrieveStatusService : IntentService("BitsRetrieveStatusService") {
             val intent = Intent(context, BitsRetrieveStatusService::class.java).apply {
                 action = ACTION_RETRIEVE_STATUS
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                context.startForegroundService(intent)
-            } else {
-                context.startService(intent)
-            }
+            context.startForegroundServiceCompat(intent)
         }
     }
 }

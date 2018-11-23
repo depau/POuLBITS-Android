@@ -19,7 +19,7 @@ class WidgetSharedPrefsHelper(val context: Context) {
     private val sharedPrefs = context.getSharedPreferences(WIDGET_PREFS_FILE, WIDGET_PREFS_MODE)
     private val jackson = jacksonObjectMapper().configure(SerializationFeature.INDENT_OUTPUT, false)
 
-    private fun getDefaultBitsData() = BitsData(
+    fun getErrorBitsData() = BitsData(
         BitsStatus.UNKNOWN,
         "", Date(),
         BitsTemperatureData(0.0, 0L, "", Date()),
@@ -36,11 +36,11 @@ class WidgetSharedPrefsHelper(val context: Context) {
     var bitsData: BitsData
         get() {
             val json = sharedPrefs.getString("bits_data", null)
-                ?: return getDefaultBitsData()
+                ?: return getErrorBitsData()
             return try {
                 jackson.readValue(json)
             } catch (e: Exception) {
-                getDefaultBitsData()
+                getErrorBitsData()
             }
         }
         set(value) {

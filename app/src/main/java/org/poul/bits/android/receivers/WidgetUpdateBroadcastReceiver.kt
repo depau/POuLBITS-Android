@@ -1,14 +1,15 @@
 package org.poul.bits.android.receivers
 
-import android.appwidget.AppWidgetManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import org.poul.bits.android.broadcasts.BitsStatusErrorBroadcast
 import org.poul.bits.android.broadcasts.BitsStatusReceivedBroadcast
 import org.poul.bits.android.broadcasts.BitsStatusRetrieveStartBroadcast
 import org.poul.bits.android.misc.WidgetSharedPrefsHelper
 import org.poul.bits.android.model.BitsData
 import org.poul.bits.android.ui.widgets.HeadquartersStatusHorizontalWidget
+import org.poul.bits.android.ui.widgets.HeadquartersStatusWidgetBase
 
 class WidgetUpdateBroadcastReceiver : BroadcastReceiver() {
 
@@ -16,17 +17,21 @@ class WidgetUpdateBroadcastReceiver : BroadcastReceiver() {
         when (intent.action) {
             BitsStatusRetrieveStartBroadcast.ACTION -> handleStatusRetrieveStartBroadcast(context)
             BitsStatusReceivedBroadcast.ACTION -> handleStatusReceivedBroadcast(context, intent)
-        }
-    }
-
-    private fun getWidgetUpdateIntent(context: Context): Intent {
-        return Intent(context, HeadquartersStatusHorizontalWidget::class.java).apply {
-            action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+            BitsStatusErrorBroadcast.ACTION -> handleStatusErrorBroadcast(context)
         }
     }
 
     private fun requestWidgetUpdate(context: Context) {
-        context.sendBroadcast(getWidgetUpdateIntent(context))
+        context.sendBroadcast(
+            HeadquartersStatusWidgetBase.getUpdateIntent(
+                context,
+                HeadquartersStatusHorizontalWidget::class.java,
+                HeadquartersStatusWidgetBase.getAppWidgetIds(
+                    context,
+                    HeadquartersStatusHorizontalWidget::class.java
+                )
+            )
+        )
     }
 
     private fun handleStatusRetrieveStartBroadcast(context: Context) {
@@ -45,5 +50,12 @@ class WidgetUpdateBroadcastReceiver : BroadcastReceiver() {
             this.bitsData = bitsData
         }
         requestWidgetUpdate(context)
+    }
+
+    private fun handleStatusErrorBroadcast(context: Context) {
+        WidgetSharedPrefsHelper(context).apply {
+            loading = false
+            bitsData = getErrorBitsData()
+        }
     }
 }

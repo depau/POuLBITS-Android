@@ -3,6 +3,11 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
 
+    <dimen name="widget_fab_margin">12dp</dimen>
+    <dimen name="widget_progressbar_margin">2dp</dimen>
+
+    <dimen name="widget_top_offset">20dp</dimen>
+
     <dimen name="card_padding">16dp</dimen>
     <dimen name="card_elevation">5dp</dimen>
 

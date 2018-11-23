@@ -74,11 +74,13 @@ class BitsRetrieveStatusService : IntentService("BitsRetrieveStatusService") {
 
     companion object {
         @JvmStatic
+        fun getIntent(context: Context) = Intent(context, BitsRetrieveStatusService::class.java).apply {
+            action = ACTION_RETRIEVE_STATUS
+        }
+
+        @JvmStatic
         fun startActionRetrieveStatus(context: Context) {
-            val intent = Intent(context, BitsRetrieveStatusService::class.java).apply {
-                action = ACTION_RETRIEVE_STATUS
-            }
-            context.startForegroundServiceCompat(intent)
+            context.startForegroundServiceCompat(getIntent(context))
         }
     }
 }

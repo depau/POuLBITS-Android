@@ -20,6 +20,8 @@ object BitsStatusReceivedBroadcast {
     }
 
     fun broadcast(context: Context, data: BitsData) {
-        context.sendBroadcast(getIntent(data))
+        context.sendBroadcast(getIntent(data).apply {
+            `package` = context.packageName
+        })
     }
 }

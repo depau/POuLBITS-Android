@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="org.poul.bits">
+          package="org.poul.bits.android">
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -13,7 +13,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
-                android:name="org.poul.bits.android.ui.activities.MainActivity"
+                android:name=".ui.activities.MainActivity"
                 android:label="@string/app_name"
                 android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -24,17 +24,31 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name="org.poul.bits.android.ui.widgets.HeadquartersStatusHorizontalWidget">
+        <receiver android:name=".ui.widgets.HeadquartersStatusHorizontalWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>
+
             <meta-data
                     android:name="android.appwidget.provider"
                     android:resource="@xml/headquarters_status_horizontal_widget_info"/>
         </receiver>
 
+        <receiver
+                android:name=".receivers.WidgetUpdateBroadcastReceiver"
+                android:enabled="true"
+                android:exported="false">
+
+            <intent-filter>
+                <action android:name="org.poul.bits.android.broadcasts.action.BITS_STATUS_RETRIEVE_START"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="org.poul.bits.android.broadcasts.action.BITS_STATUS_RECEIVED"/>
+            </intent-filter>
+        </receiver>
+
         <service
-                android:name="org.poul.bits.android.services.BitsRetrieveStatusService"
+                android:name=".services.BitsRetrieveStatusService"
                 android:exported="false">
         </service>
     </application>

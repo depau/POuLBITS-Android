@@ -11,9 +11,10 @@ import eu.depau.commons.android.kotlin.ktexts.buildCompat
 import eu.depau.commons.android.kotlin.ktexts.getNotificationBuilder
 import eu.depau.commons.android.kotlin.ktexts.registerNotificationChannel
 import eu.depau.commons.android.kotlin.ktexts.startForegroundServiceCompat
-import org.poul.bits.R
+import org.poul.bits.android.R
 import org.poul.bits.android.broadcasts.BitsStatusErrorBroadcast
 import org.poul.bits.android.broadcasts.BitsStatusReceivedBroadcast
+import org.poul.bits.android.broadcasts.BitsStatusRetrieveStartBroadcast
 import org.poul.bits.android.controllers.bitsclient.IBitsClient
 import org.poul.bits.android.controllers.bitsclient.impl.BitsJsonV3Client
 
@@ -59,8 +60,11 @@ class BitsRetrieveStatusService : IntentService("BitsRetrieveStatusService") {
     private fun handleActionRetrieveStatus() {
         try {
             startForeground(FOREGROUND_RETRIEVE_STATUS_ID, getForegroundNotification())
+
+            BitsStatusRetrieveStartBroadcast.broadcast(this)
             val data = bitsClient.downloadData()
             BitsStatusReceivedBroadcast.broadcast(this, data)
+
             stopForeground(true)
         } catch (e: Exception) {
             Log.e(LOG_TAG, "Failed to retrieve status JSON", e)

@@ -23,7 +23,7 @@ import eu.depau.commons.android.kotlin.ktexts.getColorStateListCompat
 import eu.depau.commons.android.kotlin.ktexts.snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
-import org.poul.bits.R
+import org.poul.bits.android.R
 import org.poul.bits.android.broadcasts.BitsStatusErrorBroadcast
 import org.poul.bits.android.broadcasts.BitsStatusReceivedBroadcast
 import org.poul.bits.android.misc.getColorForStatus
@@ -143,6 +143,7 @@ class MainActivity : AppCompatActivity() {
                 when (bitsData.status) {
                     BitsStatus.OPEN -> R.string.opened_by
                     BitsStatus.CLOSED -> R.string.closed_by
+                    else -> R.string.headquarters_gialla
                 }
             )
         )

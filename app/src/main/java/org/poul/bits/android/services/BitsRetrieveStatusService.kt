@@ -6,10 +6,12 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import eu.depau.commons.android.kotlin.ktexts.buildCompat
 import eu.depau.commons.android.kotlin.ktexts.getNotificationBuilder
 import eu.depau.commons.android.kotlin.ktexts.registerNotificationChannel
 import org.poul.bits.R
+import org.poul.bits.android.broadcasts.BitsStatusErrorBroadcast
 import org.poul.bits.android.broadcasts.BitsStatusReceivedBroadcast
 import org.poul.bits.android.controllers.bitsclient.IBitsClient
 import org.poul.bits.android.controllers.bitsclient.impl.BitsJsonV3Client
@@ -21,6 +23,8 @@ private const val FOREGROUND_RETRIEVE_STATUS_ID = 4389
 private const val CHANNEL_BITS_RETRIEVE_STATUS = "org.poul.bits.android.notification.CHANNEL_BITS_RETRIEVING_STATUS"
 
 class BitsRetrieveStatusService : IntentService("BitsRetrieveStatusService") {
+
+    private val LOG_TAG = "BitsRetrieveStatusSvc"
 
     private val bitsClient: IBitsClient = BitsJsonV3Client()
 
@@ -52,10 +56,15 @@ class BitsRetrieveStatusService : IntentService("BitsRetrieveStatusService") {
 
 
     private fun handleActionRetrieveStatus() {
-        startForeground(FOREGROUND_RETRIEVE_STATUS_ID, getForegroundNotification())
-        val data = bitsClient.downloadData()
-        BitsStatusReceivedBroadcast.broadcast(this, data)
-        stopForeground(true)
+        try {
+            startForeground(FOREGROUND_RETRIEVE_STATUS_ID, getForegroundNotification())
+            val data = bitsClient.downloadData()
+            BitsStatusReceivedBroadcast.broadcast(this, data)
+            stopForeground(true)
+        } catch (e: Exception) {
+            Log.e(LOG_TAG, "Failed to retrieve status JSON", e)
+            BitsStatusErrorBroadcast.broadcast(this)
+        }
     }
 
     companion object {

@@ -28,6 +28,7 @@
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
                 <action android:name="org.poul.bits.android.broadcasts.action.BITS_STATUS_RECEIVED"/>
+                <action android:name="org.poul.bits.android.broadcasts.action.BITS_STATUS_ERROR"/>
             </intent-filter>
 
             <meta-data

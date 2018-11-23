@@ -12,6 +12,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.squareup.picasso.MemoryPolicy
+import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import eu.depau.commons.android.kotlin.ktexts.SimpleHtml.accent
 import eu.depau.commons.android.kotlin.ktexts.SimpleHtml.bold
@@ -23,6 +24,7 @@ import eu.depau.commons.android.kotlin.ktexts.snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import org.poul.bits.R
+import org.poul.bits.android.broadcasts.BitsStatusErrorBroadcast
 import org.poul.bits.android.broadcasts.BitsStatusReceivedBroadcast
 import org.poul.bits.android.misc.getColorForStatus
 import org.poul.bits.android.misc.getTextForStatus
@@ -36,6 +38,9 @@ const val PRESENCE_IMG_URL = "https://bits.poul.org/bits_presence.png"
 
 class MainActivity : AppCompatActivity() {
 
+    private val bitsDataIntentFilter = IntentFilter(BitsStatusReceivedBroadcast.ACTION)
+    private val bitsErrorIntentFilter = IntentFilter(BitsStatusErrorBroadcast.ACTION)
+
     private val bitsDataReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             when (intent.action) {
@@ -45,10 +50,14 @@ class MainActivity : AppCompatActivity() {
                     )
                     stopRefresh()
                 }
+                BitsStatusErrorBroadcast.ACTION -> {
+                    updateGuiError()
+                    extended_fab.snackbar(getString(R.string.check_network_connection))
+                    stopRefresh()
+                }
             }
         }
     }
-    private val bitsDataIntentFilter = IntentFilter(BitsStatusReceivedBroadcast.ACTION)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,6 +99,7 @@ class MainActivity : AppCompatActivity() {
         presence_card.visibility = View.GONE
         Picasso.get()
             .load(PRESENCE_IMG_URL)
+            .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
             .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
             .into(presence_card_imageview, object : com.squareup.picasso.Callback {
                 override fun onSuccess() = onPresenceImageLoad()
@@ -103,7 +113,18 @@ class MainActivity : AppCompatActivity() {
 
     fun onPresenceImageLoadError(e: Exception? = null) {
         presence_card.visibility = View.GONE
-        presence_card_imageview.snackbar(getString(R.string.presence_load_error_snackbar))
+    }
+
+    fun updateGuiError() {
+        message_card.visibility = View.GONE
+        status_card.visibility = View.VISIBLE
+
+        status_card_textview.text = Html.fromHtml(
+            italic(getString(R.string.status_retrieve_failure_card))
+        )
+
+        extended_fab.backgroundTintList = resources.getColorStateListCompat(R.color.colorFloatingActionButton, theme)
+        extended_fab.text = getString(R.string.headquarters_gialla)
     }
 
     fun updateGuiWithStatusData(bitsData: BitsData) {
@@ -169,6 +190,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         registerReceiver(bitsDataReceiver, bitsDataIntentFilter)
+        registerReceiver(bitsDataReceiver, bitsErrorIntentFilter)
     }
 
     override fun onPause() {

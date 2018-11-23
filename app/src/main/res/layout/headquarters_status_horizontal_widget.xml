@@ -77,7 +77,8 @@
             android:gravity="center"
             android:background="@drawable/widget_card_bg"
             android:padding="@dimen/card_padding"
-            android:text="@string/no_information"/>
+            android:text="@string/no_information"
+            android:visibility="gone"/>
 
     <TextView
             android:id="@+id/widget_message_card_textview"
@@ -90,6 +91,7 @@
             android:gravity="center"
             android:background="@drawable/widget_card_bg"
             android:padding="@dimen/card_padding"
-            android:text="@string/no_information"/>
+            android:text="@string/no_information"
+            android:visibility="gone"/>
 
 </LinearLayout>

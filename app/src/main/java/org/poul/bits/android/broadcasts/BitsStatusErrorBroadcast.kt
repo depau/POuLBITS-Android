@@ -6,8 +6,8 @@ import android.content.Intent
 object BitsStatusErrorBroadcast {
     const val ACTION = "org.poul.bits.android.broadcasts.action.BITS_STATUS_ERROR"
 
-    private fun getIntent() = Intent().also { intent ->
-        intent.action = ACTION
+    private fun getIntent() = Intent().apply {
+        action = ACTION
     }
 
     fun localBroadcast(context: Context) {

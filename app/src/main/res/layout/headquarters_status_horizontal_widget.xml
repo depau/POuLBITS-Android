@@ -1,22 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/widget_fab_container"
+        android:id="@+id/widget_layout"
         android:layout_height="match_parent"
         android:layout_width="match_parent">
 
-    <Button
-            android:id="@+id/widget_fab"
-            style="@style/OpenSansUnelevatedButtonTheme"
+    <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:cornerRadius="56dp"
-            android:padding="@dimen/fab_margin"
-            android:textAllCaps="false"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:backgroundTint="@color/colorFloatingActionButton"
-            android:text="@string/headquarters_gialla"/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        <Button
+                android:id="@+id/widget_fab"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
+
+                android:background="@drawable/widget_fab_gialla"
+                android:textColor="@color/white"
+                android:text="@string/headquarters_gialla"/>
+
+        <ImageButton
+                android:id="@+id/widget_fab_refresh"
+                android:layout_weight="1"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:padding="@dimen/fab_margin"
+                android:src="@drawable/ic_refresh_white_24dp"
+                android:background="@drawable/widget_fab_gialla"
+                android:contentDescription="@string/refresh"/>
+
+    </LinearLayout>
 </LinearLayout>

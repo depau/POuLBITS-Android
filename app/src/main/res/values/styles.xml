@@ -28,7 +28,7 @@
     </style>
 
     <style name="OpenSansUnelevatedButtonTheme" parent="Widget.MaterialComponents.Button.UnelevatedButton">
-        <item name="android:background">@color/colorFloatingActionButton</item>
+        <item name="android:background">@color/colorHQsGialla</item>
         <item name="android:textColor">@color/white</item>
     </style>
 

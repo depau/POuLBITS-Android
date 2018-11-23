@@ -78,7 +78,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:backgroundTint="@color/colorFloatingActionButton"
+                app:backgroundTint="@color/colorHQsGialla"
                 android:text="@string/headquarters_gialla"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

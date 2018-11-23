@@ -110,4 +110,5 @@
     <string name="presence_load_error_snackbar">Unable to load presence heatmap</string>
     <string name="status_retrieve_failure_card">Failed to retrieve headquarters status information</string>
     <string name="check_network_connection">Check your network connection</string>
+    <string name="refresh">Refresh</string>
 </resources>

@@ -123,7 +123,7 @@ class MainActivity : AppCompatActivity() {
             italic(getString(R.string.status_retrieve_failure_card))
         )
 
-        extended_fab.backgroundTintList = resources.getColorStateListCompat(R.color.colorFloatingActionButton, theme)
+        extended_fab.backgroundTintList = resources.getColorStateListCompat(R.color.colorHQsGialla, theme)
         extended_fab.text = getString(R.string.headquarters_gialla)
     }
 

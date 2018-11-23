@@ -141,8 +141,8 @@ class MainActivity : AppCompatActivity() {
         val openedclosed = esc(
             getString(
                 when (bitsData.status) {
-                    BitsStatus.OPEN -> R.string.opened_by
-                    BitsStatus.CLOSED -> R.string.closed_by
+                    BitsStatus.OPEN -> R.string.opened_from
+                    BitsStatus.CLOSED -> R.string.closed_from
                     else -> R.string.headquarters_gialla
                 }
             )

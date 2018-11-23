@@ -9,6 +9,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.os.Build
+import android.os.Bundle
 import android.view.View
 import android.widget.RemoteViews
 import androidx.core.content.ContextCompat
@@ -84,9 +85,10 @@ abstract class HeadquartersStatusWidgetBase : AppWidgetProvider() {
         bitsData: BitsData,
         loading: Boolean
     ) {
-        val hqStatus = context.getTextForStatus(bitsData.status)
         // Construct the RemoteViews object
         val views = RemoteViews(context.packageName, layoutId)
+
+        val hqStatus = context.getTextForStatus(bitsData.status)
         views.setTextViewText(R.id.widget_fab, hqStatus)
 
         if (!loading) {
@@ -109,13 +111,42 @@ abstract class HeadquartersStatusWidgetBase : AppWidgetProvider() {
         views.setInt(R.id.widget_fab_refresh, "setBackgroundResource", bgDrawable)
 
         views.setTextViewText(R.id.widget_status_card_textview, MainActivity.getStatusCardText(context, bitsData))
-        views.setTextViewText(R.id.widget_message_card_textview, MainActivity.getMessageCardText(context, bitsData.message))
+        views.setTextViewText(
+            R.id.widget_message_card_textview,
+            MainActivity.getMessageCardText(context, bitsData.message)
+        )
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views)
     }
 
+    override fun onAppWidgetOptionsChanged(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetId: Int,
+        newOptions: Bundle
+    ) {
+        super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions)
+
+        val views = RemoteViews(context.packageName, layoutId)
+        val (w, h) = getCellsForOptionsBundle(newOptions)
+
+        views.setViewVisibility(R.id.widget_status_card_textview, if (h > 1) View.VISIBLE else View.GONE)
+        views.setViewVisibility(R.id.widget_message_card_textview, if (h > 2) View.VISIBLE else View.GONE)
+
+        appWidgetManager.updateAppWidget(appWidgetId, views)
+    }
+
     companion object {
+        fun getCellsNumber(size: Int): Int = (size + 30) / 70
+
+        fun getCellsForOptionsBundle(bundle: Bundle): Pair<Int, Int> {
+            return Pair(
+                getCellsNumber(bundle.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH)),
+                getCellsNumber(bundle.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT))
+            )
+        }
+
         fun <T> getUpdateIntent(
             context: Context,
             clazz: Class<T>,

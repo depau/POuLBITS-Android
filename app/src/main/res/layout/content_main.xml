@@ -24,7 +24,7 @@
                 android:orientation="vertical"
                 android:layout_marginTop="@dimen/text_margin"
                 android:animateLayoutChanges="true"
-                android:paddingTop="@dimen/fab_margin"
+                android:paddingTop="@dimen/card_layout_padding_top"
         >
             <com.google.android.material.card.MaterialCardView
                     style="@style/Widget.MaterialComponents.CardView"

@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.res.Configuration
 import android.os.Bundle
 import android.text.Html
 import android.text.Spanned
@@ -12,6 +13,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintSet
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
@@ -22,6 +24,7 @@ import eu.depau.commons.android.kotlin.ktexts.SimpleHtml.esc
 import eu.depau.commons.android.kotlin.ktexts.SimpleHtml.italic
 import eu.depau.commons.android.kotlin.ktexts.getColorStateListCompat
 import eu.depau.commons.android.kotlin.ktexts.snackbar
+import eu.depau.commons.android.kotlin.ktexts.statusBarHeight
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import org.poul.bits.android.R
@@ -38,7 +41,6 @@ import org.poul.bits.android.services.BitsRetrieveStatusService
 const val PRESENCE_IMG_URL = "https://bits.poul.org/bits_presence.png"
 
 class MainActivity : AppCompatActivity() {
-
     private val bitsDataIntentFilter = IntentFilter(BitsStatusReceivedBroadcast.ACTION)
     private val bitsErrorIntentFilter = IntentFilter(BitsStatusErrorBroadcast.ACTION)
 
@@ -65,6 +67,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            val constraintSet = ConstraintSet()
+            constraintSet.clone(left_constraintlayout)
+            constraintSet.connect(R.id.toolbar, ConstraintSet.TOP, R.id.left_constraintlayout, ConstraintSet.TOP, statusBarHeight)
+            constraintSet.applyTo(left_constraintlayout)
+        }
+
+
         status_card.visibility = View.GONE
         message_card.visibility = View.GONE
         presence_card.visibility = View.GONE
@@ -85,6 +95,7 @@ class MainActivity : AppCompatActivity() {
 
         startRefresh()
     }
+
 
     fun startRefresh() {
         swiperefreshlayout.isRefreshing = true

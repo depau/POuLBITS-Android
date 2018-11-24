@@ -12,6 +12,7 @@
     <dimen name="widget_vertical_spacing">@dimen/mtrl_card_spacing</dimen>
 
     <dimen name="widget_fab_margin">12dp</dimen>
+    <dimen name="card_layout_padding_top">12dp</dimen>
     <dimen name="widget_progressbar_margin">2dp</dimen>
 
     <dimen name="widget_fab_offset">20dp</dimen>

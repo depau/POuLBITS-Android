@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="false"
+        tools:context=".ui.activities.MainActivity">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="false">
+
+        <androidx.constraintlayout.widget.Guideline
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="0dp" android:id="@+id/guideline"
+                app:layout_constraintGuide_percent="0.40"/>
+
+        <include
+                layout="@layout/content_main"
+                app:layout_constraintLeft_toLeftOf="@id/guideline"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="0dp" android:layout_height="0dp"
+                android:elevation="8dp"
+        />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/left_constraintlayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="@id/guideline"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:fitsSystemWindows="false"
+        >
+            <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:srcCompat="@drawable/ic_poul_bits_logo_vert"
+                    android:id="@+id/imageView"
+                    android:contentDescription="@string/poul_logo_img_desc"
+                    android:scaleType="fitCenter"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginRight="30dp"
+                    app:layout_constraintHorizontal_bias="0.0" android:layout_marginTop="32dp"
+                    android:layout_marginBottom="32dp" app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                    app:layout_constraintBottom_toTopOf="@+id/extended_fab"/>
+
+
+            <com.google.android.material.button.MaterialButton
+                    android:id="@+id/extended_fab"
+                    style="@style/OpenSansUnelevatedButtonTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cornerRadius="56dp"
+                    android:padding="@dimen/fab_margin"
+                    android:textAllCaps="false"
+
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:backgroundTint="@color/colorHQsGialla"
+                    android:text="@string/headquarters_gialla"
+                    android:layout_marginBottom="24dp"/>
+
+
+            <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_width="0dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:fitsSystemWindows="false"
+                    app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

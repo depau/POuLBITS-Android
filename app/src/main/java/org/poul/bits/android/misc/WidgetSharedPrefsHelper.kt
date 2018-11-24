@@ -1,9 +1,7 @@
 package org.poul.bits.android.misc
 
 import android.content.Context
-import com.fasterxml.jackson.databind.SerializationFeature
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
+import com.google.gson.Gson
 import org.poul.bits.android.model.BitsData
 import org.poul.bits.android.model.BitsMessage
 import org.poul.bits.android.model.BitsTemperatureData
@@ -15,7 +13,7 @@ const val WIDGET_PREFS_MODE = 0
 
 class WidgetSharedPrefsHelper(val context: Context) {
     private val sharedPrefs = context.getSharedPreferences(WIDGET_PREFS_FILE, WIDGET_PREFS_MODE)
-    private val jackson = jacksonObjectMapper().configure(SerializationFeature.INDENT_OUTPUT, false)
+    private val gson = Gson()
 
     fun getErrorBitsData() = BitsData(
         BitsStatus.UNKNOWN,
@@ -36,13 +34,13 @@ class WidgetSharedPrefsHelper(val context: Context) {
             val json = sharedPrefs.getString("bits_data", null)
                 ?: return getErrorBitsData()
             return try {
-                jackson.readValue(json)
+                gson.fromJson(json, BitsData::class.java)
             } catch (e: Exception) {
                 getErrorBitsData()
             }
         }
         set(value) {
-            val json = jackson.writeValueAsString(value)
+            val json = gson.toJson(value)
             sharedPrefs.edit().putString("bits_data", json).apply()
         }
 }

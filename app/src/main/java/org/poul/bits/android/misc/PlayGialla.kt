@@ -5,9 +5,9 @@ import android.media.MediaPlayer
 
 
 fun Context.playGialla() {
-    val giallaFd = assets.openFd("gialla.ogg")
+    val giallaFd = assets.openFd("gialla.mp3")
     MediaPlayer().also {
-        it.setDataSource(giallaFd.fileDescriptor, giallaFd.startOffset, giallaFd.length);
+        it.setDataSource(giallaFd.fileDescriptor, giallaFd.startOffset, giallaFd.length)
         it.prepare()
         it.start()
     }

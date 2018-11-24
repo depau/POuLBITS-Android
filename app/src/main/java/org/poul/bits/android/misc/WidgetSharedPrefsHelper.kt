@@ -43,4 +43,10 @@ class WidgetSharedPrefsHelper(val context: Context) {
             val json = gson.toJson(value)
             sharedPrefs.edit().putString("bits_data", json).apply()
         }
+
+    fun getWidgetHeightCells(appWidgetId: Int): Int =
+        sharedPrefs.getInt("app_widget_cells_height_$appWidgetId", 1)
+
+    fun setWidgetHeightCells(appWidgetId: Int, cells: Int) =
+        sharedPrefs.edit().putInt("app_widget_cells_height_$appWidgetId", cells).apply()
 }

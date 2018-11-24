@@ -85,6 +85,9 @@ abstract class HeadquartersStatusWidgetBase : AppWidgetProvider() {
         bitsData: BitsData,
         loading: Boolean
     ) {
+        val sharedPrefsHelper = WidgetSharedPrefsHelper(context)
+        val cells = sharedPrefsHelper.getWidgetHeightCells(appWidgetId)
+
         // Construct the RemoteViews object
         val views = RemoteViews(context.packageName, layoutId)
 
@@ -111,10 +114,19 @@ abstract class HeadquartersStatusWidgetBase : AppWidgetProvider() {
         views.setInt(R.id.widget_fab_refresh, "setBackgroundResource", bgDrawable)
 
         views.setTextViewText(R.id.widget_status_card_textview, MainActivity.getStatusCardText(context, bitsData))
-        views.setTextViewText(
-            R.id.widget_message_card_textview,
-            MainActivity.getMessageCardText(context, bitsData.message)
-        )
+
+        if (bitsData.message.message.isNotBlank()) {
+            views.setTextViewText(
+                R.id.widget_message_card_textview,
+                MainActivity.getMessageCardText(context, bitsData.message)
+            )
+        }
+
+        val statusCardVisibility = if (cells > 1) View.VISIBLE else View.GONE
+        val messageCardVisibility = if (cells > 2 && bitsData.message.message.isNotBlank()) View.VISIBLE else View.GONE
+
+        views.setViewVisibility(R.id.status_card_textview, statusCardVisibility)
+        views.setViewVisibility(R.id.message_card_textview, messageCardVisibility)
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views)
@@ -133,6 +145,8 @@ abstract class HeadquartersStatusWidgetBase : AppWidgetProvider() {
 
         views.setViewVisibility(R.id.widget_status_card_textview, if (h > 1) View.VISIBLE else View.GONE)
         views.setViewVisibility(R.id.widget_message_card_textview, if (h > 2) View.VISIBLE else View.GONE)
+
+        WidgetSharedPrefsHelper(context).setWidgetHeightCells(appWidgetId, h)
 
         appWidgetManager.updateAppWidget(appWidgetId, views)
     }

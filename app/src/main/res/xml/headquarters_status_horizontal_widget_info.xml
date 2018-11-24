@@ -5,5 +5,5 @@
                     android:updatePeriodMillis="1800000"
                     android:previewImage="@drawable/example_appwidget_preview"
                     android:initialLayout="@layout/headquarters_status_horizontal_widget"
-                    android:resizeMode="horizontal">
+                    android:resizeMode="horizontal|vertical">
 </appwidget-provider>

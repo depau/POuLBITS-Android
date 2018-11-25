@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity() {
                 ConstraintSet.TOP,
                 R.id.left_constraintlayout,
                 ConstraintSet.TOP,
-                statusBarHeight
+                if (!appSettings.fullscreen) statusBarHeight else 0
             )
             constraintSet.applyTo(left_constraintlayout)
         }

@@ -1,6 +1,7 @@
 package org.poul.bits.android.controllers.appsettings.impl
 
 import android.content.Context
+import android.preference.PreferenceManager
 import org.poul.bits.android.controllers.appsettings.IAppSettingsHelper
 import org.poul.bits.android.controllers.appsettings.enum.TemperatureUnit
 
@@ -8,10 +9,7 @@ const val APP_PREFS_FILE = "app"
 const val APP_PREFS_MODE = 0
 
 class AppSettingsHelper(val context: Context) : IAppSettingsHelper {
-    private val sharedPrefs = context.getSharedPreferences(
-        APP_PREFS_FILE,
-        APP_PREFS_MODE
-    )
+    private val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
 
     override var temperatureUnit: TemperatureUnit
         get() = TemperatureUnit.valueOf(

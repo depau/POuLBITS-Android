@@ -24,6 +24,7 @@ import eu.depau.commons.android.kotlin.ktexts.SimpleHtml.color
 import eu.depau.commons.android.kotlin.ktexts.SimpleHtml.esc
 import eu.depau.commons.android.kotlin.ktexts.SimpleHtml.italic
 import eu.depau.commons.android.kotlin.ktexts.getColorStateListCompat
+import eu.depau.commons.android.kotlin.ktexts.round
 import eu.depau.commons.android.kotlin.ktexts.snackbar
 import eu.depau.commons.android.kotlin.ktexts.statusBarHeight
 import kotlinx.android.synthetic.main.activity_main.*
@@ -206,7 +207,7 @@ class MainActivity : AppCompatActivity() {
                 null -> continue@sensorDataLoop
             }
 
-            val value = getSensorValueWithUserPreferredUnit(reading)
+            val value = getSensorValueWithUserPreferredUnit(reading).round(1)
             val unit = getUserPreferredUnitStringForSensorReading(reading)
 
             view.text = "$value$unit"
@@ -248,7 +249,10 @@ class MainActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
 
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.action_settings -> {
+                startActivity(Intent(this, SettingsActivity::class.java))
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

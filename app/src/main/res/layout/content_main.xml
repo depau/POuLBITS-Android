@@ -53,6 +53,53 @@
                     android:layout_marginTop="@dimen/mtrl_card_spacing"
                     android:layout_marginRight="@dimen/mtrl_card_spacing"
                     app:cardElevation="@dimen/card_elevation"
+                    android:id="@+id/sensors_card">
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/card_padding"
+                        android:textAlignment="center"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:orientation="horizontal">
+
+                    <com.github.aakira.compoundicontextview.CompoundIconTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:cit_drawableStart="@drawable/ic_thermometer"
+                            app:cit_drawableLeft="@drawable/ic_thermometer"
+                            app:cit_iconWidth="32dp"
+                            app:cit_iconHeight="32dp"
+                            android:visibility="gone"
+                            android:textSize="20sp"
+                            android:id="@+id/temperature_textview"/>
+
+
+                    <com.github.aakira.compoundicontextview.CompoundIconTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:cit_drawableStart="@drawable/ic_water_percent"
+                            app:cit_drawableLeft="@drawable/ic_water_percent"
+                            app:cit_iconWidth="32dp"
+                            app:cit_iconHeight="32dp"
+                            android:visibility="gone"
+                            android:textSize="20sp"
+                            android:id="@+id/humidity_textview"/>
+
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                    style="@style/Widget.MaterialComponents.CardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/mtrl_card_spacing"
+                    android:layout_marginTop="@dimen/mtrl_card_spacing"
+                    android:layout_marginRight="@dimen/mtrl_card_spacing"
+                    app:cardElevation="@dimen/card_elevation"
                     android:id="@+id/message_card">
 
                 <TextView

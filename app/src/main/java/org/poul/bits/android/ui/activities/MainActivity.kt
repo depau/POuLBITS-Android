@@ -1,5 +1,6 @@
 package org.poul.bits.android.ui.activities
 
+import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -30,11 +31,14 @@ import kotlinx.android.synthetic.main.content_main.*
 import org.poul.bits.android.R
 import org.poul.bits.android.broadcasts.BitsStatusErrorBroadcast
 import org.poul.bits.android.broadcasts.BitsStatusReceivedBroadcast
-import org.poul.bits.android.misc.getColorForStatus
-import org.poul.bits.android.misc.getTextForStatus
-import org.poul.bits.android.misc.playGialla
+import org.poul.bits.android.controllers.appsettings.IAppSettingsHelper
+import org.poul.bits.android.controllers.appsettings.enum.TemperatureUnit
+import org.poul.bits.android.controllers.appsettings.impl.AppSettingsHelper
+import org.poul.bits.android.misc.*
 import org.poul.bits.android.model.BitsData
 import org.poul.bits.android.model.BitsMessage
+import org.poul.bits.android.model.BitsSensorData
+import org.poul.bits.android.model.enum.BitsSensorType
 import org.poul.bits.android.model.enum.BitsStatus
 import org.poul.bits.android.services.BitsRetrieveStatusService
 
@@ -43,6 +47,8 @@ const val PRESENCE_IMG_URL = "https://bits.poul.org/bits_presence.png"
 class MainActivity : AppCompatActivity() {
     private val bitsDataIntentFilter = IntentFilter(BitsStatusReceivedBroadcast.ACTION)
     private val bitsErrorIntentFilter = IntentFilter(BitsStatusErrorBroadcast.ACTION)
+
+    private lateinit var appSettingsHelper: IAppSettingsHelper
 
     private val bitsDataReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -64,18 +70,28 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        appSettingsHelper = AppSettingsHelper(this)
+
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             val constraintSet = ConstraintSet()
             constraintSet.clone(left_constraintlayout)
-            constraintSet.connect(R.id.toolbar, ConstraintSet.TOP, R.id.left_constraintlayout, ConstraintSet.TOP, statusBarHeight)
+            constraintSet.connect(
+                R.id.toolbar,
+                ConstraintSet.TOP,
+                R.id.left_constraintlayout,
+                ConstraintSet.TOP,
+                statusBarHeight
+            )
             constraintSet.applyTo(left_constraintlayout)
         }
 
 
         status_card.visibility = View.GONE
+        sensors_card.visibility = View.GONE
         message_card.visibility = View.GONE
         presence_card.visibility = View.GONE
 
@@ -129,6 +145,7 @@ class MainActivity : AppCompatActivity() {
 
     fun updateGuiError() {
         message_card.visibility = View.GONE
+        sensors_card.visibility = View.GONE
         status_card.visibility = View.VISIBLE
 
         status_card_textview.text = Html.fromHtml(
@@ -145,6 +162,7 @@ class MainActivity : AppCompatActivity() {
 
         updateStatusCardWithStatusData(bitsData)
         updateMessageCardWithMessage(bitsData.message)
+        updateSensorCardWithTempData(bitsData.sensors)
     }
 
     fun updateStatusCardWithStatusData(bitsData: BitsData) {
@@ -154,15 +172,57 @@ class MainActivity : AppCompatActivity() {
         status_card_textview.text = text
     }
 
-    fun updateMessageCardWithMessage(bitsData: BitsMessage) {
-        if (bitsData.empty) {
+    private fun getSensorValueWithUserPreferredUnit(reading: BitsSensorData): Double = when (reading.type!!) {
+        BitsSensorType.TEMPERATURE ->
+            when (appSettingsHelper.temperatureUnit) {
+                TemperatureUnit.CELSIUS -> reading.value
+                TemperatureUnit.FAHRENHEIT -> celsiusToFahrenheit(reading.value)
+                TemperatureUnit.KELVIN -> celsiusToKelvin(reading.value)
+            }
+        BitsSensorType.HUMIDITY ->
+            reading.value
+    }
+
+    private fun getUserPreferredUnitStringForSensorReading(reading: BitsSensorData): String = when (reading.type!!) {
+        BitsSensorType.TEMPERATURE ->
+            when (appSettingsHelper.temperatureUnit) {
+                TemperatureUnit.CELSIUS -> "°C"
+                TemperatureUnit.FAHRENHEIT -> "°F"
+                TemperatureUnit.KELVIN -> "K"
+
+            }
+        BitsSensorType.HUMIDITY ->
+            "%"
+    }
+
+    @SuppressLint("SetTextI18n")
+    fun updateSensorCardWithTempData(sensorData: List<BitsSensorData>) {
+        sensors_card.visibility = if (sensorData.isEmpty()) View.GONE else View.VISIBLE
+
+        sensorDataLoop@ for (reading in sensorData) {
+            val view = when (reading.type) {
+                BitsSensorType.TEMPERATURE -> temperature_textview
+                BitsSensorType.HUMIDITY -> humidity_textview
+                null -> continue@sensorDataLoop
+            }
+
+            val value = getSensorValueWithUserPreferredUnit(reading)
+            val unit = getUserPreferredUnitStringForSensorReading(reading)
+
+            view.text = "$value$unit"
+            view.visibility = View.VISIBLE
+        }
+    }
+
+    fun updateMessageCardWithMessage(msgData: BitsMessage) {
+        if (msgData.empty) {
             message_card.visibility = View.GONE
             return
         } else {
             message_card.visibility = View.VISIBLE
         }
 
-        message_card_textview.text = getMessageCardText(this, bitsData)
+        message_card_textview.text = getMessageCardText(this, msgData)
     }
 
     override fun onResume() {

@@ -43,4 +43,5 @@ dependencies {
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.9.7'
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.github.aakira:compound-icon-textview:1.2.1'
 }

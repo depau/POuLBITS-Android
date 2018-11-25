@@ -3,7 +3,7 @@
                     android:minWidth="110dp"
                     android:minHeight="30dp"
                     android:updatePeriodMillis="1800000"
-                    android:previewImage="@drawable/example_appwidget_preview"
+                    android:previewImage="@drawable/headquarters_status_horizontal_widget_preview"
                     android:initialLayout="@layout/headquarters_status_horizontal_widget"
                     android:resizeMode="horizontal|vertical">
 </appwidget-provider>

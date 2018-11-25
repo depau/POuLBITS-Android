@@ -12,7 +12,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.RemoteViews
-import androidx.core.content.ContextCompat
+import androidx.appcompat.content.res.AppCompatResources
 import eu.depau.commons.android.kotlin.ktexts.PendingIntentGetForegroundServiceCompat
 import org.poul.bits.android.R
 import org.poul.bits.android.controllers.widgetstorage.impl.WidgetStorageHelper
@@ -64,9 +64,9 @@ abstract class HeadquartersStatusWidgetBase : AppWidgetProvider() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             remoteViews.setImageViewResource(layout, R.drawable.ic_refresh_white_24dp)
         } else {
-            val drawable = ContextCompat.getDrawable(context, R.drawable.ic_refresh_white_24dp)
+            val drawable = AppCompatResources.getDrawable(context, R.drawable.ic_refresh_white_24dp)!!
             val b = Bitmap.createBitmap(
-                drawable!!.intrinsicWidth,
+                drawable.intrinsicWidth,
                 drawable.intrinsicHeight,
                 Bitmap.Config.ARGB_8888
             )

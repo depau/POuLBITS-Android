@@ -8,6 +8,17 @@
                 android:entries="@array/settings_temperature_unit_titles"
                 android:entryValues="@array/settings_temperature_unit_values"
                 android:key="temp_unit"
+                android:defaultValue="CELSIUS"
         />
+
+        <SwitchPreference
+                android:title="Fullscreen"
+                android:summary="@string/settings_fullscreen_desc"
+                android:summaryOff="@string/settings_fullscreen_desc_off"
+                android:summaryOn="@string/settings_fullscreen_desc_on"
+                android:key="fullscreen"
+                android:defaultValue="false"
+            />
+
     </PreferenceCategory>
 </PreferenceScreen>

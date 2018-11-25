@@ -1,11 +1,13 @@
 package org.poul.bits.android.ui.activities
 
 import android.annotation.SuppressLint
+import android.annotation.TargetApi
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.text.Spanned
@@ -13,6 +15,7 @@ import android.text.format.DateUtils
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintSet
 import com.squareup.picasso.MemoryPolicy
@@ -49,7 +52,7 @@ class MainActivity : AppCompatActivity() {
     private val bitsDataIntentFilter = IntentFilter(BitsStatusReceivedBroadcast.ACTION)
     private val bitsErrorIntentFilter = IntentFilter(BitsStatusErrorBroadcast.ACTION)
 
-    private lateinit var appSettingsHelper: IAppSettingsHelper
+    private lateinit var appSettings: IAppSettingsHelper
 
     private val bitsDataReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -60,7 +63,7 @@ class MainActivity : AppCompatActivity() {
                     )
                     stopRefresh()
                 }
-                BitsStatusErrorBroadcast.ACTION -> {
+                BitsStatusErrorBroadcast.ACTION    -> {
                     updateGuiError()
                     extended_fab.snackbar(getString(R.string.check_network_connection))
                     stopRefresh()
@@ -72,7 +75,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        appSettingsHelper = AppSettingsHelper(this)
+        appSettings = AppSettingsHelper(this)
 
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
@@ -113,6 +116,38 @@ class MainActivity : AppCompatActivity() {
         startRefresh()
     }
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) {
+            if (appSettings.fullscreen)
+                hideSystemUI()
+            else
+                showSystemUI()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
+    private fun hideSystemUI() {
+        // Enables regular immersive mode.
+        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_IMMERSIVE
+                // Set the content to appear under the system bars so that the
+                // content doesn't resize when the system bars hide and show.
+                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                // Hide the nav bar and status bar
+                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_FULLSCREEN)
+    }
+
+    // Shows the system bars by removing all the flags
+    // except for the ones that make the content appear under the system bars.
+    private fun showSystemUI() {
+        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
+    }
 
     fun startRefresh() {
         swiperefreshlayout.isRefreshing = true
@@ -175,24 +210,24 @@ class MainActivity : AppCompatActivity() {
 
     private fun getSensorValueWithUserPreferredUnit(reading: BitsSensorData): Double = when (reading.type!!) {
         BitsSensorType.TEMPERATURE ->
-            when (appSettingsHelper.temperatureUnit) {
-                TemperatureUnit.CELSIUS -> reading.value
+            when (appSettings.temperatureUnit) {
+                TemperatureUnit.CELSIUS    -> reading.value
                 TemperatureUnit.FAHRENHEIT -> celsiusToFahrenheit(reading.value)
-                TemperatureUnit.KELVIN -> celsiusToKelvin(reading.value)
+                TemperatureUnit.KELVIN     -> celsiusToKelvin(reading.value)
             }
-        BitsSensorType.HUMIDITY ->
+        BitsSensorType.HUMIDITY    ->
             reading.value
     }
 
     private fun getUserPreferredUnitStringForSensorReading(reading: BitsSensorData): String = when (reading.type!!) {
         BitsSensorType.TEMPERATURE ->
-            when (appSettingsHelper.temperatureUnit) {
-                TemperatureUnit.CELSIUS -> "°C"
+            when (appSettings.temperatureUnit) {
+                TemperatureUnit.CELSIUS    -> "°C"
                 TemperatureUnit.FAHRENHEIT -> "°F"
-                TemperatureUnit.KELVIN -> "K"
+                TemperatureUnit.KELVIN     -> "K"
 
             }
-        BitsSensorType.HUMIDITY ->
+        BitsSensorType.HUMIDITY    ->
             "%"
     }
 
@@ -203,8 +238,8 @@ class MainActivity : AppCompatActivity() {
         sensorDataLoop@ for (reading in sensorData) {
             val view = when (reading.type) {
                 BitsSensorType.TEMPERATURE -> temperature_textview
-                BitsSensorType.HUMIDITY -> humidity_textview
-                null -> continue@sensorDataLoop
+                BitsSensorType.HUMIDITY    -> humidity_textview
+                null                       -> continue@sensorDataLoop
             }
 
             val value = getSensorValueWithUserPreferredUnit(reading).round(1)
@@ -253,7 +288,7 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, SettingsActivity::class.java))
                 true
             }
-            else -> super.onOptionsItemSelected(item)
+            else                 -> super.onOptionsItemSelected(item)
         }
     }
 
@@ -262,9 +297,9 @@ class MainActivity : AppCompatActivity() {
             val openedclosed = esc(
                 context.getString(
                     when (bitsData.status) {
-                        BitsStatus.OPEN -> R.string.opened_from
+                        BitsStatus.OPEN   -> R.string.opened_from
                         BitsStatus.CLOSED -> R.string.closed_from
-                        else -> R.string.headquarters_gialla
+                        else              -> R.string.headquarters_gialla
                     }
                 )
             )

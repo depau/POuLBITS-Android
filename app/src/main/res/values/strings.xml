@@ -117,6 +117,10 @@
     <string name="settings_appearance">Appearance</string>
     <string name="settings_temp_unit">Temperature unit</string>
     <string name="settings_temp_unit_desc">Use this unit to display temperatures</string>
+    <string name="settings_fullscreen_desc">Hide status bar while the app is open</string>
+    <string name="settings_fullscreen_desc_off">Status and navigation bar are always shown</string>
+    <string name="settings_fullscreen_desc_on">Status and navigation bar will be hidden</string>
+    <string name="pref_ringtone_silent">Silent</string>
 
     <string-array name="settings_temperature_unit_titles">
         <item>Celsius</item>

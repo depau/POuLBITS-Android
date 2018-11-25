@@ -3,7 +3,8 @@ package org.poul.bits.android.controllers.bitsclient.dto.v3.json
 import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonProperty
 import org.poul.bits.android.controllers.bitsclient.dto.v3.IBitsTemperatureDTO
-import org.poul.bits.android.model.BitsTemperatureData
+import org.poul.bits.android.model.BitsSensorData
+import org.poul.bits.android.model.enum.BitsSensorType
 import java.util.*
 
 data class BitsJsonTemperatureDataDTO(
@@ -17,12 +18,13 @@ data class BitsJsonTemperatureDataDTO(
 
 ) : IBitsTemperatureDTO {
 
-    override fun toBitsTemperature(): BitsTemperatureData {
-        return BitsTemperatureData(
+    override fun toBitsTemperature(): BitsSensorData {
+        return BitsSensorData(
             value,
             sensor,
             modifiedBy,
-            timestamp
+            timestamp,
+            BitsSensorType.fromInt(sensor.toInt())
         )
     }
 }

@@ -21,13 +21,13 @@ data class BitsJsonDTO(
             status = when (status.value) {
                 "open" -> BitsStatus.OPEN
                 "closed" -> BitsStatus.CLOSED
-                else -> throw IllegalArgumentException("Invalid status string: ${status!!.value}")
+                else -> throw IllegalArgumentException("Invalid status string: ${status.value}")
             },
             modifiedBy = status.modifiedBy,
             lastModified = status.timestamp,
-            temperature = tempint.toBitsTemperature(),
+            sensors = listOf(tempint.toBitsTemperature()),
             message = message.toBitsMessage(),
-            temperatureHistory = tempinthist.map { it.toBitsTemperature() }
+            sensorsHistory = tempinthist.map { it.toBitsTemperature() }
         )
     }
 }

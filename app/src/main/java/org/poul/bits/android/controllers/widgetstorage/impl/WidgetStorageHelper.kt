@@ -5,7 +5,7 @@ import com.google.gson.Gson
 import org.poul.bits.android.controllers.widgetstorage.IWidgetStorageHelper
 import org.poul.bits.android.model.BitsData
 import org.poul.bits.android.model.BitsMessage
-import org.poul.bits.android.model.BitsTemperatureData
+import org.poul.bits.android.model.BitsSensorData
 import org.poul.bits.android.model.enum.BitsStatus
 import java.util.*
 
@@ -23,7 +23,7 @@ class WidgetStorageHelper(val context: Context) : IWidgetStorageHelper {
         get() = BitsData(
             BitsStatus.UNKNOWN,
             "", Date(),
-            BitsTemperatureData(0.0, 0L, "", Date()),
+            listOf(BitsSensorData(0.0, 0L, "", Date(), null)),
             BitsMessage("App", "Could not retrieve status information", Date()),
             listOf()
         )

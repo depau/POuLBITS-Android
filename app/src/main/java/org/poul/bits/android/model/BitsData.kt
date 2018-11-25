@@ -10,27 +10,27 @@ data class BitsData(
     val status: BitsStatus,
     val modifiedBy: String,
     val lastModified: Date,
-    val temperature: BitsTemperatureData,
+    val sensors: List<BitsSensorData>,
     val message: BitsMessage,
-    val temperatureHistory: List<BitsTemperatureData>
+    val sensorsHistory: List<BitsSensorData>
 ) : KParcelable {
     @Suppress("UNCHECKED_CAST")
     constructor(parcel: Parcel) : this(
         status = parcel.readSerializable() as BitsStatus,
         modifiedBy = parcel.readString()!!,
         lastModified = parcel.readSerializable() as Date,
-        temperature = parcel.readParcelable<BitsTemperatureData>(BitsTemperatureData::class.java.classLoader)!!,
+        sensors = parcel.readParcelableArray(BitsSensorData::class.java.classLoader)!!.map { it as BitsSensorData },
         message = parcel.readParcelable<BitsMessage>(BitsMessage::class.java.classLoader)!!,
-        temperatureHistory = parcel.readParcelableArray(BitsTemperatureData::class.java.classLoader)!!.map { it as BitsTemperatureData }
+        sensorsHistory = parcel.readParcelableArray(BitsSensorData::class.java.classLoader)!!.map { it as BitsSensorData }
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeSerializable(status)
         parcel.writeString(modifiedBy)
         parcel.writeSerializable(lastModified)
-        parcel.writeParcelable(temperature, flags)
+        parcel.writeParcelableArray(sensors.toTypedArray(), flags)
         parcel.writeParcelable(message, flags)
-        parcel.writeParcelableArray(temperatureHistory.toTypedArray(), flags)
+        parcel.writeParcelableArray(sensorsHistory.toTypedArray(), flags)
     }
 
     companion object {

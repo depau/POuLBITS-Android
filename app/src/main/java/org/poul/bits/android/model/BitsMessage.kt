@@ -26,4 +26,7 @@ data class BitsMessage(
         @JvmField
         val CREATOR = parcelableCreator(::BitsMessage)
     }
+
+    val empty: Boolean
+        get() = message.trim().isBlank()
 }

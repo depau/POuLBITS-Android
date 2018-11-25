@@ -155,9 +155,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun updateMessageCardWithMessage(bitsData: BitsMessage) {
-        val messageEmpty = bitsData.message.trim().isEmpty()
-
-        if (messageEmpty) {
+        if (bitsData.empty) {
             message_card.visibility = View.GONE
             return
         } else {

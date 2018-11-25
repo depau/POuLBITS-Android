@@ -123,7 +123,7 @@ abstract class HeadquartersStatusWidgetBase : AppWidgetProvider() {
         }
 
         val statusCardVisibility = if (cells > 1) View.VISIBLE else View.GONE
-        val messageCardVisibility = if (cells > 2 && bitsData.message.message.isNotBlank()) View.VISIBLE else View.GONE
+        val messageCardVisibility = if (cells > 2 && !bitsData.message.empty) View.VISIBLE else View.GONE
 
         views.setViewVisibility(R.id.status_card_textview, statusCardVisibility)
         views.setViewVisibility(R.id.message_card_textview, messageCardVisibility)

@@ -15,7 +15,7 @@ import android.widget.RemoteViews
 import androidx.core.content.ContextCompat
 import eu.depau.commons.android.kotlin.ktexts.PendingIntentGetForegroundServiceCompat
 import org.poul.bits.android.R
-import org.poul.bits.android.misc.WidgetSharedPrefsHelper
+import org.poul.bits.android.controllers.widgetstorage.impl.WidgetStorageHelper
 import org.poul.bits.android.misc.getTextForStatus
 import org.poul.bits.android.model.BitsData
 import org.poul.bits.android.model.enum.BitsStatus
@@ -27,7 +27,7 @@ abstract class HeadquartersStatusWidgetBase : AppWidgetProvider() {
     abstract val layoutId: Int
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
-        val sharedPrefsHelper = WidgetSharedPrefsHelper(context)
+        val sharedPrefsHelper = WidgetStorageHelper(context)
 
         appWidgetIds.forEach { appWidgetId ->
             updateAppWidget(
@@ -40,7 +40,7 @@ abstract class HeadquartersStatusWidgetBase : AppWidgetProvider() {
         }
     }
 
-    private fun getUpdateButtonPendingIntent(context: Context, appWidgetIds: IntArray): PendingIntent {
+    private fun getUpdateButtonPendingIntent(context: Context): PendingIntent {
         val intent = BitsRetrieveStatusService.getIntent(context)
         return PendingIntentGetForegroundServiceCompat(context, 0, intent, 0)
     }
@@ -85,7 +85,7 @@ abstract class HeadquartersStatusWidgetBase : AppWidgetProvider() {
         bitsData: BitsData,
         loading: Boolean
     ) {
-        val sharedPrefsHelper = WidgetSharedPrefsHelper(context)
+        val sharedPrefsHelper = WidgetStorageHelper(context)
         val cells = sharedPrefsHelper.getWidgetHeightCells(appWidgetId)
 
         // Construct the RemoteViews object
@@ -103,7 +103,7 @@ abstract class HeadquartersStatusWidgetBase : AppWidgetProvider() {
             views.setViewVisibility(R.id.widget_fab_refresh_progressbar, View.VISIBLE)
         }
 
-        val pendingRefresh = getUpdateButtonPendingIntent(context, arrayOf(appWidgetId).toIntArray())
+        val pendingRefresh = getUpdateButtonPendingIntent(context)
         views.setOnClickPendingIntent(R.id.widget_fab_refresh, pendingRefresh)
 
         val pendingActivity = getMainActivityPendingIntent(context)
@@ -146,7 +146,8 @@ abstract class HeadquartersStatusWidgetBase : AppWidgetProvider() {
         views.setViewVisibility(R.id.widget_status_card_textview, if (h > 1) View.VISIBLE else View.GONE)
         views.setViewVisibility(R.id.widget_message_card_textview, if (h > 2) View.VISIBLE else View.GONE)
 
-        WidgetSharedPrefsHelper(context).setWidgetHeightCells(appWidgetId, h)
+        WidgetStorageHelper(context)
+            .setWidgetHeightCells(appWidgetId, h)
 
         appWidgetManager.updateAppWidget(appWidgetId, views)
     }

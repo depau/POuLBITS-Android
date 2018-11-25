@@ -6,7 +6,7 @@ import android.content.Intent
 import org.poul.bits.android.broadcasts.BitsStatusErrorBroadcast
 import org.poul.bits.android.broadcasts.BitsStatusReceivedBroadcast
 import org.poul.bits.android.broadcasts.BitsStatusRetrieveStartBroadcast
-import org.poul.bits.android.misc.WidgetSharedPrefsHelper
+import org.poul.bits.android.controllers.widgetstorage.impl.WidgetStorageHelper
 import org.poul.bits.android.model.BitsData
 import org.poul.bits.android.ui.widgets.HeadquartersStatusHorizontalWidget
 import org.poul.bits.android.ui.widgets.HeadquartersStatusWidgetBase
@@ -35,7 +35,7 @@ class WidgetUpdateBroadcastReceiver : BroadcastReceiver() {
     }
 
     private fun handleStatusRetrieveStartBroadcast(context: Context) {
-        WidgetSharedPrefsHelper(context).apply {
+        WidgetStorageHelper(context).apply {
             loading = true
         }
         requestWidgetUpdate(context)
@@ -45,7 +45,7 @@ class WidgetUpdateBroadcastReceiver : BroadcastReceiver() {
         val bitsData = intent.getParcelableExtra<BitsData>(
             BitsStatusReceivedBroadcast.BITS_DATA
         )
-        WidgetSharedPrefsHelper(context).apply {
+        WidgetStorageHelper(context).apply {
             this.loading = false
             this.bitsData = bitsData
         }
@@ -53,9 +53,9 @@ class WidgetUpdateBroadcastReceiver : BroadcastReceiver() {
     }
 
     private fun handleStatusErrorBroadcast(context: Context) {
-        WidgetSharedPrefsHelper(context).apply {
+        WidgetStorageHelper(context).apply {
             loading = false
-            bitsData = getErrorBitsData()
+            bitsData = bitsDataError
         }
     }
 }

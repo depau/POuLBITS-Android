@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+>
+    <PreferenceCategory android:title="@string/settings_appearance">
+        <ListPreference
+                android:title="@string/settings_temp_unit"
+                android:summary="@string/settings_temp_unit_desc"
+                android:entries="@array/settings_temperature_unit_titles"
+                android:entryValues="@array/settings_temperature_unit_values"
+                android:key="temp_unit"
+        />
+    </PreferenceCategory>
+</PreferenceScreen>

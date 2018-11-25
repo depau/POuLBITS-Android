@@ -33,12 +33,10 @@
                     android:name="android.appwidget.provider"
                     android:resource="@xml/headquarters_status_horizontal_widget_info"/>
         </receiver>
-
         <receiver
                 android:name=".receivers.WidgetUpdateBroadcastReceiver"
                 android:enabled="true"
                 android:exported="false">
-
             <intent-filter>
                 <action android:name="org.poul.bits.android.broadcasts.action.BITS_STATUS_RETRIEVE_START"/>
             </intent-filter>
@@ -54,6 +52,15 @@
                 android:name=".services.BitsRetrieveStatusService"
                 android:exported="false">
         </service>
+
+        <activity
+                android:name=".ui.activities.SettingsActivity"
+                android:label="@string/title_activity_settings"
+                android:parentActivityName=".ui.activities.MainActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value="org.poul.bits.android.ui.activities.MainActivity"/>
+        </activity>
     </application>
 
 </manifest>

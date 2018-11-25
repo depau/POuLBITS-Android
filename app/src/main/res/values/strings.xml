@@ -93,7 +93,8 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="updating_bits_status">Updating B.I.T.S. status</string>
-    <string name="channel_bits_retrieving_status_description">Displayed while the app is running in background to retrieve the
+    <string name="channel_bits_retrieving_status_description">Displayed while the app is running in background to
+        retrieve the
         headquarters status.
     </string>
     <string name="channel_bits_retrieving_status_name">B.I.T.S. status update service</string>
@@ -112,4 +113,19 @@
     <string name="check_network_connection">Check your network connection</string>
     <string name="refresh">Refresh</string>
     <string name="no_information">No information</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="settings_appearance">Appearance</string>
+    <string name="settings_temp_unit">Temperature unit</string>
+    <string name="settings_temp_unit_desc">Use this unit to display temperatures</string>
+
+    <string-array name="settings_temperature_unit_titles">
+        <item>Celsius</item>
+        <item>Fahrenheit</item>
+        <item>Kelvin</item>
+    </string-array>
+    <string-array name="settings_temperature_unit_values">
+        <item>CELSIUS</item>
+        <item>FAHRENHEIT</item>
+        <item>KELVIN</item>
+    </string-array>
 </resources>

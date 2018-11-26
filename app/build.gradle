@@ -15,12 +15,31 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
+
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    flavorDimensions "version"
+
+    productFlavors {
+        libre {
+        }
+
+        nonlibre {
+            applicationIdSuffix ".nonlibre"
+            versionNameSuffix "-nonlibre"
+        }
+
+        internal {
+            applicationIdSuffix ".internal"
+            versionNameSuffix "-internal"
+        }
+    }
+
     packagingOptions {
         exclude 'META-INF/license.txt'
         exclude 'META-INF/notice.txt'
@@ -48,4 +67,8 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.github.aakira:compound-icon-textview:1.2.1'
+
+    internalImplementation 'org.fusesource.mqtt-client:mqtt-client:1.12'
+
+    nonlibreImplementation 'com.google.firebase:firebase-messaging:17.3.4'
 }

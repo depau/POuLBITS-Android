@@ -118,6 +118,9 @@ class MQTTService : IntentService("MQTTService") {
         try {
             val statusMessage = gson.fromJson(String(message.payload), BitsMQTTSedeMessage::class.java)
 
+            // Ugly hack to wait for the HTTP server to get in sync
+            Thread.sleep(500)
+
             BitsStatusReceivedBroadcast.broadcast(
                 this, mqttMessageToBitsData(statusMessage)
             )

@@ -72,9 +72,13 @@
                             app:cit_drawableLeft="@drawable/ic_thermometer"
                             app:cit_iconWidth="32dp"
                             app:cit_iconHeight="32dp"
+                            android:layout_marginLeft="@dimen/text_margin"
+                            android:layout_marginRight="@dimen/text_margin"
+                            android:layout_marginEnd="@dimen/text_margin"
+                            android:layout_marginStart="@dimen/text_margin"
                             android:visibility="gone"
                             android:textSize="20sp"
-                            android:id="@+id/temperature_textview"/>
+                            android:id="@+id/temperature_textview" />
 
 
                     <com.github.aakira.compoundicontextview.CompoundIconTextView
@@ -84,6 +88,10 @@
                             app:cit_drawableLeft="@drawable/ic_water_percent"
                             app:cit_iconWidth="32dp"
                             app:cit_iconHeight="32dp"
+                            android:layout_marginLeft="@dimen/text_margin"
+                            android:layout_marginRight="@dimen/text_margin"
+                            android:layout_marginEnd="@dimen/text_margin"
+                            android:layout_marginStart="@dimen/text_margin"
                             android:visibility="gone"
                             android:textSize="20sp"
                             android:id="@+id/humidity_textview"/>

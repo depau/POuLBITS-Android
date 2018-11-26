@@ -3,6 +3,7 @@ package org.poul.bits.android.controllers.bitsclient.dto.v3.json
 import com.fasterxml.jackson.annotation.JsonProperty
 import org.poul.bits.android.controllers.bitsclient.dto.v3.IBitsDataDTO
 import org.poul.bits.android.model.BitsData
+import org.poul.bits.android.model.enum.BitsDataSource
 import org.poul.bits.android.model.enum.BitsStatus
 
 data class BitsJsonDTO(
@@ -27,7 +28,8 @@ data class BitsJsonDTO(
             lastModified = status.timestamp,
             sensors = listOf(tempint.toBitsTemperature()),
             message = message.toBitsMessage(),
-            sensorsHistory = tempinthist.map { it.toBitsTemperature() }
+            sensorsHistory = tempinthist.map { it.toBitsTemperature() },
+            source = BitsDataSource.JSON
         )
     }
 }

@@ -2,6 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
 >
     <PreferenceCategory android:title="@string/settings_appearance">
+
         <ListPreference
                 android:title="@string/settings_temp_unit"
                 android:summary="@string/settings_temp_unit_desc"
@@ -12,7 +13,7 @@
         />
 
         <SwitchPreference
-                android:title="Fullscreen"
+                android:title="@string/settings_fullscreen"
                 android:summary="@string/settings_fullscreen_desc"
                 android:summaryOff="@string/settings_fullscreen_desc_off"
                 android:summaryOn="@string/settings_fullscreen_desc_on"
@@ -23,6 +24,15 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="MQTT">
+        <SwitchPreference
+                android:title="@string/settings_enable_mqtt"
+                android:summary="@string/settings_enable_mqtt_desc"
+                android:summaryOff="@string/settings_enable_mqtt_desc_off"
+                android:summaryOn="@string/settings_enable_mqtt_desc_on"
+                android:key="enable_mqtt"
+                android:defaultValue="false"
+        />
+
         <EditTextPreference
                 android:title="MQTT server hostname"
                 android:summary="Hostname or IP address of MQTT server"

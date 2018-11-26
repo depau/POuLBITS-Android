@@ -35,6 +35,7 @@ import eu.depau.commons.android.kotlin.ktexts.statusBarHeight
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import org.poul.bits.android.R
+import org.poul.bits.android.addons.mqtt.MQTTHelperFactory
 import org.poul.bits.android.broadcasts.BitsStatusErrorBroadcast
 import org.poul.bits.android.broadcasts.BitsStatusReceivedBroadcast
 import org.poul.bits.android.controllers.appsettings.IAppSettingsHelper
@@ -44,6 +45,7 @@ import org.poul.bits.android.misc.*
 import org.poul.bits.android.model.BitsData
 import org.poul.bits.android.model.BitsMessage
 import org.poul.bits.android.model.BitsSensorData
+import org.poul.bits.android.model.enum.BitsDataSource
 import org.poul.bits.android.model.enum.BitsSensorType
 import org.poul.bits.android.model.enum.BitsStatus
 import org.poul.bits.android.services.BitsRetrieveStatusService
@@ -201,11 +203,19 @@ class MainActivity : AppCompatActivity() {
                 getColorForStatus(bitsData.status),
                 theme
             )
-            updateStatusCardWithStatusData(bitsData)
+
+            if (bitsData.source != BitsDataSource.MQTT)
+                updateStatusCardWithStatusData(bitsData)
         }
 
-        updateMessageCardWithMessage(bitsData.message)
-        updateSensorCardWithTempData(bitsData.sensors)
+        if (bitsData.source != BitsDataSource.MQTT)
+            updateMessageCardWithMessage(bitsData)
+
+        updateSensorCardWithTempData(bitsData)
+
+        // Refresh because MQTT data doesn't have a lot of fields
+        if (bitsData.source == BitsDataSource.MQTT)
+            startRefresh()
     }
 
     fun updateStatusCardWithStatusData(bitsData: BitsData) {
@@ -241,8 +251,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     @SuppressLint("SetTextI18n")
-    fun updateSensorCardWithTempData(sensorData: List<BitsSensorData>?) {
-        sensorData ?: return
+    fun updateSensorCardWithTempData(bitsData: BitsData) {
+        val sensorData = bitsData.sensors ?: return
 
         sensors_card.visibility = if (sensorData.isEmpty()) View.GONE else View.VISIBLE
 
@@ -261,8 +271,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun updateMessageCardWithMessage(msgData: BitsMessage?) {
-        msgData ?: return
+    fun updateMessageCardWithMessage(bitsData: BitsData) {
+        val msgData = bitsData.message ?: return
 
         if (msgData.empty) {
             message_card.visibility = View.GONE
@@ -274,15 +284,28 @@ class MainActivity : AppCompatActivity() {
         message_card_textview.text = getMessageCardText(this, msgData)
     }
 
+    fun optionallyStartStopMqttService() {
+        if (!appSettings.mqttEnabled)
+            return stopMqttService()
+
+        MQTTHelperFactory.getMqttHelper(appSettings).startService(this)
+    }
+
+    fun stopMqttService() {
+        MQTTHelperFactory.getMqttHelper(appSettings).stopService(this)
+    }
+
     override fun onResume() {
         super.onResume()
         registerReceiver(bitsDataReceiver, bitsDataIntentFilter)
         registerReceiver(bitsDataReceiver, bitsErrorIntentFilter)
+        optionallyStartStopMqttService()
     }
 
     override fun onPause() {
         super.onPause()
         unregisterReceiver(bitsDataReceiver)
+        stopMqttService()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

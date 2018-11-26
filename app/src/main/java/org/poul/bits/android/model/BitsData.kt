@@ -3,6 +3,7 @@ package org.poul.bits.android.model
 import android.os.Parcel
 import eu.depau.commons.android.kotlin.KParcelable
 import eu.depau.commons.android.kotlin.parcelableCreator
+import org.poul.bits.android.model.enum.BitsDataSource
 import org.poul.bits.android.model.enum.BitsStatus
 import java.util.*
 
@@ -12,16 +13,18 @@ data class BitsData(
     val lastModified: Date?,
     val sensors: List<BitsSensorData>?,
     val message: BitsMessage?,
-    val sensorsHistory: List<BitsSensorData>?
+    val sensorsHistory: List<BitsSensorData>?,
+    val source: BitsDataSource
 ) : KParcelable {
     @Suppress("UNCHECKED_CAST")
     constructor(parcel: Parcel) : this(
-        status = parcel.readSerializable() as BitsStatus,
-        modifiedBy = parcel.readString()!!,
-        lastModified = parcel.readSerializable() as Date,
-        sensors = parcel.readParcelableArray(BitsSensorData::class.java.classLoader)!!.map { it as BitsSensorData },
-        message = parcel.readParcelable<BitsMessage>(BitsMessage::class.java.classLoader)!!,
-        sensorsHistory = parcel.readParcelableArray(BitsSensorData::class.java.classLoader)!!.map { it as BitsSensorData }
+        status = parcel.readSerializable() as BitsStatus?,
+        modifiedBy = parcel.readString(),
+        lastModified = parcel.readSerializable() as Date?,
+        sensors = parcel.readParcelableArray(BitsSensorData::class.java.classLoader)?.map { it as BitsSensorData },
+        message = parcel.readParcelable<BitsMessage>(BitsMessage::class.java.classLoader),
+        sensorsHistory = parcel.readParcelableArray(BitsSensorData::class.java.classLoader)?.map { it as BitsSensorData },
+        source = parcel.readSerializable() as BitsDataSource
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -31,6 +34,7 @@ data class BitsData(
         parcel.writeParcelableArray(sensors?.toTypedArray(), flags)
         parcel.writeParcelable(message, flags)
         parcel.writeParcelableArray(sensorsHistory?.toTypedArray(), flags)
+        parcel.writeSerializable(source)
     }
 
     companion object {

@@ -55,6 +55,7 @@ dependencies {
     implementation 'androidx.collection:collection-ktx:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2'
+    implementation "androidx.recyclerview:recyclerview:1.0.0"
     implementation 'com.google.android.material:material:1.1.0-alpha01'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.vectordrawable:vectordrawable:1.0.1'
@@ -67,6 +68,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.github.aakira:compound-icon-textview:1.2.1'
+    implementation "com.mikepenz:aboutlibraries:6.2.0"
 
     internalImplementation 'org.fusesource.mqtt-client:mqtt-client:1.12'
 

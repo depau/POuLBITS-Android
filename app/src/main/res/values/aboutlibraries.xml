@@ -3,4 +3,69 @@
     <string name="aboutLibraries_description_showIcon">true</string>
     <string name="aboutLibraries_description_showVersion">true</string>
     <string name="aboutLibraries_description_text">POuL B.I.T.S. client for Android</string>
+
+
+    <!-- AndroidX Jetpack -->
+    <string name="define_AndroidX"/>
+    <string name="library_AndroidX_author">AOSP</string>
+    <string name="library_AndroidX_authorWebsite">https://developer.android.com</string>
+    <string name="library_AndroidX_libraryName">AndroidX Jetpack</string>
+    <string name="library_AndroidX_libraryDescription">AndroidX is a major improvement to the original Android Support Library and provides backwards-compatibility across Android releases</string>
+    <string name="library_AndroidX_libraryWebsite">https://developer.android.com/jetpack/androidx/</string>
+    <string name="library_AndroidX_libraryVersion">1.0.1</string>
+    <string name="library_AndroidX_isOpenSource">true</string>
+    <string name="library_AndroidX_repositoryLink">https://android.googlesource.com/platform/frameworks/support/+/androidx-master-dev/</string>
+    <string name="library_AndroidX_licenseId">apache_2_0</string>
+
+
+    <!-- Kotlin Standard Library -->
+    <string name="define_KotlinStdlib"/>
+    <string name="library_KotlinStdlib_author">JetBrains</string>
+    <string name="library_KotlinStdlib_authorWebsite">https://kotlinlang.org/</string>
+    <string name="library_KotlinStdlib_libraryName">Kotlin Standard Library</string>
+    <string name="library_KotlinStdlib_libraryDescription">The Kotlin Standard Library provides living essentials for everyday work with Kotlin</string>
+    <string name="library_KotlinStdlib_libraryWebsite">https://kotlinlang.org/api/latest/jvm/stdlib/index.html</string>
+    <string name="library_KotlinStdlib_libraryVersion">1.2.71</string>
+    <string name="library_KotlinStdlib_isOpenSource">true</string>
+    <string name="library_KotlinStdlib_repositoryLink">https://github.com/JetBrains/kotlin/tree/master/libraries/stdlib</string>
+    <string name="library_KotlinStdlib_licenseId">apache_2_0</string>
+
+
+    <!-- Material Components -->
+    <string name="define_Material"/>
+    <string name="library_Material_author">Google</string>
+    <string name="library_Material_authorWebsite">https://material.io/develop/</string>
+    <string name="library_Material_libraryName">Material Components</string>
+    <string name="library_Material_libraryDescription">Make beautiful products, faster. Material is a design system – backed by open-source code – that helps teams build digital experiences</string>
+    <string name="library_Material_libraryWebsite">https://material.io/develop/android/</string>
+    <string name="library_Material_libraryVersion">1.1.0-alpha01</string>
+    <string name="library_Material_isOpenSource">true</string>
+    <string name="library_Material_repositoryLink">https://github.com/material-components/material-components-android</string>
+    <string name="library_Material_licenseId">apache_2_0</string>
+
+
+    <!-- Spring RestTemplate -->
+    <string name="define_SpringAndroid"/>
+    <string name="library_SpringAndroid_author">Pivotal Software</string>
+    <string name="library_SpringAndroid_authorWebsite">https://spring.io/</string>
+    <string name="library_SpringAndroid_libraryName">Spring RestTemplate for Android</string>
+    <string name="library_SpringAndroid_libraryDescription">Spring for Android is an extension of the Spring Framework that aims to simplify the development of native Android applications.</string>
+    <string name="library_SpringAndroid_libraryWebsite">https://projects.spring.io/spring-android/</string>
+    <string name="library_SpringAndroid_libraryVersion">2.0.0.M4</string>
+    <string name="library_SpringAndroid_isOpenSource">true</string>
+    <string name="library_SpringAndroid_repositoryLink">https://github.com/spring-projects/spring-android</string>
+    <string name="library_SpringAndroid_licenseId">apache_2_0</string>
+
+
+    <!-- Compound Icon TextView -->
+    <string name="define_CompoundIconTextView"/>
+    <string name="library_CompoundIconTextView_author">Akira Aratani</string>
+    <string name="library_CompoundIconTextView_authorWebsite">https://aakira.app/</string>
+    <string name="library_CompoundIconTextView_libraryName">Compound Icon TextView</string>
+    <string name="library_CompoundIconTextView_libraryDescription">An Android library that is able to set a vector drawable at text view pre-Lollipop.</string>
+    <string name="library_CompoundIconTextView_libraryWebsite">https://github.com/AAkira/CompoundIconTextView/</string>
+    <string name="library_CompoundIconTextView_libraryVersion">1.2.1</string>
+    <string name="library_CompoundIconTextView_isOpenSource">true</string>
+    <string name="library_CompoundIconTextView_repositoryLink">https://github.com/AAkira/CompoundIconTextView</string>
+    <string name="library_CompoundIconTextView_licenseId">apache_2_0</string>
 </resources>

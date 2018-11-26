@@ -293,6 +293,7 @@ class MainActivity : AppCompatActivity() {
             R.id.action_about    -> {
                 LibsBuilder()
                     .withActivityStyle(Libs.ActivityStyle.DARK)
+                    .withFields(R.string::class.java.fields)
                     .start(this)
                 true
             }

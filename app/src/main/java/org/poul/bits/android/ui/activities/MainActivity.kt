@@ -99,7 +99,7 @@ class MainActivity : AppCompatActivity() {
         message_card.visibility = View.GONE
         presence_card.visibility = View.GONE
 
-        extended_fab.setOnClickListener { view ->
+        extended_fab.setOnClickListener {
             playGialla()
         }
 

@@ -51,7 +51,7 @@ abstract class HeadquartersStatusWidgetBase : AppWidgetProvider() {
     }
 
     private fun getBackgroundDrawable(bitsData: BitsData): Int {
-        return when (bitsData.status) {
+        return when (bitsData.status!!) {
             BitsStatus.OPEN -> R.drawable.widget_fab_open
             BitsStatus.CLOSED -> R.drawable.widget_fab_closed
             BitsStatus.UNKNOWN -> R.drawable.widget_fab_gialla
@@ -91,8 +91,14 @@ abstract class HeadquartersStatusWidgetBase : AppWidgetProvider() {
         // Construct the RemoteViews object
         val views = RemoteViews(context.packageName, layoutId)
 
-        val hqStatus = context.getTextForStatus(bitsData.status)
-        views.setTextViewText(R.id.widget_fab, hqStatus)
+        if (bitsData.status != null) {
+            val hqStatus = context.getTextForStatus(bitsData.status)
+            views.setTextViewText(R.id.widget_fab, hqStatus)
+
+            val bgDrawable = getBackgroundDrawable(bitsData)
+            views.setInt(R.id.widget_fab, "setBackgroundResource", bgDrawable)
+            views.setInt(R.id.widget_fab_refresh, "setBackgroundResource", bgDrawable)
+        }
 
         if (!loading) {
             drawRemoteRefreshButtonDrawable(context, views)
@@ -109,13 +115,9 @@ abstract class HeadquartersStatusWidgetBase : AppWidgetProvider() {
         val pendingActivity = getMainActivityPendingIntent(context)
         views.setOnClickPendingIntent(R.id.widget_fab, pendingActivity)
 
-        val bgDrawable = getBackgroundDrawable(bitsData)
-        views.setInt(R.id.widget_fab, "setBackgroundResource", bgDrawable)
-        views.setInt(R.id.widget_fab_refresh, "setBackgroundResource", bgDrawable)
-
         views.setTextViewText(R.id.widget_status_card_textview, MainActivity.getStatusCardText(context, bitsData))
 
-        if (bitsData.message.message.isNotBlank()) {
+        if (bitsData.message != null && bitsData.message.message.isNotBlank()) {
             views.setTextViewText(
                 R.id.widget_message_card_textview,
                 MainActivity.getMessageCardText(context, bitsData.message)
@@ -123,7 +125,7 @@ abstract class HeadquartersStatusWidgetBase : AppWidgetProvider() {
         }
 
         val statusCardVisibility = if (cells > 1) View.VISIBLE else View.GONE
-        val messageCardVisibility = if (cells > 2 && !bitsData.message.empty) View.VISIBLE else View.GONE
+        val messageCardVisibility = if (cells > 2 && bitsData.message?.empty == false) View.VISIBLE else View.GONE
 
         views.setViewVisibility(R.id.status_card_textview, statusCardVisibility)
         views.setViewVisibility(R.id.message_card_textview, messageCardVisibility)

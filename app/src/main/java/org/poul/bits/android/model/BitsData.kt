@@ -7,12 +7,12 @@ import org.poul.bits.android.model.enum.BitsStatus
 import java.util.*
 
 data class BitsData(
-    val status: BitsStatus,
-    val modifiedBy: String,
-    val lastModified: Date,
-    val sensors: List<BitsSensorData>,
-    val message: BitsMessage,
-    val sensorsHistory: List<BitsSensorData>
+    val status: BitsStatus?,
+    val modifiedBy: String?,
+    val lastModified: Date?,
+    val sensors: List<BitsSensorData>?,
+    val message: BitsMessage?,
+    val sensorsHistory: List<BitsSensorData>?
 ) : KParcelable {
     @Suppress("UNCHECKED_CAST")
     constructor(parcel: Parcel) : this(
@@ -28,9 +28,9 @@ data class BitsData(
         parcel.writeSerializable(status)
         parcel.writeString(modifiedBy)
         parcel.writeSerializable(lastModified)
-        parcel.writeParcelableArray(sensors.toTypedArray(), flags)
+        parcel.writeParcelableArray(sensors?.toTypedArray(), flags)
         parcel.writeParcelable(message, flags)
-        parcel.writeParcelableArray(sensorsHistory.toTypedArray(), flags)
+        parcel.writeParcelableArray(sensorsHistory?.toTypedArray(), flags)
     }
 
     companion object {

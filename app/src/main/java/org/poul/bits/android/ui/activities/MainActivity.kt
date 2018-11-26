@@ -195,10 +195,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun updateGuiWithStatusData(bitsData: BitsData) {
-        extended_fab.text = getTextForStatus(bitsData.status)
-        extended_fab.backgroundTintList = resources.getColorStateListCompat(getColorForStatus(bitsData.status), theme)
+        if (bitsData.status != null) {
+            extended_fab.text = getTextForStatus(bitsData.status)
+            extended_fab.backgroundTintList = resources.getColorStateListCompat(
+                getColorForStatus(bitsData.status),
+                theme
+            )
+            updateStatusCardWithStatusData(bitsData)
+        }
 
-        updateStatusCardWithStatusData(bitsData)
         updateMessageCardWithMessage(bitsData.message)
         updateSensorCardWithTempData(bitsData.sensors)
     }
@@ -206,8 +211,10 @@ class MainActivity : AppCompatActivity() {
     fun updateStatusCardWithStatusData(bitsData: BitsData) {
         status_card.visibility = View.VISIBLE
 
-        val text = getStatusCardText(this, bitsData)
-        status_card_textview.text = text
+        if (bitsData.lastModified != null) {
+            val text = getStatusCardText(this, bitsData)
+            status_card_textview.text = text
+        }
     }
 
     private fun getSensorValueWithUserPreferredUnit(reading: BitsSensorData): Double = when (reading.type!!) {
@@ -234,7 +241,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     @SuppressLint("SetTextI18n")
-    fun updateSensorCardWithTempData(sensorData: List<BitsSensorData>) {
+    fun updateSensorCardWithTempData(sensorData: List<BitsSensorData>?) {
+        sensorData ?: return
+
         sensors_card.visibility = if (sensorData.isEmpty()) View.GONE else View.VISIBLE
 
         sensorDataLoop@ for (reading in sensorData) {
@@ -252,7 +261,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun updateMessageCardWithMessage(msgData: BitsMessage) {
+    fun updateMessageCardWithMessage(msgData: BitsMessage?) {
+        msgData ?: return
+
         if (msgData.empty) {
             message_card.visibility = View.GONE
             return
@@ -302,7 +313,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        fun getStatusCardText(context: Context, bitsData: BitsData): Spanned {
+        fun getStatusCardText(context: Context, bitsData: BitsData): Spanned? {
+            bitsData.lastModified ?: return null
+            bitsData.modifiedBy ?: return null
+
             val openedclosed = esc(
                 context.getString(
                     when (bitsData.status) {

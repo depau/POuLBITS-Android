@@ -22,7 +22,7 @@ internal const val ACTION_RETRIEVE_STATUS = "org.poul.bits.android.services.acti
 
 private const val FOREGROUND_RETRIEVE_STATUS_ID = 4389
 
-private const val CHANNEL_BITS_RETRIEVE_STATUS = "org.poul.bits.android.notification.CHANNEL_BITS_RETRIEVING_STATUS"
+const val CHANNEL_BITS_RETRIEVE_STATUS = "org.poul.bits.android.notification.CHANNEL_BITS_RETRIEVING_STATUS"
 
 class BitsRetrieveStatusService : IntentService("BitsRetrieveStatusService") {
 

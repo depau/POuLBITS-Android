@@ -44,7 +44,7 @@
             <ImageView
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:srcCompat="@drawable/ic_poul_bits_logo_vert"
+                    app:srcCompat="@drawable/ic_poul_bits_logo"
                     android:id="@+id/imageView"
                     android:contentDescription="@string/poul_logo_img_desc"
                     android:scaleType="fitCenter"

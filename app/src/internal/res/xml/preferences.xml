@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+>
+    <PreferenceCategory android:title="@string/settings_appearance">
+        <ListPreference
+                android:title="@string/settings_temp_unit"
+                android:summary="@string/settings_temp_unit_desc"
+                android:entries="@array/settings_temperature_unit_titles"
+                android:entryValues="@array/settings_temperature_unit_values"
+                android:key="temp_unit"
+                android:defaultValue="CELSIUS"
+        />
+
+        <SwitchPreference
+                android:title="Fullscreen"
+                android:summary="@string/settings_fullscreen_desc"
+                android:summaryOff="@string/settings_fullscreen_desc_off"
+                android:summaryOn="@string/settings_fullscreen_desc_on"
+                android:key="fullscreen"
+                android:defaultValue="false"
+        />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="MQTT">
+        <EditTextPreference
+                android:title="MQTT server hostname"
+                android:summary="Hostname or IP address of MQTT server"
+                android:key="mqtt_hostname"
+                android:inputType="textUri"
+                android:defaultValue="192.168.0.4"
+        />
+
+        <EditTextPreference
+                android:title="MQTT server port"
+                android:summary="TCP port of MQTT server"
+                android:inputType="number"
+                android:key="mqtt_port"
+                android:defaultValue="1883"
+        />
+
+        <SwitchPreference
+            android:title="Use TLS"
+            android:summaryOn="Communication will be encrypted"
+            android:summaryOff="Communication will not be encrypted"
+            android:key="mqtt_tls"
+            android:defaultValue="false"/>
+
+        <EditTextPreference
+                android:title="Status topic"
+                android:summary="MQTT topic on which B.I.T.S. status is provided"
+                android:key="mqtt_status_topic"
+                android:inputType="textUri"
+                android:defaultValue="sede/status"
+        />
+
+        <EditTextPreference
+                android:title="Temperature topic"
+                android:summary="MQTT topic on which temperature readings are provided"
+                android:key="mqtt_temperature_topic"
+                android:inputType="textUri"
+                android:defaultValue="sede/sensors/si7020/temperature"
+        />
+
+
+        <EditTextPreference
+                android:title="Humidity topic"
+                android:summary="MQTT topic on which humidity readings are provided"
+                android:key="mqtt_humidity_topic"
+                android:inputType="textUri"
+                android:defaultValue="sede/sensors/si7020/humidity"
+        />
+
+    </PreferenceCategory>
+</PreferenceScreen>

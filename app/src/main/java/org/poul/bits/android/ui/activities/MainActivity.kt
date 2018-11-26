@@ -15,6 +15,7 @@ import android.text.format.DateUtils
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.FrameLayout
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintSet
@@ -95,6 +96,12 @@ class MainActivity : AppCompatActivity() {
                 if (!appSettings.fullscreen) statusBarHeight else 0
             )
             constraintSet.applyTo(left_constraintlayout)
+
+            (card_linearlayout.layoutParams as FrameLayout.LayoutParams).topMargin =
+                    when (appSettings.fullscreen) {
+                        true  -> 0
+                        false -> resources.getDimension(R.dimen.text_margin).toInt()
+                    }
         }
 
 

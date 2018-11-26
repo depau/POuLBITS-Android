@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Firebase Cloud Messaging -->
+    <string name="define_FCM"/>
+    <string name="library_FCM_author">Google</string>
+    <string name="library_FCM_authorWebsite">https://firebase.google.com/</string>
+    <string name="library_FCM_libraryName">Firebase Cloud Messaging</string>
+    <string name="library_FCM_libraryDescription">Firebase Cloud Messaging (FCM) is a cross-platform messaging solution that lets you reliably deliver messages at no cost.</string>
+    <string name="library_FCM_libraryWebsite">https://firebase.google.com/docs/cloud-messaging/android/client/</string>
+    <string name="library_FCM_libraryVersion">17.3.4</string>
+    <string name="library_FCM_isOpenSource">false</string>
+</resources>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mqtt_service_running">Il servizio MQTT è in esecuzione</string>
+    <string name="mqtt_notification_desc">Sto ricevendo aggiornamenti in tempo reale dal server MQTT locale</string>
+</resources>

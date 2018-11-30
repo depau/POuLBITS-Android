@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="aboutLibraries_description_showIcon">true</string>
-    <string name="aboutLibraries_description_showVersion">true</string>
+    <string name="aboutLibraries_description_showIcon" translatable="false">true</string>
+    <string name="aboutLibraries_description_showVersion" translatable="false">true</string>
     <string name="aboutLibraries_description_text">POuL B.I.T.S. client for Android</string>
 
 
     <!-- AndroidX Jetpack -->
-    <string name="define_AndroidX"/>
-    <string name="library_AndroidX_author">AOSP</string>
-    <string name="library_AndroidX_authorWebsite">https://developer.android.com</string>
-    <string name="library_AndroidX_libraryName">AndroidX Jetpack</string>
+    <string name="define_AndroidX" translatable="false"/>
+    <string name="library_AndroidX_author" translatable="false">AOSP</string>
+    <string name="library_AndroidX_authorWebsite" translatable="false">https://developer.android.com</string>
+    <string name="library_AndroidX_libraryName" translatable="false">AndroidX Jetpack</string>
     <string name="library_AndroidX_libraryDescription">AndroidX is a major improvement to the original Android Support Library and provides backwards-compatibility across Android releases</string>
     <string name="library_AndroidX_libraryWebsite">https://developer.android.com/jetpack/androidx/</string>
     <string name="library_AndroidX_libraryVersion">1.0.1</string>
     <string name="library_AndroidX_isOpenSource">true</string>
     <string name="library_AndroidX_repositoryLink">https://android.googlesource.com/platform/frameworks/support/+/androidx-master-dev/</string>
-    <string name="library_AndroidX_licenseId">apache_2_0</string>
+    <string name="library_AndroidX_licenseId" translatable="false">apache_2_0</string>
 
 
     <!-- Kotlin Standard Library -->

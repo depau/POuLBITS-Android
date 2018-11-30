@@ -30,5 +30,13 @@
                 android:inputType="textUri"
                 android:defaultValue="https://bits.poul.org/data"
         />
+
+        <EditTextPreference
+                android:title="@string/settings_http_presence_img_url"
+                android:summary="@string/settings_http_presence_img_url_desc"
+                android:key="http_presence_img_url"
+                android:inputType="textUri"
+                android:defaultValue="https://bits.poul.org/bits_presence.png"
+        />
     </PreferenceCategory>
 </PreferenceScreen>

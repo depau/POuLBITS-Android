@@ -51,8 +51,6 @@ import org.poul.bits.android.model.enum.BitsSensorType
 import org.poul.bits.android.model.enum.BitsStatus
 import org.poul.bits.android.services.BitsRetrieveStatusService
 
-const val PRESENCE_IMG_URL = "https://bits.poul.org/bits_presence.png"
-
 class MainActivity : AppCompatActivity() {
     private val bitsDataIntentFilter = IntentFilter(BitsStatusReceivedBroadcast.ACTION)
     private val bitsErrorIntentFilter = IntentFilter(BitsStatusErrorBroadcast.ACTION)
@@ -173,7 +171,7 @@ class MainActivity : AppCompatActivity() {
     fun loadPresenceImage() {
         presence_card.visibility = View.GONE
         Picasso.get()
-            .load(PRESENCE_IMG_URL)
+            .load(appSettings.presenceImageUrl)
             .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
             .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
             .into(presence_card_imageview, object : com.squareup.picasso.Callback {

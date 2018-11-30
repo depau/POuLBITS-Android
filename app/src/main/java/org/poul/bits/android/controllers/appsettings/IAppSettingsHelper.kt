@@ -6,6 +6,8 @@ interface IAppSettingsHelper {
     var temperatureUnit: TemperatureUnit
     var fullscreen: Boolean
 
+    var jsonStatusUrl: String
+
     var mqttEnabled: Boolean
     var mqttHostname: String
     var mqttPort: Int

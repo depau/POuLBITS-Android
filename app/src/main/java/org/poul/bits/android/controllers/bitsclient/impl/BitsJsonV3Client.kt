@@ -16,8 +16,7 @@ class BitsJsonV3Client : IBitsClient {
         )
     }
 
-    override fun downloadData(): BitsData {
-        val url = "https://bits.poul.org/data"
+    override fun downloadData(url: String): BitsData {
         return restTemplate.getForObject(url, BitsJsonDTO::class.java).toBitsData()
     }
 }

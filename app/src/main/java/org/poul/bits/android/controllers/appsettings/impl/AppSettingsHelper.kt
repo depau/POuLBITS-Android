@@ -24,7 +24,7 @@ class AppSettingsHelper(val context: Context) : IAppSettingsHelper {
 
     override var mqttEnabled: Boolean
         get() = sharedPrefs.getBoolean("enable_mqtt", false)
-        set(value) = sharedPrefs.edit{ putBoolean("enable_mqtt", value) }
+        set(value) = sharedPrefs.edit { putBoolean("enable_mqtt", value) }
 
     override var mqttHostname: String
         get() = sharedPrefs.getString("mqtt_hostname", "192.168.0.4")!!
@@ -49,4 +49,8 @@ class AppSettingsHelper(val context: Context) : IAppSettingsHelper {
     override var mqttHumTopic: String
         get() = sharedPrefs.getString("mqtt_humidity_topic", "sede/sensors/si7020/humidity")!!
         set(value) = sharedPrefs.edit { putString("mqtt_humidity_topic", value) }
+
+    override var jsonStatusUrl: String
+        get() = sharedPrefs.getString("http_json_status_url", "https://bits.poul.org/data")!!
+        set(value) = sharedPrefs.edit { putString("http_json_status_url", value) }
 }

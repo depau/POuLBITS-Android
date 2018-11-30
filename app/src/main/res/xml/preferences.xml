@@ -18,7 +18,17 @@
                 android:summaryOn="@string/settings_fullscreen_desc_on"
                 android:key="fullscreen"
                 android:defaultValue="false"
-            />
+        />
 
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_http">
+        <EditTextPreference
+                android:title="@string/settings_http_url"
+                android:summary="@string/settings_http_url_desc"
+                android:key="http_json_status_url"
+                android:inputType="textUri"
+                android:defaultValue="https://bits.poul.org/data"
+        />
     </PreferenceCategory>
 </PreferenceScreen>

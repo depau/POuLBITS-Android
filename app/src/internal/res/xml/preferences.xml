@@ -23,6 +23,16 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/settings_http">
+        <EditTextPreference
+                android:title="@string/settings_http_url"
+                android:summary="@string/settings_http_url_desc"
+                android:key="http_json_status_url"
+                android:inputType="textUri"
+                android:defaultValue="https://bits.poul.org/data"
+        />
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="MQTT">
         <SwitchPreference
                 android:title="@string/settings_enable_mqtt"

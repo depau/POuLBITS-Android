@@ -15,6 +15,8 @@ import org.poul.bits.android.R
 import org.poul.bits.android.broadcasts.BitsStatusErrorBroadcast
 import org.poul.bits.android.broadcasts.BitsStatusReceivedBroadcast
 import org.poul.bits.android.broadcasts.BitsStatusRetrieveStartBroadcast
+import org.poul.bits.android.controllers.appsettings.IAppSettingsHelper
+import org.poul.bits.android.controllers.appsettings.impl.AppSettingsHelper
 import org.poul.bits.android.controllers.bitsclient.IBitsClient
 import org.poul.bits.android.controllers.bitsclient.impl.BitsJsonV3Client
 
@@ -30,8 +32,13 @@ class BitsRetrieveStatusService : IntentService("BitsRetrieveStatusService") {
 
     private val bitsClient: IBitsClient = BitsJsonV3Client()
 
+    private lateinit var appSettings: IAppSettingsHelper
+
     override fun onCreate() {
         super.onCreate()
+
+        appSettings = AppSettingsHelper(this)
+
         registerNotificationChannel(
             CHANNEL_BITS_RETRIEVE_STATUS,
             getString(R.string.channel_bits_retrieving_status_name),
@@ -62,7 +69,7 @@ class BitsRetrieveStatusService : IntentService("BitsRetrieveStatusService") {
             startForeground(FOREGROUND_RETRIEVE_STATUS_ID, getForegroundNotification())
 
             BitsStatusRetrieveStartBroadcast.broadcast(this)
-            val data = bitsClient.downloadData()
+            val data = bitsClient.downloadData(appSettings.jsonStatusUrl)
             BitsStatusReceivedBroadcast.broadcast(this, data)
 
             stopForeground(true)

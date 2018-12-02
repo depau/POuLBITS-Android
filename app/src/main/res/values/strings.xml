@@ -53,4 +53,7 @@
         <item>FAHRENHEIT</item>
         <item>KELVIN</item>
     </string-array>
+
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="configure">Configure</string>
 </resources>

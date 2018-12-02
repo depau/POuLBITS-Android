@@ -10,15 +10,11 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.os.Build
 import android.os.Bundle
-import android.view.View
 import android.widget.RemoteViews
 import androidx.appcompat.content.res.AppCompatResources
 import eu.depau.commons.android.kotlin.ktexts.PendingIntentGetForegroundServiceCompat
-import org.poul.bits.android.R
-import org.poul.bits.android.controllers.widgetstorage.impl.WidgetStorageHelper
-import org.poul.bits.android.misc.getTextForStatus
+import org.poul.bits.android.controllers.widgetstorage.impl.SharedPrefsWidgetStorageHelper
 import org.poul.bits.android.model.BitsData
-import org.poul.bits.android.model.enum.BitsStatus
 import org.poul.bits.android.services.BitsRetrieveStatusService
 import org.poul.bits.android.ui.activities.MainActivity
 
@@ -27,7 +23,7 @@ abstract class HeadquartersStatusWidgetBase : AppWidgetProvider() {
     abstract val layoutId: Int
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
-        val sharedPrefsHelper = WidgetStorageHelper(context)
+        val sharedPrefsHelper = SharedPrefsWidgetStorageHelper(context)
 
         appWidgetIds.forEach { appWidgetId ->
             updateAppWidget(
@@ -40,119 +36,24 @@ abstract class HeadquartersStatusWidgetBase : AppWidgetProvider() {
         }
     }
 
-    private fun getUpdateButtonPendingIntent(context: Context): PendingIntent {
-        val intent = BitsRetrieveStatusService.getIntent(context)
-        return PendingIntentGetForegroundServiceCompat(context, 0, intent, 0)
-    }
-
-    private fun getMainActivityPendingIntent(context: Context): PendingIntent {
-        val intent = Intent(context, MainActivity::class.java)
-        return PendingIntent.getActivity(context, 0, intent, 0)
-    }
-
-    private fun getBackgroundDrawable(bitsData: BitsData): Int {
-        return when (bitsData.status!!) {
-            BitsStatus.OPEN -> R.drawable.widget_fab_open
-            BitsStatus.CLOSED -> R.drawable.widget_fab_closed
-            BitsStatus.UNKNOWN -> R.drawable.widget_fab_gialla
-        }
-    }
-
-    private fun drawRemoteRefreshButtonDrawable(context: Context, remoteViews: RemoteViews) {
-        val layout = R.id.widget_fab_refresh_imageview
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            remoteViews.setImageViewResource(layout, R.drawable.ic_refresh_white_24dp)
-        } else {
-            val drawable = AppCompatResources.getDrawable(context, R.drawable.ic_refresh_white_24dp)!!
-            val b = Bitmap.createBitmap(
-                drawable.intrinsicWidth,
-                drawable.intrinsicHeight,
-                Bitmap.Config.ARGB_8888
-            )
-            val canvas = Canvas(b)
-            drawable.setBounds(0, 0, canvas.width, canvas.height)
-            drawable.draw(canvas)
-            remoteViews.setImageViewBitmap(layout, b)
-        }
-    }
-
-
-    fun updateAppWidget(
+    abstract fun updateAppWidget(
         context: Context,
         appWidgetManager: AppWidgetManager,
         appWidgetId: Int,
         bitsData: BitsData,
         loading: Boolean
-    ) {
-        val sharedPrefsHelper = WidgetStorageHelper(context)
-        val cells = sharedPrefsHelper.getWidgetHeightCells(appWidgetId)
+    )
 
-        // Construct the RemoteViews object
-        val views = RemoteViews(context.packageName, layoutId)
-
-        if (bitsData.status != null) {
-            val hqStatus = context.getTextForStatus(bitsData.status)
-            views.setTextViewText(R.id.widget_fab, hqStatus)
-
-            val bgDrawable = getBackgroundDrawable(bitsData)
-            views.setInt(R.id.widget_fab, "setBackgroundResource", bgDrawable)
-            views.setInt(R.id.widget_fab_refresh, "setBackgroundResource", bgDrawable)
-        }
-
-        if (!loading) {
-            drawRemoteRefreshButtonDrawable(context, views)
-            views.setViewVisibility(R.id.widget_fab_refresh_imageview, View.VISIBLE)
-            views.setViewVisibility(R.id.widget_fab_refresh_progressbar, View.GONE)
-        } else {
-            views.setViewVisibility(R.id.widget_fab_refresh_imageview, View.GONE)
-            views.setViewVisibility(R.id.widget_fab_refresh_progressbar, View.VISIBLE)
-        }
-
-        val pendingRefresh = getUpdateButtonPendingIntent(context)
-        views.setOnClickPendingIntent(R.id.widget_fab_refresh, pendingRefresh)
-
-        val pendingActivity = getMainActivityPendingIntent(context)
-        views.setOnClickPendingIntent(R.id.widget_fab, pendingActivity)
-
-        views.setTextViewText(R.id.widget_status_card_textview, MainActivity.getStatusCardText(context, bitsData))
-
-        if (bitsData.message != null && bitsData.message.message.isNotBlank()) {
-            views.setTextViewText(
-                R.id.widget_message_card_textview,
-                MainActivity.getMessageCardText(context, bitsData.message)
-            )
-        }
-
-        val statusCardVisibility = if (cells > 1) View.VISIBLE else View.GONE
-        val messageCardVisibility = if (cells > 2 && bitsData.message?.empty == false) View.VISIBLE else View.GONE
-
-        views.setViewVisibility(R.id.status_card_textview, statusCardVisibility)
-        views.setViewVisibility(R.id.message_card_textview, messageCardVisibility)
-
-        // Instruct the widget manager to update the widget
-        appWidgetManager.updateAppWidget(appWidgetId, views)
+    internal fun getUpdateButtonPendingIntent(context: Context): PendingIntent {
+        val intent = BitsRetrieveStatusService.getIntent(context)
+        return PendingIntentGetForegroundServiceCompat(context, 0, intent, 0)
     }
 
-    override fun onAppWidgetOptionsChanged(
-        context: Context,
-        appWidgetManager: AppWidgetManager,
-        appWidgetId: Int,
-        newOptions: Bundle
-    ) {
-        super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions)
-
-        val views = RemoteViews(context.packageName, layoutId)
-        val (w, h) = getCellsForOptionsBundle(newOptions)
-
-        views.setViewVisibility(R.id.widget_status_card_textview, if (h > 1) View.VISIBLE else View.GONE)
-        views.setViewVisibility(R.id.widget_message_card_textview, if (h > 2) View.VISIBLE else View.GONE)
-
-        WidgetStorageHelper(context)
-            .setWidgetHeightCells(appWidgetId, h)
-
-        appWidgetManager.updateAppWidget(appWidgetId, views)
+    internal fun getMainActivityPendingIntent(context: Context): PendingIntent {
+        val intent = Intent(context, MainActivity::class.java)
+        return PendingIntent.getActivity(context, 0, intent, 0)
     }
+
 
     companion object {
         fun getCellsNumber(size: Int): Int = (size + 30) / 70
@@ -175,6 +76,23 @@ abstract class HeadquartersStatusWidgetBase : AppWidgetProvider() {
 
         fun <T> getAppWidgetIds(context: Context, clazz: Class<T>): IntArray where T : AppWidgetProvider =
             AppWidgetManager.getInstance(context).getAppWidgetIds(ComponentName(context, clazz))
+
+        fun drawRemoteDrawable(context: Context, remoteViews: RemoteViews, drawableId: Int, layout: Int) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                remoteViews.setImageViewResource(layout, drawableId)
+            } else {
+                val drawable = AppCompatResources.getDrawable(context, drawableId)!!
+                val b = Bitmap.createBitmap(
+                    drawable.intrinsicWidth,
+                    drawable.intrinsicHeight,
+                    Bitmap.Config.ARGB_8888
+                )
+                val canvas = Canvas(b)
+                drawable.setBounds(0, 0, canvas.width, canvas.height)
+                drawable.draw(canvas)
+                remoteViews.setImageViewBitmap(layout, b)
+            }
+        }
     }
 }
 

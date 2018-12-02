@@ -13,7 +13,7 @@ import java.util.*
 const val WIDGET_PREFS_FILE = "hq_widget"
 const val WIDGET_PREFS_MODE = 0
 
-class WidgetStorageHelper(val context: Context) : IWidgetStorageHelper {
+class SharedPrefsWidgetStorageHelper(val context: Context) : IWidgetStorageHelper {
     private val sharedPrefs = context.getSharedPreferences(
         WIDGET_PREFS_FILE,
         WIDGET_PREFS_MODE

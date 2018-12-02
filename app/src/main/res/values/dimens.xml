@@ -14,11 +14,14 @@
     <dimen name="widget_fab_margin">12dp</dimen>
     <dimen name="card_layout_padding_top">12dp</dimen>
     <dimen name="widget_progressbar_margin">2dp</dimen>
+    <dimen name="widget_icon_progressbar_margin">0dp</dimen>
 
     <dimen name="widget_fab_offset">20dp</dimen>
 
     <dimen name="card_padding">16dp</dimen>
     <dimen name="card_elevation">5dp</dimen>
+
+    <dimen name="icon_widget_size">48dp</dimen>
 
     <!--
 Refer to App Widget Documentation for margin information

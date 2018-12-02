@@ -1,0 +1,5 @@
+Client for Politecnico Open unix Labs B.I.T.S. status system.
+
+B.I.T.S. shows whether the headquarters are open and there's someone.
+
+If the icon is green, come hack with us :)

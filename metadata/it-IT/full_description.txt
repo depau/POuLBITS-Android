@@ -1,0 +1,5 @@
+Client per il sistema di controllo apertura sede B.I.T.S. del Politecnico Open unix Labs.
+
+B.I.T.S. mostra se la sede del POuL è aperta e c'è qualcuno.
+
+Se il bottone è verde, vieni con noi a hackerare ;)

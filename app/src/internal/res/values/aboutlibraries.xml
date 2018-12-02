@@ -2,13 +2,12 @@
 <resources>
     <!-- MQTT Client -->
     <string name="define_MQTTClient"/>
-    <string name="library_MQTTClient_author">FuseSource</string>
-    <string name="library_MQTTClient_authorWebsite">https://github.com/fusesource/</string>
-    <string name="library_MQTTClient_libraryName">MQTT Client</string>
-    <string name="library_MQTTClient_libraryDescription">MQTT is a machine-to-machine (M2M)/"Internet of Things" connectivity protocol. It was designed as an extremely lightweight publish/subscribe messaging transport.</string>
-    <string name="library_MQTTClient_libraryWebsite">https://github.com/fusesource/mqtt-client</string>
-    <string name="library_MQTTClient_libraryVersion">1.12</string>
+    <string name="library_MQTTClient_author">Eclipse</string>
+    <string name="library_MQTTClient_authorWebsite">https://www.eclipse.org</string>
+    <string name="library_MQTTClient_libraryName">Eclipse Paho Java Client</string>
+    <string name="library_MQTTClient_libraryDescription">MQTT client library written in Java for developing applications that run on the JVM or other Java compatible platforms such as Android.</string>
+    <string name="library_MQTTClient_libraryWebsite">https://www.eclipse.org/paho/clients/java/</string>
+    <string name="library_MQTTClient_libraryVersion">1.2.0</string>
     <string name="library_MQTTClient_isOpenSource">true</string>
-    <string name="library_MQTTClient_repositoryLink">https://github.com/fusesource/mqtt-client</string>
-    <string name="library_MQTTClient_licenseId">apache_2_0</string>
+    <string name="library_MQTTClient_repositoryLink">https://github.com/eclipse/paho.mqtt.java</string>
 </resources>

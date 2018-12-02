@@ -19,8 +19,6 @@ import android.widget.FrameLayout
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintSet
-import com.mikepenz.aboutlibraries.Libs
-import com.mikepenz.aboutlibraries.LibsBuilder
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
@@ -35,6 +33,7 @@ import eu.depau.commons.android.kotlin.ktexts.snackbar
 import eu.depau.commons.android.kotlin.ktexts.statusBarHeight
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
+import me.jfenn.attribouter.Attribouter
 import org.poul.bits.android.R
 import org.poul.bits.android.addons.mqtt.MQTTHelperFactory
 import org.poul.bits.android.broadcasts.BitsStatusErrorBroadcast
@@ -330,10 +329,9 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.action_about    -> {
-                LibsBuilder()
-                    .withActivityStyle(Libs.ActivityStyle.DARK)
-                    .withFields(R.string::class.java.fields)
-                    .start(this)
+                Attribouter
+                    .from(this)
+                    .show()
                 true
             }
             else                 -> super.onOptionsItemSelected(item)

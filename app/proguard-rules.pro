@@ -31,6 +31,7 @@
 -dontwarn com.squareup.okhttp.**
 -keep class com.squareup.okhttp3.** { *; }
 -dontwarn okio.
+-dontwarn okio.**
 -dontwarn okhttp3.**
 
 -keep class * implements android.os.Parcelable {

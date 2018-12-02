@@ -69,4 +69,10 @@
     <style name="AppTheme.WhiteAccent">
         <item name="colorAccent">@color/white</item>
     </style>
+
+    <style name="AttribouterTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="personDialogTheme">@style/PersonDialogTheme</item>
+    </style>
+
+    <style name="PersonDialogTheme" parent="ThemeOverlay.AppCompat.Dialog"/>
 </resources>

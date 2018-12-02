@@ -68,4 +68,41 @@
     <string name="library_CompoundIconTextView_isOpenSource">true</string>
     <string name="library_CompoundIconTextView_repositoryLink">https://github.com/AAkira/CompoundIconTextView</string>
     <string name="library_CompoundIconTextView_licenseId">apache_2_0</string>
+
+    <!-- Jackson databinding -->
+    <string name="define_JacksonDatabind"/>
+    <string name="library_JacksonDatabind_author">FasterXML</string>
+    <string name="library_JacksonDatabind_authorWebsite">https://github.com/FasterXML/</string>
+    <string name="library_JacksonDatabind_libraryName">Jackson JSON Data-Binding</string>
+    <string name="library_JacksonDatabind_libraryDescription">General-purpose data-binding functionality and tree-model for Jackson Data Processor.</string>
+    <string name="library_JacksonDatabind_libraryWebsite">https://github.com/FasterXML/jackson-databind/</string>
+    <string name="library_JacksonDatabind_libraryVersion">2.9.7</string>
+    <string name="library_JacksonDatabind_isOpenSource">true</string>
+    <string name="library_JacksonDatabind_repositoryLink">https://github.com/FasterXML/jackson-databind</string>
+    <string name="library_JacksonDatabind_licenseId">apache_2_0</string>
+
+    <!-- Jackson Kotlin module -->
+    <string name="define_JacksonKotlinModule"/>
+    <string name="library_JacksonKotlinModule_author">FasterXML</string>
+    <string name="library_JacksonKotlinModule_authorWebsite">https://github.com/FasterXML/</string>
+    <string name="library_JacksonKotlinModule_libraryName">Jackson Kotlin Module</string>
+    <string name="library_JacksonKotlinModule_libraryDescription">Module that adds support for serialization/deserialization of Kotlin (http://kotlinlang.org) classes and data classes.</string>
+    <string name="library_JacksonKotlinModule_libraryWebsite">https://github.com/FasterXML/jackson-module-kotlin</string>
+    <string name="library_JacksonKotlinModule_libraryVersion">2.9.7</string>
+    <string name="library_JacksonKotlinModule_isOpenSource">true</string>
+    <string name="library_JacksonKotlinModule_repositoryLink">https://github.com/FasterXML/jackson-module-kotlin</string>
+    <string name="library_JacksonKotlinModule_licenseId">apache_2_0</string>
+
+
+    <!-- Picasso -->
+    <string name="define_Picasso"/>
+    <string name="library_Picasso_author">Square</string>
+    <string name="library_Picasso_authorWebsite">https://square.github.io/</string>
+    <string name="library_Picasso_libraryName">Picasso</string>
+    <string name="library_Picasso_libraryDescription">A powerful image downloading and caching library for Android</string>
+    <string name="library_Picasso_libraryWebsite">http://square.github.io/picasso/</string>
+    <string name="library_Picasso_libraryVersion">2.71828</string>
+    <string name="library_Picasso_isOpenSource">true</string>
+    <string name="library_Picasso_repositoryLink">https://github.com/square/picasso</string>
+    <string name="library_Picasso_licenseId">apache_2_0</string>
 </resources>

@@ -7,7 +7,7 @@ import android.util.Log
 import com.google.gson.Gson
 import eu.depau.commons.android.kotlin.ktexts.buildCompat
 import eu.depau.commons.android.kotlin.ktexts.getNotificationBuilder
-import org.fusesource.mqtt.client.*
+import org.eclipse.paho.client.mqttv3.*
 import org.poul.bits.android.R
 import org.poul.bits.android.addons.mqtt.Constants.ACTION_START
 import org.poul.bits.android.broadcasts.BitsStatusReceivedBroadcast
@@ -20,12 +20,11 @@ import org.poul.bits.android.model.enum.BitsSensorType
 import org.poul.bits.android.model.enum.BitsStatus
 import org.poul.bits.android.services.dto.BitsMQTTSedeMessage
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 private const val FOREGROUND_MQTT_SERVICE_ID = 5919
 private const val LOG_TAG = "MQTTService"
 
-class MQTTService : IntentService("MQTTService") {
+class MQTTService : IntentService("MQTTService"), MqttCallback {
     private var shouldStop: Boolean = false
     private lateinit var appSettings: IAppSettingsHelper
     private val gson = Gson()
@@ -50,35 +49,28 @@ class MQTTService : IntentService("MQTTService") {
             .buildCompat()
     }
 
-    private fun getMQTT() = MQTT().apply {
-        if (appSettings.mqttUseTls)
-            setHost("tls://${appSettings.mqttHostname}:${appSettings.mqttPort}")
-        else
-            setHost(appSettings.mqttHostname, appSettings.mqttPort)
-
-        setClientId("bits_android_client")
-        isCleanSession = false
-    }
-
-    private fun subscribeTopics(connection: BlockingConnection): BlockingConnection {
-        val topics = arrayOf(
-            Topic(appSettings.mqttSedeTopic, QoS.AT_LEAST_ONCE),
-            Topic(appSettings.mqttTempTopic, QoS.AT_LEAST_ONCE),
-            Topic(appSettings.mqttHumTopic, QoS.AT_LEAST_ONCE)
-        )
-        return connection.apply { subscribe(topics) }
-    }
-
-    private fun handleMessage(connection: BlockingConnection) {
-        val message: Message = connection.receive(300, TimeUnit.MILLISECONDS) ?: return
-
-        Log.d(LOG_TAG, "Incoming MQTT message from ${message.topic}: '${String(message.payload)}'")
-
-        when (message.topic) {
-            appSettings.mqttSedeTopic -> handleStatusMessage(message)
-            appSettings.mqttTempTopic -> handleSensorMessage(message, BitsSensorType.TEMPERATURE)
-            appSettings.mqttHumTopic  -> handleSensorMessage(message, BitsSensorType.HUMIDITY)
+    private fun getMQTT(): MqttClient {
+        val broker = when (appSettings.mqttUseTls) {
+            true -> "tls://${appSettings.mqttHostname}:${appSettings.mqttPort}"
+            else -> "tcp://${appSettings.mqttHostname}:${appSettings.mqttPort}"
         }
+        val clientId = "bits_android_client"
+
+        return MqttClient(broker, clientId)
+    }
+
+    private fun MqttClient.subscribeTopics() {
+        val topics = arrayOf(
+            appSettings.mqttSedeTopic,
+            appSettings.mqttTempTopic,
+            appSettings.mqttHumTopic
+        )
+
+        val qos = arrayOf(
+            1, 1, 1
+        ).toIntArray()
+
+        this.subscribe(topics, qos)
     }
 
     private fun mqttMessageToBitsData(msg: BitsMQTTSedeMessage) = BitsData(
@@ -114,7 +106,7 @@ class MQTTService : IntentService("MQTTService") {
             BitsDataSource.MQTT
         )
 
-    private fun handleStatusMessage(message: Message) {
+    private fun handleStatusMessage(message: MqttMessage) {
         try {
             val statusMessage = gson.fromJson(String(message.payload), BitsMQTTSedeMessage::class.java)
 
@@ -130,7 +122,7 @@ class MQTTService : IntentService("MQTTService") {
         }
     }
 
-    private fun handleSensorMessage(message: Message, sensorType: BitsSensorType) {
+    private fun handleSensorMessage(message: MqttMessage, sensorType: BitsSensorType) {
         try {
             val value = String(message.payload).toDouble()
 
@@ -148,18 +140,42 @@ class MQTTService : IntentService("MQTTService") {
 
         Log.i(LOG_TAG, "MQTT service started")
 
-        val mqtt = getMQTT()
-        val connection = mqtt.blockingConnection()
-        connection.connect()
-        subscribeTopics(connection)
+        val mqtt = getMQTT().apply {
+            setCallback(this@MQTTService)
+            subscribeTopics()
+            connect(MqttConnectOptions().apply {
+                isCleanSession = false
+            })
+        }
 
         while (!shouldStop)
-            handleMessage(connection)
+            Thread.sleep(300)
 
-        connection.disconnect()
+        mqtt.disconnect()
         Log.i(LOG_TAG, "MQTT service stopped")
         stopForeground(true)
     }
+
+    override fun messageArrived(topic: String, message: MqttMessage) {
+        Log.d(LOG_TAG, "Incoming MQTT message from $topic: '${String(message.payload)}'")
+
+        when (topic) {
+            appSettings.mqttSedeTopic -> handleStatusMessage(message)
+            appSettings.mqttTempTopic -> handleSensorMessage(message, BitsSensorType.TEMPERATURE)
+            appSettings.mqttHumTopic  -> handleSensorMessage(message, BitsSensorType.HUMIDITY)
+        }
+    }
+
+    override fun connectionLost(cause: Throwable?) {
+        if (!shouldStop) {
+            Log.w(LOG_TAG, "MQTT connection lost, attempting reconnection in 1 second", cause)
+            Thread.sleep(1000)
+        }
+        if (!shouldStop)
+            handleActionStart()
+    }
+
+    override fun deliveryComplete(token: IMqttDeliveryToken?) {}
 
     override fun onDestroy() {
         shouldStop = true

@@ -77,7 +77,7 @@ dependencies {
     implementation 'com.github.aakira:compound-icon-textview:1.2.1'
     implementation "com.mikepenz:aboutlibraries:6.2.0"
 
-    internalImplementation 'org.fusesource.mqtt-client:mqtt-client:1.12'
+    internalImplementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.0'
 
     nonlibreImplementation 'com.google.firebase:firebase-messaging:17.3.4'
 }

@@ -8,6 +8,7 @@ import com.google.gson.Gson
 import eu.depau.commons.android.kotlin.ktexts.buildCompat
 import eu.depau.commons.android.kotlin.ktexts.getNotificationBuilder
 import org.eclipse.paho.client.mqttv3.*
+import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence
 import org.poul.bits.android.R
 import org.poul.bits.android.addons.mqtt.Constants.ACTION_START
 import org.poul.bits.android.broadcasts.BitsStatusReceivedBroadcast
@@ -56,7 +57,7 @@ class MQTTService : IntentService("MQTTService"), MqttCallback {
         }
         val clientId = "bits_android_client"
 
-        return MqttClient(broker, clientId)
+        return MqttClient(broker, clientId, MemoryPersistence())
     }
 
     private fun MqttClient.subscribeTopics() {
@@ -142,10 +143,10 @@ class MQTTService : IntentService("MQTTService"), MqttCallback {
 
         val mqtt = getMQTT().apply {
             setCallback(this@MQTTService)
-            subscribeTopics()
             connect(MqttConnectOptions().apply {
                 isCleanSession = false
             })
+            subscribeTopics()
         }
 
         while (!shouldStop)

@@ -31,4 +31,5 @@ http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
 
     <dimen name="refresher_offset">-15dp</dimen>
     <dimen name="refresher_offset_end">50dp</dimen>
+    <dimen name="fab_margin_land_bottom">24dp</dimen>
 </resources>

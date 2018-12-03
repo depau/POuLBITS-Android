@@ -22,15 +22,12 @@ import androidx.constraintlayout.widget.ConstraintSet
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
+import eu.depau.commons.android.kotlin.ktexts.*
 import eu.depau.commons.android.kotlin.ktexts.SimpleHtml.bold
 import eu.depau.commons.android.kotlin.ktexts.SimpleHtml.br
 import eu.depau.commons.android.kotlin.ktexts.SimpleHtml.color
 import eu.depau.commons.android.kotlin.ktexts.SimpleHtml.esc
 import eu.depau.commons.android.kotlin.ktexts.SimpleHtml.italic
-import eu.depau.commons.android.kotlin.ktexts.getColorStateListCompat
-import eu.depau.commons.android.kotlin.ktexts.round
-import eu.depau.commons.android.kotlin.ktexts.snackbar
-import eu.depau.commons.android.kotlin.ktexts.statusBarHeight
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import me.jfenn.attribouter.Attribouter
@@ -84,15 +81,25 @@ class MainActivity : AppCompatActivity() {
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             val constraintSet = ConstraintSet()
-            constraintSet.clone(left_constraintlayout)
-            constraintSet.connect(
-                R.id.toolbar,
-                ConstraintSet.TOP,
-                R.id.left_constraintlayout,
-                ConstraintSet.TOP,
-                if (!appSettings.fullscreen) statusBarHeight else 0
-            )
-            constraintSet.applyTo(left_constraintlayout)
+            constraintSet.apply {
+                clone(left_constraintlayout)
+                connect(
+                    R.id.toolbar,
+                    ConstraintSet.TOP,
+                    R.id.left_constraintlayout,
+                    ConstraintSet.TOP,
+                    if (!appSettings.fullscreen) statusBarHeight else 0
+                )
+                connect(
+                    R.id.extended_fab,
+                    ConstraintSet.BOTTOM,
+                    R.id.left_constraintlayout,
+                    ConstraintSet.BOTTOM,
+                    (if (!appSettings.fullscreen) navigationBarHeight else 0)
+                            + resources.getDimension(R.dimen.fab_margin_land_bottom).toInt()
+                )
+                applyTo(left_constraintlayout)
+            }
 
             (card_linearlayout.layoutParams as FrameLayout.LayoutParams).topMargin =
                     when (appSettings.fullscreen) {

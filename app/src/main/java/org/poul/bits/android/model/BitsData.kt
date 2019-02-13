@@ -1,8 +1,8 @@
 package org.poul.bits.android.model
 
 import android.os.Parcel
-import eu.depau.commons.android.kotlin.KParcelable
-import eu.depau.commons.android.kotlin.parcelableCreator
+import eu.depau.kotlet.android.parcelable.KotletParcelable
+import eu.depau.kotlet.android.parcelable.parcelableCreator
 import org.poul.bits.android.model.enum.BitsDataSource
 import org.poul.bits.android.model.enum.BitsStatus
 import java.util.*
@@ -15,7 +15,7 @@ data class BitsData(
     val message: BitsMessage?,
     val sensorsHistory: List<BitsSensorData>?,
     val source: BitsDataSource
-) : KParcelable {
+) : KotletParcelable {
     @Suppress("UNCHECKED_CAST")
     constructor(parcel: Parcel) : this(
         status = parcel.readSerializable() as BitsStatus?,

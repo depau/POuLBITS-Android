@@ -22,12 +22,16 @@ import androidx.constraintlayout.widget.ConstraintSet
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
-import eu.depau.commons.android.kotlin.ktexts.*
 import eu.depau.commons.android.kotlin.ktexts.SimpleHtml.bold
 import eu.depau.commons.android.kotlin.ktexts.SimpleHtml.br
 import eu.depau.commons.android.kotlin.ktexts.SimpleHtml.color
 import eu.depau.commons.android.kotlin.ktexts.SimpleHtml.esc
 import eu.depau.commons.android.kotlin.ktexts.SimpleHtml.italic
+import eu.depau.commons.android.kotlin.ktexts.round
+import eu.depau.kotlet.android.extensions.ui.activity.navigationBarHeight
+import eu.depau.kotlet.android.extensions.ui.activity.statusBarHeight
+import eu.depau.kotlet.android.extensions.ui.context.getColorStateListCompat
+import eu.depau.kotlet.android.extensions.ui.view.snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import me.jfenn.attribouter.Attribouter
@@ -102,10 +106,10 @@ class MainActivity : AppCompatActivity() {
             }
 
             (card_linearlayout.layoutParams as FrameLayout.LayoutParams).topMargin =
-                    when (appSettings.fullscreen) {
-                        true  -> 0
-                        false -> resources.getDimension(R.dimen.text_margin).toInt()
-                    }
+                when (appSettings.fullscreen) {
+                    true  -> 0
+                    false -> resources.getDimension(R.dimen.text_margin).toInt()
+                }
         }
 
 

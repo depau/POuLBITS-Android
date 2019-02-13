@@ -1,15 +1,15 @@
 package org.poul.bits.android.model
 
 import android.os.Parcel
-import eu.depau.commons.android.kotlin.KParcelable
-import eu.depau.commons.android.kotlin.parcelableCreator
+import eu.depau.kotlet.android.parcelable.KotletParcelable
+import eu.depau.kotlet.android.parcelable.parcelableCreator
 import java.util.*
 
 data class BitsMessage(
     val user: String,
     val message: String,
     val lastModified: Date
-) : KParcelable {
+) : KotletParcelable {
     constructor(parcel: Parcel) : this(
         user = parcel.readString()!!,
         message = parcel.readString()!!,

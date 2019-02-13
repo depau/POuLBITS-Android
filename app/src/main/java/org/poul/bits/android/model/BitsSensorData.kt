@@ -1,8 +1,8 @@
 package org.poul.bits.android.model
 
 import android.os.Parcel
-import eu.depau.commons.android.kotlin.KParcelable
-import eu.depau.commons.android.kotlin.parcelableCreator
+import eu.depau.kotlet.android.parcelable.KotletParcelable
+import eu.depau.kotlet.android.parcelable.parcelableCreator
 import org.poul.bits.android.model.enum.BitsSensorType
 import java.util.*
 
@@ -12,7 +12,7 @@ data class BitsSensorData(
     val modifiedBy: String,
     val lastModified: Date,
     val type: BitsSensorType?
-) : KParcelable {
+) : KotletParcelable {
     constructor(parcel: Parcel) : this(
         value = parcel.readDouble(),
         sensorId = parcel.readLong(),

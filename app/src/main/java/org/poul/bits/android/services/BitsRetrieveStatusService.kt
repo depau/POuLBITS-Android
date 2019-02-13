@@ -5,12 +5,12 @@ import android.app.Notification
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.util.Log
-import eu.depau.commons.android.kotlin.ktexts.buildCompat
-import eu.depau.commons.android.kotlin.ktexts.getNotificationBuilder
-import eu.depau.commons.android.kotlin.ktexts.registerNotificationChannel
-import eu.depau.commons.android.kotlin.ktexts.startForegroundServiceCompat
+import eu.depau.kotlet.android.extensions.notification.NotificationImportanceCompat
+import eu.depau.kotlet.android.extensions.notification.buildCompat
+import eu.depau.kotlet.android.extensions.notification.registerNotificationChannel
+import eu.depau.kotlet.android.extensions.ui.context.getNotificationBuilder
+import eu.depau.kotlet.android.extensions.ui.context.startForegroundServiceCompat
 import org.poul.bits.android.R
 import org.poul.bits.android.broadcasts.BitsStatusErrorBroadcast
 import org.poul.bits.android.broadcasts.BitsStatusReceivedBroadcast
@@ -19,6 +19,7 @@ import org.poul.bits.android.controllers.appsettings.IAppSettingsHelper
 import org.poul.bits.android.controllers.appsettings.impl.AppSettingsHelper
 import org.poul.bits.android.controllers.bitsclient.IBitsClient
 import org.poul.bits.android.controllers.bitsclient.impl.BitsJsonV3Client
+
 
 internal const val ACTION_RETRIEVE_STATUS = "org.poul.bits.android.services.action.ACTION_RETRIEVE_STATUS"
 
@@ -39,12 +40,13 @@ class BitsRetrieveStatusService : IntentService("BitsRetrieveStatusService") {
 
         appSettings = AppSettingsHelper(this)
 
-        registerNotificationChannel(
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        notificationManager.registerNotificationChannel(
             CHANNEL_BITS_RETRIEVE_STATUS,
             getString(R.string.channel_bits_retrieving_status_name),
             getString(R.string.channel_bits_retrieving_status_description),
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-                NotificationManager.IMPORTANCE_LOW else null
+            NotificationImportanceCompat.IMPORTANCE_LOW
         )
     }
 

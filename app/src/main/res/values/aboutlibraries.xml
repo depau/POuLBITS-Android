@@ -31,6 +31,18 @@
     <string name="library_KotlinStdlib_licenseId">apache_2_0</string>
 
 
+    <!-- Kotlet Android -->
+    <string name="define_KotletAndroid"/>
+    <string name="library_KotletAndroid_author">Davide Depau</string>
+    <string name="library_KotletAndroid_authorWebsite">https://depau.eu/</string>
+    <string name="library_KotletAndroid_libraryName">Kotlet Android</string>
+    <string name="library_KotletAndroid_libraryDescription">Kotlin commons to throw away boilerplate code</string>
+    <string name="library_KotletAndroid_libraryWebsite">https://github.com/Depau/kotlet-android</string>
+    <string name="library_KotletAndroid_libraryVersion">v0.2.4</string>
+    <string name="library_KotletAndroid_isOpenSource">true</string>
+    <string name="library_KotletAndroid_repositoryLink">https://github.com/Depau/kotlet-android</string>
+    <string name="library_KotletAndroid_licenseId">apache_2_0</string>
+
     <!-- Material Components -->
     <string name="define_Material"/>
     <string name="library_Material_author">Google</string>

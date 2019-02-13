@@ -2,7 +2,7 @@ package org.poul.bits.android.addons.mqtt.impl
 
 import android.content.Context
 import android.content.Intent
-import eu.depau.commons.android.kotlin.ktexts.startForegroundServiceCompat
+import eu.depau.kotlet.android.extensions.ui.context.startForegroundServiceCompat
 import org.poul.bits.android.addons.mqtt.Constants
 import org.poul.bits.android.addons.mqtt.IMQTTServiceHelper
 

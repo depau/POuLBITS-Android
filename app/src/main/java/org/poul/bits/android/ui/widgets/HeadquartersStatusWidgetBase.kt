@@ -12,7 +12,7 @@ import android.os.Build
 import android.os.Bundle
 import android.widget.RemoteViews
 import androidx.appcompat.content.res.AppCompatResources
-import eu.depau.commons.android.kotlin.ktexts.PendingIntentGetForegroundServiceCompat
+import eu.depau.kotlet.android.extensions.intent.pendingIntentGetForegroundServiceCompat
 import org.poul.bits.android.controllers.widgetstorage.impl.SharedPrefsWidgetStorageHelper
 import org.poul.bits.android.model.BitsData
 import org.poul.bits.android.services.BitsRetrieveStatusService
@@ -46,7 +46,7 @@ abstract class HeadquartersStatusWidgetBase : AppWidgetProvider() {
 
     internal fun getUpdateButtonPendingIntent(context: Context): PendingIntent {
         val intent = BitsRetrieveStatusService.getIntent(context)
-        return PendingIntentGetForegroundServiceCompat(context, 0, intent, 0)
+        return pendingIntentGetForegroundServiceCompat(context, 0, intent, 0)
     }
 
     internal fun getMainActivityPendingIntent(context: Context): PendingIntent {

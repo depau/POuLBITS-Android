@@ -5,8 +5,8 @@ import android.app.Notification
 import android.content.Intent
 import android.util.Log
 import com.google.gson.Gson
-import eu.depau.commons.android.kotlin.ktexts.buildCompat
-import eu.depau.commons.android.kotlin.ktexts.getNotificationBuilder
+import eu.depau.kotlet.android.extensions.notification.buildCompat
+import eu.depau.kotlet.android.extensions.ui.context.getNotificationBuilder
 import org.eclipse.paho.client.mqttv3.*
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence
 import org.poul.bits.android.R

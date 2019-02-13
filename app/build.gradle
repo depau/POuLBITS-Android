@@ -77,6 +77,8 @@ dependencies {
     implementation 'com.github.aakira:compound-icon-textview:1.2.1'
     implementation 'me.jfenn:Attribouter:0.1.5'
 
+    implementation 'com.github.Depau:kotlet-android:v0.2.4'
+
     internalImplementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.0'
 
     nonlibreImplementation 'com.google.firebase:firebase-messaging:17.3.4'

@@ -1,9 +1,10 @@
-package eu.depau.commons.android.kotlin.ktexts
+package org.poul.bits.android.misc
 
 import android.content.Context
 import android.text.Html
 import androidx.core.content.ContextCompat
 import eu.depau.kotlet.android.extensions.ui.context.accentColor
+import eu.depau.kotlet.extensions.builtins.toHexColor
 
 object SimpleHtml {
     val br = "<br>"
@@ -43,7 +44,8 @@ object SimpleHtml {
     }
 
     fun color(text: String, color: String) = font(text, color = color)
-    fun color(context: Context, text: String, colorId: Int) = font(text, color = ContextCompat.getColor(context, colorId).toHexColor())
+    fun color(context: Context, text: String, colorId: Int) =
+        font(text, color = ContextCompat.getColor(context, colorId).toHexColor())
     fun size(text: String, size: String) = font(text, size = size)
 
     fun Context.accent(text: String) = color(text, accentColor.toHexColor())

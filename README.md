@@ -2,6 +2,10 @@
 
 With home screen widget
 
+[<img src="https://f-droid.org/badge/get-it-on.png"
+     alt="Get it on F-Droid"
+     height="80">](https://f-droid.org/packages/org.poul.bits.android/)
+
 ## How to build
 
 - Import in Android Studio

@@ -81,6 +81,4 @@ dependencies {
     implementation 'com.github.Depau:kotlet-android:v0.2.4'
 
     internalImplementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.0'
-
-    nonlibreImplementation 'com.google.firebase:firebase-messaging:17.3.4'
 }

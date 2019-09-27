@@ -42,7 +42,9 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/card_padding"
                         android:textAlignment="center"
-                        android:id="@+id/status_card_textview"/>
+                        android:id="@+id/status_card_textview"
+                        android:gravity="center_horizontal"
+                        android:layout_gravity="center_horizontal" />
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -61,7 +63,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/card_padding"
                         android:textAlignment="center"
-                        android:gravity="center"
+                        android:gravity="center_horizontal"
                         android:layout_gravity="center"
                         android:orientation="horizontal">
 
@@ -116,7 +118,9 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/card_padding"
                         android:textAlignment="center"
-                        android:id="@+id/message_card_textview"/>
+                        android:id="@+id/message_card_textview"
+                        android:gravity="center_horizontal"
+                        android:layout_gravity="center_horizontal" />
 
             </com.google.android.material.card.MaterialCardView>
 

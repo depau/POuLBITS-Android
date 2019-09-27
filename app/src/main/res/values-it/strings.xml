@@ -37,7 +37,7 @@
     <string name="settings_enable_mqtt_desc_on">Registrato al server MQTT locale</string>
     <string name="settings_http">HTTP</string>
     <string name="settings_http_url">URL HTTP dati di stato</string>
-    <string name="settings_http_presence_img_url">URL HTTP immagine heatmap presenza</string>
+    <string name="settings_http_presence_img_url">URL HTTP immagine SVG heatmap presenza</string>
     <string name="add_widget">Aggiungi widget</string>
     <string name="app_description">Client Android per B.I.T.S. del Politecnico Open unix Labs</string>
 </resources>

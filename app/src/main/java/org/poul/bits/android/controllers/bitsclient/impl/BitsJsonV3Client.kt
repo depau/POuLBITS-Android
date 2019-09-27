@@ -15,8 +15,13 @@ class BitsJsonV3Client : IBitsClient {
             }
         )
     }
+    private val plainRestTemplate = RestTemplate()
 
     override fun downloadData(url: String): BitsData {
         return restTemplate.getForObject(url, BitsJsonDTO::class.java).toBitsData()
+    }
+
+    override fun downloadPresenceSVG(url: String): String {
+        return plainRestTemplate.getForObject(url, String::class.java)
     }
 }

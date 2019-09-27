@@ -72,7 +72,13 @@ class BitsRetrieveStatusService : IntentService("BitsRetrieveStatusService") {
 
             BitsStatusRetrieveStartBroadcast.broadcast(this)
             val data = bitsClient.downloadData(appSettings.jsonStatusUrl)
-            BitsStatusReceivedBroadcast.broadcast(this, data)
+            val svg: String? = try {
+                bitsClient.downloadPresenceSVG(appSettings.presenceVectorUri)
+            } catch (e: java.lang.Exception) {
+                Log.e(LOG_TAG, "Error downloading presence image", e)
+                null
+            }
+            BitsStatusReceivedBroadcast.broadcast(this, data, svg)
 
             stopForeground(true)
         } catch (e: Exception) {

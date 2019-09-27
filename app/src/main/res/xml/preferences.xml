@@ -34,9 +34,9 @@
         <EditTextPreference
                 android:title="@string/settings_http_presence_img_url"
                 android:summary="@string/settings_http_presence_img_url_desc"
-                android:key="http_presence_img_url"
+                android:key="http_presence_svg_uri"
                 android:inputType="textUri"
-                android:defaultValue="https://bits.poul.org/bits_presence.png"
+                android:defaultValue="https://bits.poul.org/presence.svg"
         />
     </PreferenceCategory>
 </PreferenceScreen>

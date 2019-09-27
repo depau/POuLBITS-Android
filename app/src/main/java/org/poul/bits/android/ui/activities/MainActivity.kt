@@ -19,9 +19,8 @@ import android.widget.FrameLayout
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintSet
-import com.squareup.picasso.MemoryPolicy
-import com.squareup.picasso.NetworkPolicy
-import com.squareup.picasso.Picasso
+import com.caverock.androidsvg.SVG
+import com.caverock.androidsvg.SimpleAssetResolver
 import eu.depau.kotlet.android.extensions.ui.activity.navigationBarHeight
 import eu.depau.kotlet.android.extensions.ui.activity.statusBarHeight
 import eu.depau.kotlet.android.extensions.ui.context.getColorStateListCompat
@@ -42,6 +41,7 @@ import org.poul.bits.android.misc.SimpleHtml.bold
 import org.poul.bits.android.misc.SimpleHtml.br
 import org.poul.bits.android.misc.SimpleHtml.color
 import org.poul.bits.android.misc.SimpleHtml.esc
+import org.poul.bits.android.misc.SimpleHtml.font
 import org.poul.bits.android.misc.SimpleHtml.italic
 import org.poul.bits.android.model.BitsData
 import org.poul.bits.android.model.BitsMessage
@@ -61,9 +61,11 @@ class MainActivity : AppCompatActivity() {
         override fun onReceive(context: Context, intent: Intent) {
             when (intent.action) {
                 BitsStatusReceivedBroadcast.ACTION -> {
-                    updateGuiWithStatusData(
-                        intent.getParcelableExtra(BitsStatusReceivedBroadcast.BITS_DATA)
-                    )
+                    updateGuiWithStatusData(intent.getParcelableExtra(BitsStatusReceivedBroadcast.BITS_DATA)!!)
+                    intent.getStringExtra(BitsStatusReceivedBroadcast.BITS_PRESENCE_SVG)?.let {
+                        loadPresenceImage(it)
+                        onPresenceImageLoad()
+                    } ?: onPresenceImageLoadError()
                     stopRefresh()
                 }
                 BitsStatusErrorBroadcast.ACTION    -> {
@@ -77,6 +79,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        SVG.registerExternalFileResolver(SimpleAssetResolver(assets))
 
         appSettings = AppSettingsHelper(this)
 
@@ -170,7 +174,7 @@ class MainActivity : AppCompatActivity() {
 
     fun startRefresh() {
         swiperefreshlayout.isRefreshing = true
-        loadPresenceImage()
+        presence_card.visibility = View.GONE
         BitsRetrieveStatusService.startActionRetrieveStatus(this)
     }
 
@@ -178,16 +182,9 @@ class MainActivity : AppCompatActivity() {
         swiperefreshlayout.isRefreshing = false
     }
 
-    fun loadPresenceImage() {
-        presence_card.visibility = View.GONE
-        Picasso.get()
-            .load(appSettings.presenceImageUrl)
-            .networkPolicy(NetworkPolicy.NO_CACHE, NetworkPolicy.NO_STORE)
-            .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
-            .into(presence_card_imageview, object : com.squareup.picasso.Callback {
-                override fun onSuccess() = onPresenceImageLoad()
-                override fun onError(e: Exception?) = onPresenceImageLoadError(e)
-            })
+    private fun loadPresenceImage(svgString: String) {
+        val svg = SVG.getFromString(svgString)
+        presence_card_imageview.setSVG(svg)
     }
 
     fun onPresenceImageLoad() {

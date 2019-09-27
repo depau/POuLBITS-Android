@@ -54,7 +54,7 @@ class AppSettingsHelper(val context: Context) : IAppSettingsHelper {
         get() = sharedPrefs.getString("http_json_status_url", "https://bits.poul.org/data")!!
         set(value) = sharedPrefs.edit { putString("http_json_status_url", value) }
 
-    override var presenceImageUrl: String
-        get() = sharedPrefs.getString("http_presence_img_url", "https://bits.poul.org/bits_presence.png")!!
-        set(value) = sharedPrefs.edit { putString("http_presence_img_url", value) }
+    override var presenceVectorUri: String
+        get() = sharedPrefs.getString("http_presence_svg_uri", "https://bits.poul.org/presence.svg")!!
+        set(value) = sharedPrefs.edit { putString("http_presence_svg_uri", value) }
 }

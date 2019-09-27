@@ -7,7 +7,7 @@ interface IAppSettingsHelper {
     var fullscreen: Boolean
 
     var jsonStatusUrl: String
-    var presenceImageUrl: String
+    var presenceVectorUri: String
 
     var mqttEnabled: Boolean
     var mqttHostname: String

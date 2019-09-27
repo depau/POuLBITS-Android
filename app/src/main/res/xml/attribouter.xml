@@ -36,6 +36,14 @@
                                                   licenseName="Apache License 2.0"
                                                   licenseUrl="https://choosealicense.com/licenses/apache-2.0/"/>
 
+
+        <me.jfenn.attribouter.wedges.LicenseWedge title="AndroidSVG"
+                description="SVG rendering library for Android"
+                website="http://bigbadaboom.github.io/androidsvg/"
+                license="apache-2.0"
+                licenseName="Apache License 2.0"
+                licenseUrl="https://choosealicense.com/licenses/apache-2.0/"/>
+
         <me.jfenn.attribouter.wedges.LicenseWedge title="@string/library_Material_libraryName"
                                                   description="@string/library_Material_libraryDescription"
                                                   website="@string/library_Material_libraryWebsite"

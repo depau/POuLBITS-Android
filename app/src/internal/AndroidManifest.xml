@@ -1,9 +1,0 @@
-<manifest xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <application tools:ignore="GoogleAppIndexingWarning">
-        <service android:name="org.poul.bits.android.services.MQTTService"
-                 android:exported="false">
-        </service>
-    </application>
-
-</manifest>

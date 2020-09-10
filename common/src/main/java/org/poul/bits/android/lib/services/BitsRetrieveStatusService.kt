@@ -1,16 +1,15 @@
 package org.poul.bits.android.lib.services
 
-import android.app.IntentService
 import android.app.Notification
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import androidx.core.app.JobIntentService
 import eu.depau.kotlet.android.extensions.notification.NotificationImportanceCompat
 import eu.depau.kotlet.android.extensions.notification.buildCompat
 import eu.depau.kotlet.android.extensions.notification.registerNotificationChannel
 import eu.depau.kotlet.android.extensions.ui.context.getNotificationBuilder
-import eu.depau.kotlet.android.extensions.ui.context.startForegroundServiceCompat
 import org.poul.bits.android.lib.R
 import org.poul.bits.android.lib.broadcasts.BitsStatusErrorBroadcast
 import org.poul.bits.android.lib.broadcasts.BitsStatusReceivedBroadcast
@@ -21,13 +20,15 @@ import org.poul.bits.android.lib.controllers.bitsclient.IBitsClient
 import org.poul.bits.android.lib.controllers.bitsclient.impl.BitsJsonV3Client
 
 
-internal const val ACTION_RETRIEVE_STATUS = "org.poul.bits.android.lib.services.action.ACTION_RETRIEVE_STATUS"
+internal const val ACTION_RETRIEVE_STATUS =
+    "org.poul.bits.android.lib.services.action.ACTION_RETRIEVE_STATUS"
 
 private const val FOREGROUND_RETRIEVE_STATUS_ID = 4389
 
-const val CHANNEL_BITS_RETRIEVE_STATUS = "org.poul.bits.android.notification.CHANNEL_BITS_RETRIEVING_STATUS"
+const val CHANNEL_BITS_RETRIEVE_STATUS =
+    "org.poul.bits.android.notification.CHANNEL_BITS_RETRIEVING_STATUS"
 
-class BitsRetrieveStatusService : IntentService("BitsRetrieveStatusService") {
+class BitsRetrieveStatusService : JobIntentService() {
 
     private val LOG_TAG = "BitsRetrieveStatusSvc"
 
@@ -40,7 +41,8 @@ class BitsRetrieveStatusService : IntentService("BitsRetrieveStatusService") {
 
         appSettings = AppSettingsHelper(this)
 
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         notificationManager.registerNotificationChannel(
             CHANNEL_BITS_RETRIEVE_STATUS,
@@ -50,8 +52,9 @@ class BitsRetrieveStatusService : IntentService("BitsRetrieveStatusService") {
         )
     }
 
-    override fun onHandleIntent(intent: Intent?) {
-        when (intent?.action) {
+    override fun onHandleWork(intent: Intent) {
+        Log.d(LOG_TAG, "Intent received: ${intent?.action}")
+        when (intent.action) {
             ACTION_RETRIEVE_STATUS -> {
                 handleActionRetrieveStatus()
             }
@@ -88,14 +91,17 @@ class BitsRetrieveStatusService : IntentService("BitsRetrieveStatusService") {
     }
 
     companion object {
+        private const val JOB_ID = 42
+
         @JvmStatic
-        fun getIntent(context: Context) = Intent(context, BitsRetrieveStatusService::class.java).apply {
-            action = ACTION_RETRIEVE_STATUS
-        }
+        fun getIntent(context: Context) =
+            Intent(context, BitsRetrieveStatusService::class.java).apply {
+                action = ACTION_RETRIEVE_STATUS
+            }
 
         @JvmStatic
         fun startActionRetrieveStatus(context: Context) {
-            context.startForegroundServiceCompat(getIntent(context))
+            enqueueWork(context, BitsRetrieveStatusService::class.java, JOB_ID, getIntent(context))
         }
     }
 }

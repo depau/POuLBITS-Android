@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+>
+    <PreferenceCategory android:title="@string/settings_appearance">
+        <ListPreference
+                android:title="@string/settings_temp_unit"
+                android:summary="@string/settings_temp_unit_desc"
+                android:entries="@array/settings_temperature_unit_titles"
+                android:entryValues="@array/settings_temperature_unit_values"
+                android:key="temp_unit"
+                android:defaultValue="CELSIUS"
+        />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_http">
+        <EditTextPreference
+                android:title="@string/settings_http_url"
+                android:summary="@string/settings_http_url_desc"
+                android:key="http_json_status_url"
+                android:inputType="textUri"
+                android:defaultValue="https://bits.poul.org/data"
+        />
+    </PreferenceCategory>
+</PreferenceScreen>

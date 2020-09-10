@@ -1,10 +1,54 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.Wearable">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:textViewStyle">@style/OpenSansTextViewTheme</item>
+        <item name="buttonStyle">@style/OpenSansButtonTheme</item>
     </style>
 
+    <style name="SettingsAppTheme" parent="Theme.Wearable">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:textViewStyle">@style/OpenSansTextViewTheme</item>
+        <item name="buttonStyle">@style/OpenSansButtonTheme</item>
+    </style>
+
+    <style name="OpenSansTextViewTheme" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/opensans</item>
+    </style>
+
+    <style name="OpenSansButtonTheme" parent="TextAppearance.AppCompat.Widget.Button">
+        <item name="android:fontFamily">@font/opensans</item>
+    </style>
+
+    <style name="customPreferenceFragmentList">
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+    </style>
+
+    <style name="CenteredTitle" parent="TextAppearance.Wearable.Medium">
+        <item name="android:textAlignment">center</item>
+    </style>
+    
+    <style name="PopupMenuStyle" parent="Theme.Wearable.Modal"/>
+    
+    <style name="Theme.BitsPrefs" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:colorPrimary">@color/colorPrimary</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
+        <item name="android:colorBackground">@color/black</item>
+        <item name="android:windowBackground">@color/black</item>
+        <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorControlHighlight">@color/colorAccent</item>
+        <item name="android:fontFamily">@font/opensans</item>
+        <item name="android:titleTextStyle">@style/CenteredTitle</item>
+        <item name="android:windowTitleStyle">@style/CenteredTitle</item>
+        <item name="alertDialogTheme">@style/PopupMenuStyle</item>
+        <item name="android:preferenceFragmentStyle">@style/customPreferenceFragmentList</item>
+    </style>
 </resources>

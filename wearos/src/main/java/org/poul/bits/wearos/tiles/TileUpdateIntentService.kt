@@ -21,7 +21,6 @@ class TileUpdateIntentService : JobIntentService() {
         override fun onServiceConnected(className: ComponentName?, binder: IBinder) {
             val tileBinder = (binder as ITileProvider.Stub)
             val tileService = tileBinder.service as PoulBitsTileProviderService
-            Log.d(LOG_TAG, "Bound to TileProviderService")
             tileService.updateTiles()
             unbindService(this)
         }
@@ -34,7 +33,6 @@ class TileUpdateIntentService : JobIntentService() {
     }
 
     override fun onHandleWork(intent: Intent) {
-        Log.d(LOG_TAG, "Updating tiles from TileUpdateIntentService")
         startForeground(
             99,
             getNotificationBuilder(CHANNEL_BITS_RETRIEVE_STATUS)

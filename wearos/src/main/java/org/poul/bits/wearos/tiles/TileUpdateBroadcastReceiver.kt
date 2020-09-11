@@ -23,7 +23,6 @@ class TileUpdateBroadcastReceiver : BroadcastReceiver() {
 
     private fun requestTileUpdate(context: Context) {
         // Run shim service because BroadcastReceivers cannot bind to services
-        Log.d(LOG_TAG, "Starting tile update service")
         TileUpdateIntentService.doRequestTileUpdate(context)
     }
 

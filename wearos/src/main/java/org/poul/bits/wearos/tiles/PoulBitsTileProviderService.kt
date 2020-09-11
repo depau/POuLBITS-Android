@@ -23,14 +23,12 @@ class PoulBitsTileProviderService : TileProviderService() {
     private val LOG_TAG = "BitsTileProvSvc"
 
     override fun onTileUpdate(tileId: Int) {
-        Log.d(LOG_TAG, "Tile update: $tileId")
         if (isIdForDummyData(tileId)) return
         AppSettingsHelper(this).wearTileIDs += tileId
         onSystemTileUpdateRequested(tileId)
     }
 
     override fun onTileFocus(tileId: Int) {
-        Log.d(LOG_TAG, "Tile focus: $tileId")
         super.onTileFocus(tileId)
         if (isIdForDummyData(tileId)) return
         onSystemTileUpdateRequested(tileId)

@@ -9,8 +9,9 @@ import eu.depau.kotlet.android.extensions.notification.buildCompat
 import eu.depau.kotlet.android.extensions.ui.context.getNotificationBuilder
 import org.eclipse.paho.client.mqttv3.*
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence
-import org.poul.bits.addon.mqtt.R
 import org.poul.bits.addon.mqtt.Constants.ACTION_START
+import org.poul.bits.addon.mqtt.R
+import org.poul.bits.addon.mqtt.services.dto.BitsMQTTSedeMessage
 import org.poul.bits.android.lib.broadcasts.BitsStatusReceivedBroadcast
 import org.poul.bits.android.lib.controllers.appsettings.IAppSettingsHelper
 import org.poul.bits.android.lib.controllers.appsettings.impl.AppSettingsHelper
@@ -20,16 +21,16 @@ import org.poul.bits.android.lib.model.enum.BitsDataSource
 import org.poul.bits.android.lib.model.enum.BitsSensorType
 import org.poul.bits.android.lib.model.enum.BitsStatus
 import org.poul.bits.android.lib.services.CHANNEL_BITS_RETRIEVE_STATUS
-import org.poul.bits.addon.mqtt.services.dto.BitsMQTTSedeMessage
 import java.util.*
 
 private const val FOREGROUND_MQTT_SERVICE_ID = 5919
 private const val LOG_TAG = "MQTTService"
 
-class MQTTService : IntentService("MQTTService"), MqttCallback {
+class MQTTService : IntentService("MQTTService"), MqttCallbackExtended {
     private var shouldStop: Boolean = false
     private lateinit var appSettings: IAppSettingsHelper
     private val gson = Gson()
+    private var mqtt: MqttAsyncClient? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -51,14 +52,14 @@ class MQTTService : IntentService("MQTTService"), MqttCallback {
             .buildCompat()
     }
 
-    private fun getMQTT(): MqttClient {
+    private fun getMQTT(): MqttAsyncClient {
         val broker = "${appSettings.mqttProto}://${appSettings.mqttServer}"
         val clientId = "bits_android_client"
 
-        return MqttClient(broker, clientId, MemoryPersistence())
+        return MqttAsyncClient(broker, clientId, MemoryPersistence())
     }
 
-    private fun MqttClient.subscribeTopics() {
+    private fun MqttAsyncClient.subscribeTopics() {
         val topics = arrayOf(
             appSettings.mqttSedeTopic,
             appSettings.mqttTempTopic,
@@ -107,7 +108,8 @@ class MQTTService : IntentService("MQTTService"), MqttCallback {
 
     private fun handleStatusMessage(message: MqttMessage) {
         try {
-            val statusMessage = gson.fromJson(String(message.payload), BitsMQTTSedeMessage::class.java)
+            val statusMessage =
+                gson.fromJson(String(message.payload), BitsMQTTSedeMessage::class.java)
 
             // Ugly hack to wait for the HTTP server to get in sync
             Thread.sleep(500)
@@ -139,18 +141,22 @@ class MQTTService : IntentService("MQTTService"), MqttCallback {
 
         Log.i(LOG_TAG, "MQTT service started")
 
-        val mqtt = getMQTT().apply {
+        mqtt = getMQTT().apply {
             setCallback(this@MQTTService)
             connect(MqttConnectOptions().apply {
                 isCleanSession = false
+                isAutomaticReconnect = true
             })
-            subscribeTopics()
         }
 
         while (!shouldStop)
             Thread.sleep(300)
 
-        mqtt.disconnect()
+        mqtt
+            ?.takeIf { it.isConnected }
+            ?.disconnect()
+
+        mqtt = null
         Log.i(LOG_TAG, "MQTT service stopped")
         stopForeground(true)
     }
@@ -161,7 +167,7 @@ class MQTTService : IntentService("MQTTService"), MqttCallback {
         when (topic) {
             appSettings.mqttSedeTopic -> handleStatusMessage(message)
             appSettings.mqttTempTopic -> handleSensorMessage(message, BitsSensorType.TEMPERATURE)
-            appSettings.mqttHumTopic  -> handleSensorMessage(message, BitsSensorType.HUMIDITY)
+            appSettings.mqttHumTopic -> handleSensorMessage(message, BitsSensorType.HUMIDITY)
         }
     }
 
@@ -175,6 +181,11 @@ class MQTTService : IntentService("MQTTService"), MqttCallback {
     }
 
     override fun deliveryComplete(token: IMqttDeliveryToken?) {}
+
+    override fun connectComplete(reconnect: Boolean, serverURI: String?) {
+        println("Connect complete")
+        mqtt?.subscribeTopics()
+    }
 
     override fun onDestroy() {
         shouldStop = true

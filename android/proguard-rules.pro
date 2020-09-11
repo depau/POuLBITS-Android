@@ -39,6 +39,8 @@
 -keep class org.poul.bits.android.lib.controllers.bitsclient.** { *; }
 -keep class org.poul.bits.android.lib.model.** { *; }
 
+-keep class org.apache.http.impl.client.CloseableHttpClient
+
 #-keep class com.google.gson.*
 -keep class com.google.gson.stream.** { *; }
 -dontwarn sun.misc.**

@@ -7,12 +7,10 @@ import android.util.Log
 import com.google.gson.Gson
 import eu.depau.kotlet.android.extensions.notification.buildCompat
 import eu.depau.kotlet.android.extensions.ui.context.getNotificationBuilder
-import org.eclipse.paho.android.service.MqttAndroidClient
 import org.eclipse.paho.client.mqttv3.*
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence
-import org.poul.bits.addon.mqtt.Constants.ACTION_START
 import org.poul.bits.addon.mqtt.R
-import org.poul.bits.addon.mqtt.services.dto.BitsMQTTSedeMessage
+import org.poul.bits.addon.mqtt.Constants.ACTION_START
 import org.poul.bits.android.lib.broadcasts.BitsStatusReceivedBroadcast
 import org.poul.bits.android.lib.controllers.appsettings.IAppSettingsHelper
 import org.poul.bits.android.lib.controllers.appsettings.impl.AppSettingsHelper
@@ -22,12 +20,13 @@ import org.poul.bits.android.lib.model.enum.BitsDataSource
 import org.poul.bits.android.lib.model.enum.BitsSensorType
 import org.poul.bits.android.lib.model.enum.BitsStatus
 import org.poul.bits.android.lib.services.CHANNEL_BITS_RETRIEVE_STATUS
+import org.poul.bits.addon.mqtt.services.dto.BitsMQTTSedeMessage
 import java.util.*
 
 private const val FOREGROUND_MQTT_SERVICE_ID = 5919
 private const val LOG_TAG = "MQTTService"
 
-class MQTTService : IntentService("MQTTService"), MqttCallback, IMqttActionListener {
+class MQTTService : IntentService("MQTTService"), MqttCallback {
     private var shouldStop: Boolean = false
     private lateinit var appSettings: IAppSettingsHelper
     private val gson = Gson()
@@ -52,14 +51,14 @@ class MQTTService : IntentService("MQTTService"), MqttCallback, IMqttActionListe
             .buildCompat()
     }
 
-    private fun getMQTT(): MqttAndroidClient {
+    private fun getMQTT(): MqttClient {
         val broker = "${appSettings.mqttProto}://${appSettings.mqttServer}"
         val clientId = "bits_android_client"
 
-        return MqttAndroidClient(this, broker, clientId, MemoryPersistence())
+        return MqttClient(broker, clientId, MemoryPersistence())
     }
 
-    private fun MqttAndroidClient.subscribeTopics() {
+    private fun MqttClient.subscribeTopics() {
         val topics = arrayOf(
             appSettings.mqttSedeTopic,
             appSettings.mqttTempTopic,
@@ -75,9 +74,9 @@ class MQTTService : IntentService("MQTTService"), MqttCallback, IMqttActionListe
 
     private fun mqttMessageToBitsData(msg: BitsMQTTSedeMessage) = BitsData(
         when (msg.status) {
-            "open" -> BitsStatus.OPEN
+            "open"   -> BitsStatus.OPEN
             "closed" -> BitsStatus.CLOSED
-            else -> null
+            else     -> null
         },
         null,
         Date(),
@@ -108,8 +107,7 @@ class MQTTService : IntentService("MQTTService"), MqttCallback, IMqttActionListe
 
     private fun handleStatusMessage(message: MqttMessage) {
         try {
-            val statusMessage =
-                gson.fromJson(String(message.payload), BitsMQTTSedeMessage::class.java)
+            val statusMessage = gson.fromJson(String(message.payload), BitsMQTTSedeMessage::class.java)
 
             // Ugly hack to wait for the HTTP server to get in sync
             Thread.sleep(500)
@@ -141,25 +139,12 @@ class MQTTService : IntentService("MQTTService"), MqttCallback, IMqttActionListe
 
         Log.i(LOG_TAG, "MQTT service started")
 
-        val mqtt = getMQTT()
-
-        mqtt.apply {
+        val mqtt = getMQTT().apply {
             setCallback(this@MQTTService)
-            connect(
-                MqttConnectOptions().apply {
-                    isCleanSession = false
-                    isAutomaticReconnect = true
-                },
-                null,
-                object : IMqttActionListener {
-                    override fun onSuccess(asyncActionToken: IMqttToken?) {
-                        mqtt.subscribeTopics()
-                    }
-
-                    override fun onFailure(asyncActionToken: IMqttToken?, exception: Throwable?) {
-                        Log.w(LOG_TAG, "Connection to MQTT broker failed", exception)
-                    }
-                })
+            connect(MqttConnectOptions().apply {
+                isCleanSession = false
+            })
+            subscribeTopics()
         }
 
         while (!shouldStop)
@@ -176,7 +161,7 @@ class MQTTService : IntentService("MQTTService"), MqttCallback, IMqttActionListe
         when (topic) {
             appSettings.mqttSedeTopic -> handleStatusMessage(message)
             appSettings.mqttTempTopic -> handleSensorMessage(message, BitsSensorType.TEMPERATURE)
-            appSettings.mqttHumTopic -> handleSensorMessage(message, BitsSensorType.HUMIDITY)
+            appSettings.mqttHumTopic  -> handleSensorMessage(message, BitsSensorType.HUMIDITY)
         }
     }
 
@@ -194,14 +179,6 @@ class MQTTService : IntentService("MQTTService"), MqttCallback, IMqttActionListe
     override fun onDestroy() {
         shouldStop = true
         super.onDestroy()
-    }
-
-    override fun onSuccess(asyncActionToken: IMqttToken?) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onFailure(asyncActionToken: IMqttToken?, exception: Throwable?) {
-        TODO("Not yet implemented")
     }
 
 }

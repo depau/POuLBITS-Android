@@ -84,7 +84,9 @@ class MainActivity : AppCompatActivity() {
 
         SVG.registerExternalFileResolver(SimpleAssetResolver(assets))
 
-        appSettings = AppSettingsHelper(this)
+        appSettings = AppSettingsHelper(this).apply {
+            migrate()
+        }
 
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)

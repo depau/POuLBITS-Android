@@ -51,40 +51,34 @@
                 android:defaultValue="false"
         />
 
-        <EditTextPreference
-                android:title="MQTT server hostname"
-                android:summary="Hostname or IP address of MQTT server"
-                android:key="mqtt_hostname"
-                android:inputType="textUri"
-                android:defaultValue="192.168.0.4"
-        />
+        <ListPreference
+            android:title="@string/settings_mqtt_proto_title"
+            android:summary="@string/settings_mqtt_proto_desc"
+            android:entries="@array/settings_mqtt_proto_titles"
+            android:entryValues="@array/settings_mqtt_proto_values"
+            android:key="mqtt_proto"
+            android:defaultValue="wss"/>
 
         <EditTextPreference
-                android:title="MQTT server port"
-                android:summary="TCP port of MQTT server"
-                android:inputType="number"
-                android:key="mqtt_port"
-                android:defaultValue="1883"
-        />
-
-        <SwitchPreference
-            android:title="Use TLS"
-            android:summaryOn="Communication will be encrypted"
-            android:summaryOff="Communication will not be encrypted"
-            android:key="mqtt_tls"
-            android:defaultValue="false"/>
+            android:title="@string/settings_mqtt_server_title"
+            android:summary="@string/settings_mqtt_server_desc"
+            android:key="mqtt_server"
+            android:inputType="textUri"
+            android:hint="bits.poul.org/ws"
+            android:defaultValue="bits.poul.org/ws"
+            />
 
         <EditTextPreference
-                android:title="Status topic"
-                android:summary="MQTT topic on which B.I.T.S. status is provided"
+                android:title="@string/settings_mqtt_statustopic_title"
+                android:summary="@string/settings_mqtt_statustopic_desc"
                 android:key="mqtt_status_topic"
                 android:inputType="textUri"
                 android:defaultValue="sede/status"
         />
 
         <EditTextPreference
-                android:title="Temperature topic"
-                android:summary="MQTT topic on which temperature readings are provided"
+                android:title="@string/settings_mqtt_temptopic_title"
+                android:summary="@string/settings_mqtt_temptopic_desc"
                 android:key="mqtt_temperature_topic"
                 android:inputType="textUri"
                 android:defaultValue="sede/sensors/si7020/temperature"
@@ -92,8 +86,8 @@
 
 
         <EditTextPreference
-                android:title="Humidity topic"
-                android:summary="MQTT topic on which humidity readings are provided"
+                android:title="@string/settings_mqtt_humtopic_title"
+                android:summary="@string/settings_mqtt_humtopic_desc"
                 android:key="mqtt_humidity_topic"
                 android:inputType="textUri"
                 android:defaultValue="sede/sensors/si7020/humidity"

@@ -24,10 +24,6 @@
     <string name="pref_ringtone_silent">Silent</string>
     <string name="action_about">About</string>
     <string name="settings_fullscreen">Fullscreen</string>
-    <string name="settings_enable_mqtt">Enable MQTT service</string>
-    <string name="settings_enable_mqtt_desc">Subscribe to local MQTT server</string>
-    <string name="settings_enable_mqtt_desc_off">Not subscribed to local MQTT server</string>
-    <string name="settings_enable_mqtt_desc_on">Subscribed to local MQTT server</string>
     <string name="settings_http">HTTP</string>
     <string name="settings_http_url">HTTP JSON status data URL</string>
     <string name="settings_http_url_desc">Default: https://bits.poul.org/data</string>

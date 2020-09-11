@@ -57,7 +57,9 @@ class MainActivity : WearableActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        appSettings = AppSettingsHelper(this)
+        appSettings = AppSettingsHelper(this).apply {
+            migrate()
+        }
         setAmbientEnabled()
         setContentView(R.layout.activity_main)
 
@@ -144,9 +146,9 @@ class MainActivity : WearableActivity() {
         when (reading.type!!) {
             BitsSensorType.TEMPERATURE ->
                 when (appSettings.temperatureUnit) {
-                    TemperatureUnit.CELSIUS -> reading.value
+                    TemperatureUnit.CELSIUS    -> reading.value
                     TemperatureUnit.FAHRENHEIT -> celsiusToFahrenheit(reading.value)
-                    TemperatureUnit.KELVIN -> celsiusToKelvin(reading.value)
+                    TemperatureUnit.KELVIN     -> celsiusToKelvin(reading.value)
                 }
             BitsSensorType.HUMIDITY ->
                 reading.value
@@ -156,9 +158,9 @@ class MainActivity : WearableActivity() {
         when (reading.type!!) {
             BitsSensorType.TEMPERATURE ->
                 when (appSettings.temperatureUnit) {
-                    TemperatureUnit.CELSIUS -> "°C"
+                    TemperatureUnit.CELSIUS    -> "°C"
                     TemperatureUnit.FAHRENHEIT -> "°F"
-                    TemperatureUnit.KELVIN -> "K"
+                    TemperatureUnit.KELVIN     -> "K"
 
                 }
             BitsSensorType.HUMIDITY ->
@@ -214,7 +216,8 @@ class MainActivity : WearableActivity() {
             Log.d("MainActivity", "Using proper MQTT service helper")
         }
 
-        mqttHelper.startService(this)    }
+        mqttHelper.startService(this)
+    }
 
     fun stopMqttService() {
         MQTTHelperFactory.getMqttHelper(appSettings).stopService(this)
@@ -241,9 +244,9 @@ class MainActivity : WearableActivity() {
             val openedclosed = html.esc(
                 context.getString(
                     when (bitsData.status) {
-                        BitsStatus.OPEN -> R.string.opened_from
+                        BitsStatus.OPEN   -> R.string.opened_from
                         BitsStatus.CLOSED -> R.string.closed_from
-                        else -> R.string.headquarters_gialla
+                        else              -> R.string.headquarters_gialla
                     }
                 )
             )

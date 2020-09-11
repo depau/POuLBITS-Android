@@ -22,16 +22,12 @@
     <string name="settings_fullscreen_desc_on">Barra di stato e di navigazione nascoste</string>
     <string name="action_about">Informazioni</string>
     <string name="settings_fullscreen">Schermo intero</string>
-    <string name="settings_enable_mqtt">Attiva servizio MQTT</string>
-    <string name="settings_enable_mqtt_desc">Registra a server MQTT locale</string>
-    <string name="settings_enable_mqtt_desc_off">Non registrato al server MQTT locale</string>
-    <string name="settings_enable_mqtt_desc_on">Registrato al server MQTT locale</string>
     <string name="settings_http">HTTP</string>
     <string name="settings_http_url">URL HTTP dati di stato</string>
     <string name="settings_http_presence_img_url">URL HTTP immagine SVG heatmap presenza</string>
     <string name="add_widget">Aggiungi widget</string>
     <string name="app_description">Client Android per B.I.T.S. del Politecnico Open unix Labs</string>
-<string name="pref_ringtone_silent">Silenzioso</string>
+    <string name="pref_ringtone_silent">Silenzioso</string>
     <string name="settings_http_url_desc">Default: https://bits.poul.org/data</string>
     <string name="settings_http_presence_img_url_desc">Default: https://bits.poul.org/bits_presence.png</string>
 

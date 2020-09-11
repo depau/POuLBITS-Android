@@ -53,10 +53,7 @@ class MQTTService : IntentService("MQTTService"), MqttCallback, IMqttActionListe
     }
 
     private fun getMQTT(): MqttAndroidClient {
-        val broker = when (appSettings.mqttUseTls) {
-            true -> "tls://${appSettings.mqttHostname}:${appSettings.mqttPort}"
-            else -> "tcp://${appSettings.mqttHostname}:${appSettings.mqttPort}"
-        }
+        val broker = "${appSettings.mqttProto}://${appSettings.mqttServer}"
         val clientId = "bits_android_client"
 
         return MqttAndroidClient(this, broker, clientId, MemoryPersistence())

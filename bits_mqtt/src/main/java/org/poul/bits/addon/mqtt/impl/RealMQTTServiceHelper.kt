@@ -6,15 +6,7 @@ import eu.depau.kotlet.android.extensions.ui.context.startForegroundServiceCompa
 import org.poul.bits.addon.mqtt.Constants
 import org.poul.bits.android.lib.mqtt_stub.IMQTTServiceHelper
 
-class RealMQTTServiceHelper(
-    private val hostname: String,
-    private val port: Int,
-    private val useTls: Boolean,
-    private val sedeTopic: String,
-    private val tempTopic: String,
-    private val humTopic: String
-
-) : IMQTTServiceHelper {
+class RealMQTTServiceHelper() : IMQTTServiceHelper {
     override val hasMQTTService: Boolean = true
 
     private fun getIntent(context: Context): Intent {
@@ -31,25 +23,5 @@ class RealMQTTServiceHelper(
 
     override fun stopService(context: Context) {
         context.stopService(getIntent(context))
-    }
-
-    data class Builder(
-        var hostname: String?,
-        var port: Int?,
-        var useTls: Boolean?,
-        var sedeTopic: String?,
-        var tempTopic: String?,
-        var humTopic: String?
-    ) {
-        constructor() : this(null, null, null, null, null, null)
-
-        fun build() = RealMQTTServiceHelper(
-            hostname!!,
-            port!!,
-            useTls!!,
-            sedeTopic!!,
-            tempTopic!!,
-            humTopic!!
-        )
     }
 }

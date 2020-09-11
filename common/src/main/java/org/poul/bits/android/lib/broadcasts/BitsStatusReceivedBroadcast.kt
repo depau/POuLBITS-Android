@@ -23,7 +23,7 @@ object BitsStatusReceivedBroadcast {
 
     fun broadcast(context: Context, data: BitsData, presenceSvg: String? = null) {
         context.sendBroadcast(getIntent(data, presenceSvg).apply {
-            `package` = context.packageName
+            `package` = context.applicationContext.packageName
         })
     }
 }

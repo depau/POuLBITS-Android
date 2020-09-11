@@ -1,49 +1,37 @@
-package org.poul.bits.android.receivers
+package org.poul.bits.wearos.tiles
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import org.poul.bits.android.lib.broadcasts.BitsStatusErrorBroadcast
 import org.poul.bits.android.lib.broadcasts.BitsStatusReceivedBroadcast
 import org.poul.bits.android.lib.broadcasts.BitsStatusRetrieveStartBroadcast
 import org.poul.bits.android.lib.controllers.widgetstorage.impl.SharedPrefsWidgetStorageHelper
 import org.poul.bits.android.lib.model.BitsData
-import org.poul.bits.android.lib.widgets.getAppWidgetIds
-import org.poul.bits.android.ui.widgets.HeadquartersStatusHorizontalWidget
-import org.poul.bits.android.ui.widgets.HeadquartersStatusIconAppWidget
-import org.poul.bits.android.ui.widgets.HeadquartersStatusWidgetBase
 
-class WidgetUpdateBroadcastReceiver : BroadcastReceiver() {
+class TileUpdateBroadcastReceiver : BroadcastReceiver() {
+    private val LOG_TAG = "TileUpdBcsRecvr"
 
     override fun onReceive(context: Context, intent: Intent) {
         when (intent.action) {
             BitsStatusRetrieveStartBroadcast.ACTION -> handleStatusRetrieveStartBroadcast(context)
-            BitsStatusReceivedBroadcast.ACTION      -> handleStatusReceivedBroadcast(context, intent)
-            BitsStatusErrorBroadcast.ACTION         -> handleStatusErrorBroadcast(context)
+            BitsStatusReceivedBroadcast.ACTION -> handleStatusReceivedBroadcast(context, intent)
+            BitsStatusErrorBroadcast.ACTION -> handleStatusErrorBroadcast(context)
         }
     }
 
-    private fun requestWidgetUpdate(context: Context) {
-        arrayOf(
-            HeadquartersStatusHorizontalWidget::class.java,
-            HeadquartersStatusIconAppWidget::class.java
-        ).forEach { clazz ->
-            context.sendBroadcast(
-                HeadquartersStatusWidgetBase.getUpdateIntent(
-                    context, clazz,
-                    getAppWidgetIds(
-                        context, clazz
-                    )
-                )
-            )
-        }
+    private fun requestTileUpdate(context: Context) {
+        // Run shim service because BroadcastReceivers cannot bind to services
+        Log.d(LOG_TAG, "Starting tile update service")
+        TileUpdateIntentService.doRequestTileUpdate(context)
     }
 
     private fun handleStatusRetrieveStartBroadcast(context: Context) {
         SharedPrefsWidgetStorageHelper(context).apply {
             loading = true
         }
-        requestWidgetUpdate(context)
+        requestTileUpdate(context)
     }
 
     private fun handleStatusReceivedBroadcast(context: Context, intent: Intent) {
@@ -55,7 +43,7 @@ class WidgetUpdateBroadcastReceiver : BroadcastReceiver() {
             this.bitsData = bitsData
             this.lastDataUpdate = System.currentTimeMillis()
         }
-        requestWidgetUpdate(context)
+        requestTileUpdate(context)
     }
 
     private fun handleStatusErrorBroadcast(context: Context) {

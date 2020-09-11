@@ -48,13 +48,13 @@
             android:enabled="true"
             android:exported="false">
             <intent-filter>
-                <action android:name="org.poul.bits.android.broadcasts.action.BITS_STATUS_RETRIEVE_START" />
+                <action android:name="org.poul.bits.android.lib.broadcasts.action.BITS_STATUS_RETRIEVE_START" />
             </intent-filter>
             <intent-filter>
-                <action android:name="org.poul.bits.android.broadcasts.action.BITS_STATUS_RECEIVED" />
+                <action android:name="org.poul.bits.android.lib.broadcasts.action.BITS_STATUS_RECEIVED" />
             </intent-filter>
             <intent-filter>
-                <action android:name="org.poul.bits.android.broadcasts.action.BITS_STATUS_ERROR" />
+                <action android:name="org.poul.bits.android.lib.broadcasts.action.BITS_STATUS_ERROR" />
             </intent-filter>
         </receiver>
 

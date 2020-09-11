@@ -1,6 +1,7 @@
 package org.poul.bits.android.lib.controllers.widgetstorage.impl
 
 import android.content.Context
+import androidx.core.content.edit
 import com.google.gson.Gson
 import org.poul.bits.android.lib.controllers.widgetstorage.IWidgetStorageHelper
 import org.poul.bits.android.lib.model.BitsData
@@ -56,4 +57,8 @@ class SharedPrefsWidgetStorageHelper(val context: Context) : IWidgetStorageHelpe
 
     override fun setWidgetHeightCells(appWidgetId: Int, cells: Int) =
         sharedPrefs.edit().putInt("app_widget_cells_height_$appWidgetId", cells).apply()
+
+    override var lastDataUpdate: Long
+        get() = sharedPrefs.getLong("app_widget_data_last_update", -1)
+        set(value) = sharedPrefs.edit { putLong("app_widget_data_last_update", value) }
 }

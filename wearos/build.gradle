@@ -80,5 +80,6 @@ dependencies {
     implementation 'com.github.Depau:kotlet-android:0.2.5'
 
     implementation project(":common")
-    //internalImplementation project(":bits_mqtt")
+    implementation project(":unofficialtileapi")
+    internalImplementation project(":bits_mqtt")
 }

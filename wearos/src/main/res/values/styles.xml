@@ -51,4 +51,8 @@
         <item name="alertDialogTheme">@style/PopupMenuStyle</item>
         <item name="android:preferenceFragmentStyle">@style/customPreferenceFragmentList</item>
     </style>
+
+    <style name="AppTheme.WhiteAccent">
+        <item name="colorAccent">@color/white</item>
+    </style>
 </resources>

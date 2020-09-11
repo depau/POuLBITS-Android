@@ -28,6 +28,7 @@ import org.poul.bits.android.lib.model.enum.BitsSensorType
 import org.poul.bits.android.lib.model.enum.BitsStatus
 import org.poul.bits.android.lib.mqtt_stub.MQTTHelperFactory
 import org.poul.bits.android.lib.services.BitsRetrieveStatusService
+import org.poul.bits.android.lib.misc.SimpleHtml as html
 
 class MainActivity : WearableActivity() {
 
@@ -93,7 +94,7 @@ class MainActivity : WearableActivity() {
         status_card.visibility = View.VISIBLE
 
         status_card.text = Html.fromHtml(
-            SimpleHtml.italic(getString(R.string.status_retrieve_failure_card))
+            html.italic(getString(R.string.status_retrieve_failure_card))
         )
 
         status_button.setBackgroundColor(resources.getColor(R.color.colorHQsGialla, theme))
@@ -221,7 +222,7 @@ class MainActivity : WearableActivity() {
             bitsData.lastModified ?: return null
             bitsData.modifiedBy ?: return null
 
-            val openedclosed = SimpleHtml.esc(
+            val openedclosed = html.esc(
                 context.getString(
                     when (bitsData.status) {
                         BitsStatus.OPEN -> R.string.opened_from
@@ -231,7 +232,7 @@ class MainActivity : WearableActivity() {
                 )
             )
 
-            val changedTime = SimpleHtml.esc(
+            val changedTime = html.esc(
                 DateUtils.getRelativeTimeSpanString(
                     bitsData.lastModified!!.time,
                     System.currentTimeMillis(),
@@ -242,17 +243,17 @@ class MainActivity : WearableActivity() {
 
             return Html.fromHtml(
                 "$openedclosed ${
-                    SimpleHtml.bold(
-                        SimpleHtml.color(
+                    html.bold(
+                        html.color(
                             context,
-                            SimpleHtml.esc(bitsData.modifiedBy!!),
+                            html.esc(bitsData.modifiedBy!!),
                             R.color.colorAccent
                         )
                     )
                 }<br>" +
                         "${context.getString(R.string.last_changed)} ${
-                            SimpleHtml.bold(
-                                SimpleHtml.color(
+                            html.bold(
+                                html.color(
                                     context,
                                     changedTime,
                                     R.color.colorAccent
@@ -262,8 +263,19 @@ class MainActivity : WearableActivity() {
             )!!
         }
 
-        fun getMessageCardText(context: Context, bitsData: BitsMessage): Spanned {
-            val sentTime = SimpleHtml.esc(
+        fun getMessageCardText(
+            context: Context,
+            bitsData: BitsMessage,
+            maxMessageChars: Int? = null
+        ): Spanned {
+            val message =
+                if (maxMessageChars == null || bitsData.message.length < maxMessageChars) {
+                    bitsData.message
+                } else {
+                    bitsData.message.slice(0 until maxMessageChars) + "…"
+                }
+
+            val sentTime = html.esc(
                 DateUtils.getRelativeTimeSpanString(
                     bitsData.lastModified.time,
                     System.currentTimeMillis(),
@@ -274,23 +286,23 @@ class MainActivity : WearableActivity() {
 
             return Html.fromHtml(
                 "${context.getString(R.string.last_msg_from)} ${
-                    SimpleHtml.bold(
-                        SimpleHtml.color(
+                    html.bold(
+                        html.color(
                             context,
-                            SimpleHtml.esc(bitsData.user),
+                            html.esc(bitsData.user),
                             R.color.colorAccent
                         )
                     )
                 }, ${
-                    SimpleHtml.bold(
-                        SimpleHtml.color(
+                    html.bold(
+                        html.color(
                             context,
-                            SimpleHtml.esc(sentTime),
+                            html.esc(sentTime),
                             R.color.colorAccent
                         )
                     )
-                } ${SimpleHtml.br}" +
-                        SimpleHtml.italic("“${SimpleHtml.esc(bitsData.message)}”")
+                } ${html.br}" +
+                        html.italic("“${html.esc(message)}”")
             )!!
         }
     }

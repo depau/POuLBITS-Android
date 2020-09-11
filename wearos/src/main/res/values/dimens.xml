@@ -33,6 +33,7 @@
     <dimen name="widget_fab_offset">20dp</dimen>
 
     <dimen name="card_padding">16dp</dimen>
+    <dimen name="card_padding_tile">10dp</dimen>
     <dimen name="card_elevation">5dp</dimen>
 
     <dimen name="icon_widget_size">48dp</dimen>

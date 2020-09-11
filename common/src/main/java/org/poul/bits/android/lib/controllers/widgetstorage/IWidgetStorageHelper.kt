@@ -6,6 +6,7 @@ interface IWidgetStorageHelper {
     val bitsDataError: BitsData
     var loading: Boolean
     var bitsData: BitsData
+    var lastDataUpdate: Long
     fun getWidgetHeightCells(appWidgetId: Int): Int
     fun setWidgetHeightCells(appWidgetId: Int, cells: Int)
 }

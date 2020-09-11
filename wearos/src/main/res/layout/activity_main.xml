@@ -45,6 +45,13 @@
                     android:textAlignment="center"
                     android:textAllCaps="false" />
 
+                <TextView
+                    android:id="@+id/status_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/card_padding"
+                    android:gravity="center_horizontal"
+                    android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/message_card"
@@ -54,15 +61,6 @@
                     android:layout_margin="@dimen/card_padding"
                     android:gravity="center_horizontal"
                     android:textAlignment="center" />
-
-                <TextView
-                    android:id="@+id/status_card"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/card_padding"
-                    android:gravity="center_horizontal"
-                    android:textAlignment="center" />
-
 
                 <LinearLayout
                     android:id="@+id/sensors_card"

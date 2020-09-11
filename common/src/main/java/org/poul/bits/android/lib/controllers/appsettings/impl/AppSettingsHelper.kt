@@ -55,6 +55,29 @@ class AppSettingsHelper(val context: Context) : IAppSettingsHelper {
         set(value) = sharedPrefs.edit { putString("http_json_status_url", value) }
 
     override var presenceVectorUri: String
-        get() = sharedPrefs.getString("http_presence_svg_uri", "https://bits.poul.org/presence.svg")!!
+        get() = sharedPrefs.getString(
+            "http_presence_svg_uri",
+            "https://bits.poul.org/presence.svg"
+        )!!
         set(value) = sharedPrefs.edit { putString("http_presence_svg_uri", value) }
+
+    override var wearTileIDs: IntArray
+        get() {
+            return try {
+                sharedPrefs
+                    .getString("wear_tile_ids", null)
+                    ?.split(",")
+                    ?.map { it.toInt() }
+                    ?.distinct()
+                    ?.toIntArray()
+                    ?: intArrayOf()
+            } catch (_: Exception) {
+                intArrayOf()
+            }
+        }
+        set(value) = sharedPrefs.edit { putString("wear_tile_ids", value.joinToString(",")) }
+
+    override var wearTileDataExpirationMins: Int
+        get() = sharedPrefs.getString("wear_tile_data_expire_timeout", "15")!!.toInt()
+        set(value) = sharedPrefs.edit { putString("wear_tile_data_expire_timeout", value.toString()) }
 }

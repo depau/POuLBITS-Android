@@ -7,6 +7,7 @@ import android.widget.RemoteViews
 import org.poul.bits.android.R
 import org.poul.bits.android.lib.model.BitsData
 import org.poul.bits.android.lib.model.enum.BitsStatus
+import org.poul.bits.android.lib.widgets.drawRemoteDrawable
 
 class HeadquartersStatusIconAppWidget : HeadquartersStatusWidgetBase() {
 
@@ -56,8 +57,8 @@ class HeadquartersStatusIconAppWidget : HeadquartersStatusWidgetBase() {
 
     private fun getBackgroundDrawable(bitsData: BitsData): Int {
         return when (bitsData.status!!) {
-            BitsStatus.OPEN    -> R.drawable.widget_bg_shape_circle_open
-            BitsStatus.CLOSED  -> R.drawable.widget_bg_shape_circle_closed
+            BitsStatus.OPEN -> R.drawable.widget_bg_shape_circle_open
+            BitsStatus.CLOSED -> R.drawable.widget_bg_shape_circle_closed
             BitsStatus.UNKNOWN -> R.drawable.widget_bg_shape_circle_gialla
         }
     }

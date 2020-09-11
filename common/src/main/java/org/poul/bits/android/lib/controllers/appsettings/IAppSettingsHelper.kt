@@ -16,4 +16,7 @@ interface IAppSettingsHelper {
     var mqttSedeTopic: String
     var mqttTempTopic: String
     var mqttHumTopic: String
+
+    var wearTileIDs: IntArray
+    var wearTileDataExpirationMins: Int
 }

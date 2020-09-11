@@ -11,6 +11,16 @@
         />
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/tile">
+        <EditTextPreference
+            android:title="@string/tile_data_expire_setting"
+            android:summary="@string/tile_data_expire_setting_desc"
+            android:inputType="number"
+            android:key="wear_tile_data_expire_timeout"
+            android:defaultValue="15"
+            />
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/settings_http">
         <EditTextPreference
                 android:title="@string/settings_http_url"

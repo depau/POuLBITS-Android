@@ -15,7 +15,7 @@ abstract class AbstractBroadcastHelper {
 
     fun broadcast(context: Context) {
         context.sendBroadcast(getIntent().apply {
-            `package` = context.packageName
+            `package` = context.applicationContext.packageName
         })
     }
 }

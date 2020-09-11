@@ -10,6 +10,7 @@ import org.poul.bits.android.lib.controllers.widgetstorage.impl.SharedPrefsWidge
 import org.poul.bits.android.lib.misc.getTextForStatus
 import org.poul.bits.android.lib.model.BitsData
 import org.poul.bits.android.lib.model.enum.BitsStatus
+import org.poul.bits.android.lib.widgets.drawRemoteDrawable
 import org.poul.bits.android.ui.activities.MainActivity
 
 class HeadquartersStatusHorizontalWidget : HeadquartersStatusWidgetBase() {

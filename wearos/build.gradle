@@ -19,13 +19,13 @@ android {
     buildTypes {
         debug {
             minifyEnabled true
-            shrinkResources false  // Avoid conflicts with Instant Run
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
         release {
             minifyEnabled true
-            shrinkResources false
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -70,11 +70,7 @@ dependencies {
     implementation 'androidx.wear:wear:1.0.0'
     implementation 'com.google.android.support:wearable:2.7.0'
     compileOnly 'com.google.android.wearable:wearable:2.7.0'
-    testImplementation 'junit:junit:4.13'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
     implementation 'com.github.aakira:compound-icon-textview:1.2.1'
     implementation 'com.github.Depau:kotlet:v0.1'
     implementation 'com.github.Depau:kotlet-android:0.2.5'

@@ -75,8 +75,12 @@ class PoulBitsTileProviderService : TileProviderService() {
         views.setTextColor(R.id.message_card, getColor(R.color.transpWhite))
 
         views.setTextViewTextSize(R.id.status_button, COMPLEX_UNIT_DIP, 13F)
-        views.setTextViewTextSize(R.id.status_card, COMPLEX_UNIT_DIP, 13F)
         views.setTextViewTextSize(R.id.message_card, COMPLEX_UNIT_DIP, 13F)
+        if (widgetData.bitsData.message?.message?.isBlank() == true) {
+            views.setTextViewTextSize(R.id.status_card, COMPLEX_UNIT_DIP, 15F)
+        } else {
+            views.setTextViewTextSize(R.id.status_card, COMPLEX_UNIT_DIP, 13F)
+        }
 
         if (!widgetData.loading) {
             drawRemoteDrawable(
@@ -91,7 +95,7 @@ class PoulBitsTileProviderService : TileProviderService() {
             views.setViewVisibility(R.id.refresh_button, View.GONE)
             views.setViewVisibility(R.id.refresh_progressbar, View.VISIBLE)
         }
-        
+
         views.setTextViewText(
             R.id.status_button,
             getTextForStatus(widgetData.bitsData.status!!)
@@ -106,8 +110,14 @@ class PoulBitsTileProviderService : TileProviderService() {
             R.id.message_card,
             widgetData.bitsData.message
                 .takeIf { it?.message?.isNotBlank() ?: false }
-                ?.let { message -> MainActivity.getMessageCardText(this, message, maxMessageChars = 30) }
-                ?: "\n"
+                ?.let { message ->
+                    MainActivity.getMessageCardText(
+                        this,
+                        message,
+                        maxMessageChars = 30
+                    )
+                }
+                ?: ""
         )
 
 

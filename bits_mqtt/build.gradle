@@ -43,6 +43,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.0'
+    implementation 'org.eclipse.paho:org.eclipse.paho.android.service:1.1.1'
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.github.Depau:kotlet:v0.1'
     implementation 'com.github.Depau:kotlet-android:0.2.5'

@@ -11,7 +11,7 @@
 
     <me.jfenn.attribouter.wedges.LicensesWedge
             repo="Depau/POuLBITS-Android"
-    overflow="3">
+            overflow="3">
 
 
         <me.jfenn.attribouter.wedges.LicenseWedge
@@ -28,21 +28,6 @@
                                                   license="apache-2.0"
                                                   licenseName="Apache License 2.0"
                                                   licenseUrl="https://choosealicense.com/licenses/apache-2.0/"/>
-
-        <me.jfenn.attribouter.wedges.LicenseWedge title="@string/library_KotletAndroid_libraryName"
-                                                  description="@string/library_KotletAndroid_libraryDescription"
-                                                  website="@string/library_KotletAndroid_libraryWebsite"
-                                                  license="apache-2.0"
-                                                  licenseName="Apache License 2.0"
-                                                  licenseUrl="https://choosealicense.com/licenses/apache-2.0/"/>
-
-
-        <me.jfenn.attribouter.wedges.LicenseWedge title="AndroidSVG"
-                description="SVG rendering library for Android"
-                website="http://bigbadaboom.github.io/androidsvg/"
-                license="apache-2.0"
-                licenseName="Apache License 2.0"
-                licenseUrl="https://choosealicense.com/licenses/apache-2.0/"/>
 
         <me.jfenn.attribouter.wedges.LicenseWedge title="@string/library_Material_libraryName"
                                                   description="@string/library_Material_libraryDescription"
@@ -98,6 +83,15 @@
                 license="apache-2.0"
                 licenseName="Apache License 2.0"
                 licenseUrl="https://choosealicense.com/licenses/apache-2.0/"/>
+
+        <me.jfenn.attribouter.wedges.LicenseWedge
+                repo="eclipse/paho.mqtt.java"
+                title="@string/library_MQTTClient_libraryName"
+                description="@string/library_MQTTClient_libraryDescription"
+                website="@string/library_MQTTClient_libraryWebsite"
+                license="other"
+                licenseName="Eclipse Distribution License 1.0"
+                licenseUrl="https://www.eclipse.org/org/documents/edl-v10.html"/>
 
     </me.jfenn.attribouter.wedges.LicensesWedge>
 

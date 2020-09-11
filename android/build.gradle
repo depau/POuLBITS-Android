@@ -40,11 +40,6 @@ android {
             applicationIdSuffix ".nonlibre"
             versionNameSuffix "-nonlibre"
         }
-
-        internal {
-            applicationIdSuffix ".internal"
-            versionNameSuffix "-internal"
-        }
     }
 
     packagingOptions {
@@ -86,5 +81,5 @@ dependencies {
     implementation 'com.github.Depau:kotlet-android:0.2.5'
 
     implementation project(":common")
-    internalImplementation project(":bits_mqtt")
+    implementation project(":bits_mqtt")
 }

@@ -206,13 +206,12 @@ class MainActivity : WearableActivity() {
             return stopMqttService()
 
         val mqttHelper = MQTTHelperFactory.getMqttHelper(appSettings)
-        if (BuildConfig.FLAVOR == "internal" && mqttHelper is StubMQTTServiceHelper) {
+        if (mqttHelper is StubMQTTServiceHelper) {
             Log.w(
                 "MainActivity",
                 "Stub MQTT service is in use and you're running the MQTT build flavor"
             )
-        }
-        if (mqttHelper !is StubMQTTServiceHelper) {
+        } else {
             Log.d("MainActivity", "Using proper MQTT service helper")
         }
 

@@ -40,11 +40,6 @@ android {
             applicationIdSuffix ".nonlibre"
             versionNameSuffix "-nonlibre"
         }
-
-        internal {
-            applicationIdSuffix ".internal"
-            versionNameSuffix "-internal"
-        }
     }
 
     packagingOptions {
@@ -77,5 +72,5 @@ dependencies {
 
     implementation project(":common")
     implementation project(":unofficialtileapi")
-    internalImplementation project(":bits_mqtt")
+    implementation project(":bits_mqtt")
 }

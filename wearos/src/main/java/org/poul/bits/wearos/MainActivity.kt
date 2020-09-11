@@ -10,6 +10,7 @@ import android.support.wearable.activity.WearableActivity
 import android.text.Html
 import android.text.Spanned
 import android.text.format.DateUtils
+import android.util.Log
 import android.view.View
 import eu.depau.kotlet.android.extensions.ui.view.snackbar
 import eu.depau.kotlet.extensions.builtins.round
@@ -27,6 +28,7 @@ import org.poul.bits.android.lib.model.enum.BitsDataSource
 import org.poul.bits.android.lib.model.enum.BitsSensorType
 import org.poul.bits.android.lib.model.enum.BitsStatus
 import org.poul.bits.android.lib.mqtt_stub.MQTTHelperFactory
+import org.poul.bits.android.lib.mqtt_stub.StubMQTTServiceHelper
 import org.poul.bits.android.lib.services.BitsRetrieveStatusService
 import org.poul.bits.android.lib.misc.SimpleHtml as html
 
@@ -201,8 +203,18 @@ class MainActivity : WearableActivity() {
         if (!appSettings.mqttEnabled)
             return stopMqttService()
 
-        MQTTHelperFactory.getMqttHelper(appSettings).startService(this)
-    }
+        val mqttHelper = MQTTHelperFactory.getMqttHelper(appSettings)
+        if (BuildConfig.FLAVOR == "internal" && mqttHelper is StubMQTTServiceHelper) {
+            Log.w(
+                "MainActivity",
+                "Stub MQTT service is in use and you're running the MQTT build flavor"
+            )
+        }
+        if (mqttHelper !is StubMQTTServiceHelper) {
+            Log.d("MainActivity", "Using proper MQTT service helper")
+        }
+
+        mqttHelper.startService(this)    }
 
     fun stopMqttService() {
         MQTTHelperFactory.getMqttHelper(appSettings).stopService(this)

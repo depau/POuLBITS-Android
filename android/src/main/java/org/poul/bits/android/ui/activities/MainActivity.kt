@@ -12,6 +12,7 @@ import android.os.Bundle
 import android.text.Html
 import android.text.Spanned
 import android.text.format.DateUtils
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -29,8 +30,8 @@ import eu.depau.kotlet.extensions.builtins.round
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import me.jfenn.attribouter.Attribouter
+import org.poul.bits.android.BuildConfig
 import org.poul.bits.android.R
-import org.poul.bits.android.lib.mqtt_stub.MQTTHelperFactory
 import org.poul.bits.android.lib.broadcasts.BitsStatusErrorBroadcast
 import org.poul.bits.android.lib.broadcasts.BitsStatusReceivedBroadcast
 import org.poul.bits.android.lib.controllers.appsettings.IAppSettingsHelper
@@ -48,6 +49,8 @@ import org.poul.bits.android.lib.model.BitsSensorData
 import org.poul.bits.android.lib.model.enum.BitsDataSource
 import org.poul.bits.android.lib.model.enum.BitsSensorType
 import org.poul.bits.android.lib.model.enum.BitsStatus
+import org.poul.bits.android.lib.mqtt_stub.MQTTHelperFactory
+import org.poul.bits.android.lib.mqtt_stub.StubMQTTServiceHelper
 import org.poul.bits.android.lib.services.BitsRetrieveStatusService
 
 class MainActivity : AppCompatActivity() {
@@ -299,7 +302,15 @@ class MainActivity : AppCompatActivity() {
         if (!appSettings.mqttEnabled)
             return stopMqttService()
 
-        MQTTHelperFactory.getMqttHelper(appSettings).startService(this)
+        val mqttHelper = MQTTHelperFactory.getMqttHelper(appSettings)
+        if (BuildConfig.FLAVOR == "internal" && mqttHelper is StubMQTTServiceHelper) {
+            Log.w(
+                "MainActivity",
+                "Stub MQTT service is in use and you're running the MQTT build flavor"
+            )
+        }
+
+        mqttHelper.startService(this)
     }
 
     fun stopMqttService() {

@@ -71,6 +71,10 @@ class MainActivity : WearableActivity() {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
 
+        refresh_button.setOnClickListener {
+            startRefresh()
+        }
+
         swiperefreshlayout.setOnRefreshListener {
             startRefresh()
         }

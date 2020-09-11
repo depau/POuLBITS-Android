@@ -15,6 +15,7 @@ import org.poul.bits.wearos.R
 
 class TileUpdateIntentService : JobIntentService() {
     private val LOG_TAG = "TileUpdIntSvc"
+    private var serviceBound = false
 
     private val tileProviderConn: ServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName?, binder: IBinder) {
@@ -26,6 +27,7 @@ class TileUpdateIntentService : JobIntentService() {
         }
 
         override fun onServiceDisconnected(className: ComponentName?) {
+            serviceBound = false
             stopForeground(true)
             stopSelf()
         }
@@ -52,6 +54,12 @@ class TileUpdateIntentService : JobIntentService() {
         )
 
         // Work continues in tileProviderConn once the service is bound
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (serviceBound)
+            unbindService(tileProviderConn)
     }
 
     companion object {

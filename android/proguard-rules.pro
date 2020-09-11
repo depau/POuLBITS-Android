@@ -54,5 +54,3 @@
 }
 
 -keep class org.poul.bits.addon.mqtt.** { *; }
-
--keep class org.eclipse.paho.** { *; }

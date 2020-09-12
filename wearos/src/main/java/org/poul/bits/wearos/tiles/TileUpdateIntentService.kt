@@ -53,10 +53,10 @@ class TileUpdateIntentService : JobIntentService() {
         )
 
         // Work continues in tileProviderConn once the service is bound, sleep here to prevent warning
-        for (i in 0..20) {
+        for (i in 0..100) {
             if (!serviceBound)
                 return
-            Thread.sleep(50)
+            Thread.sleep(100)
         }
     }
 

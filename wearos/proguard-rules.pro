@@ -1,0 +1,1 @@
+../android/proguard-rules.pro

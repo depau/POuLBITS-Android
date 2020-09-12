@@ -1,1 +1,5 @@
-include ':app'
+include ':bits_mqtt'
+include ':common'
+include ':wearos'
+include ':android'
+include ':unofficialtileapi'

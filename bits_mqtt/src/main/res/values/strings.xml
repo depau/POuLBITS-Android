@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+    <string name="mqtt_service_running">MQTT service is running</string>
+    <string name="mqtt_notification_desc">Receiving real-time updates from local MQTT server</string>
+    <string name="app_name">POuL BITS (headquarters)</string>
+    <string name="settings_enable_mqtt">Enable MQTT service</string>
+    <string name="settings_enable_mqtt_desc">Subscribe to local MQTT server</string>
+    <string name="settings_enable_mqtt_desc_off">Not subscribed to local MQTT server</string>
+    <string name="settings_enable_mqtt_desc_on">Subscribed to local MQTT server</string>
+    <string name="settings_mqtt_proto_title">MQTT protocol</string>
+    <string name="settings_mqtt_server_title">MQTT server</string>
+    <string name="settings_mqtt_server_desc">Host:port or WS server URL</string>
+    <string name="settings_mqtt_proto_desc">Connect over TCP, TLS or WebSocket</string>
+    <string name="settings_mqtt_statustopic_title">Status topic</string>
+    <string name="settings_mqtt_statustopic_desc">MQTT topic on which B.I.T.S. status is provided</string>
+    <string name="settings_mqtt_temptopic_title">Temperature topic</string>
+    <string name="settings_mqtt_temptopic_desc">MQTT topic on which temperature readings are provided</string>
+    <string name="settings_mqtt_humtopic_title">Humidity topic</string>
+    <string name="settings_mqtt_humtopic_desc">MQTT topic on which humidity readings are provided</string>
+
+    <string-array name="settings_mqtt_proto_titles">
+        <item>TCP</item>
+        <item>TLS</item>
+        <item>WebSocket</item>
+        <item>WebSocket (TLS)</item>
+    </string-array>
+    <string-array name="settings_mqtt_proto_values">
+        <item>tcp</item>
+        <item>ssl</item>
+        <item>ws</item>
+        <item>wss</item>
+    </string-array>
+</resources>

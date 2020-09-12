@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorAccent">#ffc500</color>
+    <color name="colorHQsGialla">@color/colorAccent</color>
+    <color name="colorHQsOpen">#387002</color>
+    <color name="colorHQsClosed">#d32f2f</color>
+</resources>

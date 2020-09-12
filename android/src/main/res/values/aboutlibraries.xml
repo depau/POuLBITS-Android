@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="aboutLibraries_description_showIcon" translatable="false">true</string>
+    <string name="aboutLibraries_description_showVersion" translatable="false">true</string>
+    <string name="aboutLibraries_description_text">POuL B.I.T.S. client for Android</string>
+
+
+    <!-- AndroidX Jetpack -->
+    <string name="define_AndroidX" translatable="false"/>
+    <string name="library_AndroidX_author" translatable="false">AOSP</string>
+    <string name="library_AndroidX_authorWebsite" translatable="false">https://developer.android.com</string>
+    <string name="library_AndroidX_libraryName" translatable="false">AndroidX Jetpack</string>
+    <string name="library_AndroidX_libraryDescription">AndroidX is a major improvement to the original Android Support Library and provides backwards-compatibility across Android releases</string>
+    <string name="library_AndroidX_libraryWebsite">https://developer.android.com/jetpack/androidx/</string>
+    <string name="library_AndroidX_libraryVersion">1.0.1</string>
+    <string name="library_AndroidX_isOpenSource">true</string>
+    <string name="library_AndroidX_repositoryLink">https://android.googlesource.com/platform/frameworks/support/+/androidx-master-dev/</string>
+    <string name="library_AndroidX_licenseId" translatable="false">apache_2_0</string>
+
+
+    <!-- Kotlin Standard Library -->
+    <string name="define_KotlinStdlib"/>
+    <string name="library_KotlinStdlib_author">JetBrains</string>
+    <string name="library_KotlinStdlib_authorWebsite">https://kotlinlang.org/</string>
+    <string name="library_KotlinStdlib_libraryName">Kotlin Standard Library</string>
+    <string name="library_KotlinStdlib_libraryDescription">The Kotlin Standard Library provides living essentials for everyday work with Kotlin</string>
+    <string name="library_KotlinStdlib_libraryWebsite">https://kotlinlang.org/api/latest/jvm/stdlib/index.html</string>
+    <string name="library_KotlinStdlib_libraryVersion">1.2.71</string>
+    <string name="library_KotlinStdlib_isOpenSource">true</string>
+    <string name="library_KotlinStdlib_repositoryLink">https://github.com/JetBrains/kotlin/tree/master/libraries/stdlib</string>
+    <string name="library_KotlinStdlib_licenseId">apache_2_0</string>
+
+
+    <!-- Kotlet -->
+    <string name="define_Kotlet"/>
+    <string name="library_Kotlet_author">Davide Depau</string>
+    <string name="library_Kotlet_authorWebsite">https://depau.eu/</string>
+    <string name="library_Kotlet_libraryName">Kotlet</string>
+    <string name="library_Kotlet_libraryDescription">Kotlin commons to throw away boilerplate code</string>
+    <string name="library_Kotlet_libraryWebsite">https://github.com/Depau/kotlet</string>
+    <string name="library_Kotlet_libraryVersion">v0.1</string>
+    <string name="library_Kotlet_isOpenSource">true</string>
+    <string name="library_Kotlet_repositoryLink">https://github.com/Depau/kotlet</string>
+    <string name="library_Kotlet_licenseId">apache_2_0</string>
+
+    <!-- Kotlet Android -->
+    <string name="define_KotletAndroid"/>
+    <string name="library_KotletAndroid_author">Davide Depau</string>
+    <string name="library_KotletAndroid_authorWebsite">https://depau.eu/</string>
+    <string name="library_KotletAndroid_libraryName">Kotlet Android</string>
+    <string name="library_KotletAndroid_libraryDescription">Kotlin commons to throw away boilerplate code (Android parts)</string>
+    <string name="library_KotletAndroid_libraryWebsite">https://github.com/Depau/kotlet-android</string>
+    <string name="library_KotletAndroid_libraryVersion">v0.2.4</string>
+    <string name="library_KotletAndroid_isOpenSource">true</string>
+    <string name="library_KotletAndroid_repositoryLink">https://github.com/Depau/kotlet-android</string>
+    <string name="library_KotletAndroid_licenseId">apache_2_0</string>
+
+    <!-- Material Components -->
+    <string name="define_Material"/>
+    <string name="library_Material_author">Google</string>
+    <string name="library_Material_authorWebsite">https://material.io/develop/</string>
+    <string name="library_Material_libraryName">Material Components</string>
+    <string name="library_Material_libraryDescription">Make beautiful products, faster. Material is a design system – backed by open-source code – that helps teams build digital experiences</string>
+    <string name="library_Material_libraryWebsite">https://material.io/develop/android/</string>
+    <string name="library_Material_libraryVersion">1.1.0-alpha01</string>
+    <string name="library_Material_isOpenSource">true</string>
+    <string name="library_Material_repositoryLink">https://github.com/material-components/material-components-android</string>
+    <string name="library_Material_licenseId">apache_2_0</string>
+
+
+    <!-- Spring RestTemplate -->
+    <string name="define_SpringAndroid"/>
+    <string name="library_SpringAndroid_author">Pivotal Software</string>
+    <string name="library_SpringAndroid_authorWebsite">https://spring.io/</string>
+    <string name="library_SpringAndroid_libraryName">Spring RestTemplate for Android</string>
+    <string name="library_SpringAndroid_libraryDescription">Spring for Android is an extension of the Spring Framework that aims to simplify the development of native Android applications.</string>
+    <string name="library_SpringAndroid_libraryWebsite">https://projects.spring.io/spring-android/</string>
+    <string name="library_SpringAndroid_libraryVersion">2.0.0.M4</string>
+    <string name="library_SpringAndroid_isOpenSource">true</string>
+    <string name="library_SpringAndroid_repositoryLink">https://github.com/spring-projects/spring-android</string>
+    <string name="library_SpringAndroid_licenseId">apache_2_0</string>
+
+
+    <!-- Compound Icon TextView -->
+    <string name="define_CompoundIconTextView"/>
+    <string name="library_CompoundIconTextView_author">Akira Aratani</string>
+    <string name="library_CompoundIconTextView_authorWebsite">https://aakira.app/</string>
+    <string name="library_CompoundIconTextView_libraryName">Compound Icon TextView</string>
+    <string name="library_CompoundIconTextView_libraryDescription">An Android library that is able to set a vector drawable at text view pre-Lollipop.</string>
+    <string name="library_CompoundIconTextView_libraryWebsite">https://github.com/AAkira/CompoundIconTextView/</string>
+    <string name="library_CompoundIconTextView_libraryVersion">1.2.1</string>
+    <string name="library_CompoundIconTextView_isOpenSource">true</string>
+    <string name="library_CompoundIconTextView_repositoryLink">https://github.com/AAkira/CompoundIconTextView</string>
+    <string name="library_CompoundIconTextView_licenseId">apache_2_0</string>
+
+    <!-- Jackson databinding -->
+    <string name="define_JacksonDatabind"/>
+    <string name="library_JacksonDatabind_author">FasterXML</string>
+    <string name="library_JacksonDatabind_authorWebsite">https://github.com/FasterXML/</string>
+    <string name="library_JacksonDatabind_libraryName">Jackson JSON Data-Binding</string>
+    <string name="library_JacksonDatabind_libraryDescription">General-purpose data-binding functionality and tree-model for Jackson Data Processor.</string>
+    <string name="library_JacksonDatabind_libraryWebsite">https://github.com/FasterXML/jackson-databind/</string>
+    <string name="library_JacksonDatabind_libraryVersion">2.9.7</string>
+    <string name="library_JacksonDatabind_isOpenSource">true</string>
+    <string name="library_JacksonDatabind_repositoryLink">https://github.com/FasterXML/jackson-databind</string>
+    <string name="library_JacksonDatabind_licenseId">apache_2_0</string>
+
+    <!-- Jackson Kotlin module -->
+    <string name="define_JacksonKotlinModule"/>
+    <string name="library_JacksonKotlinModule_author">FasterXML</string>
+    <string name="library_JacksonKotlinModule_authorWebsite">https://github.com/FasterXML/</string>
+    <string name="library_JacksonKotlinModule_libraryName">Jackson Kotlin Module</string>
+    <string name="library_JacksonKotlinModule_libraryDescription">Module that adds support for serialization/deserialization of Kotlin (http://kotlinlang.org) classes and data classes.</string>
+    <string name="library_JacksonKotlinModule_libraryWebsite">https://github.com/FasterXML/jackson-module-kotlin</string>
+    <string name="library_JacksonKotlinModule_libraryVersion">2.9.7</string>
+    <string name="library_JacksonKotlinModule_isOpenSource">true</string>
+    <string name="library_JacksonKotlinModule_repositoryLink">https://github.com/FasterXML/jackson-module-kotlin</string>
+    <string name="library_JacksonKotlinModule_licenseId">apache_2_0</string>
+
+
+    <!-- Picasso -->
+    <string name="define_Picasso"/>
+    <string name="library_Picasso_author">Square</string>
+    <string name="library_Picasso_authorWebsite">https://square.github.io/</string>
+    <string name="library_Picasso_libraryName">Picasso</string>
+    <string name="library_Picasso_libraryDescription">A powerful image downloading and caching library for Android</string>
+    <string name="library_Picasso_libraryWebsite">http://square.github.io/picasso/</string>
+    <string name="library_Picasso_libraryVersion">2.71828</string>
+    <string name="library_Picasso_isOpenSource">true</string>
+    <string name="library_Picasso_repositoryLink">https://github.com/square/picasso</string>
+    <string name="library_Picasso_licenseId">apache_2_0</string>
+
+    <!-- MQTT Client -->
+    <string name="define_MQTTClient"/>
+    <string name="library_MQTTClient_author">Eclipse</string>
+    <string name="library_MQTTClient_authorWebsite">https://www.eclipse.org</string>
+    <string name="library_MQTTClient_libraryName">Eclipse Paho Java Client</string>
+    <string name="library_MQTTClient_libraryDescription">MQTT client library written in Java for developing applications that run on the JVM or other Java compatible platforms such as Android.</string>
+    <string name="library_MQTTClient_libraryWebsite">https://www.eclipse.org/paho/clients/java/</string>
+    <string name="library_MQTTClient_libraryVersion">1.2.0</string>
+    <string name="library_MQTTClient_isOpenSource">true</string>
+    <string name="library_MQTTClient_repositoryLink">https://github.com/eclipse/paho.mqtt.java</string>
+</resources>

@@ -1,0 +1,9 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.poul.bits.addon.mqtt">
+
+    <application>
+        <service android:name="org.poul.bits.addon.mqtt.services.MQTTService"
+            android:exported="false">
+        </service>
+    </application>
+</manifest>

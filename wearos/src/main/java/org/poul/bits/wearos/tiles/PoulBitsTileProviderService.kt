@@ -79,14 +79,16 @@ class PoulBitsTileProviderService : TileProviderService() {
             R.id.status_card,
             COMPLEX_UNIT_DIP,
             when {
-                widgetData.bitsData.message?.message?.isBlank() == true -> 15F
+                widgetData.bitsData.message?.message?.isBlank() == true -> 17F
                 widgetData.bitsData.status!! == BitsStatus.UNKNOWN      -> 17F
                 else                                                    -> 13F
             }
         )
 
-        if (widgetData.bitsData.status!! == BitsStatus.UNKNOWN) {
+        if (widgetData.bitsData.status!! == BitsStatus.UNKNOWN || widgetData.bitsData.message?.message?.isBlank() == true) {
             views.setViewVisibility(R.id.message_card, View.GONE)
+        } else {
+            views.setViewVisibility(R.id.message_card, View.VISIBLE)
         }
 
         if (!widgetData.loading) {
@@ -110,10 +112,26 @@ class PoulBitsTileProviderService : TileProviderService() {
 
         views.setTextViewText(
             R.id.status_card,
-            if (widgetData.bitsData.status!! == BitsStatus.UNKNOWN)
-                "\n" + Html.fromHtml(SimpleHtml.italic(getString(R.string.status_retrieve_failure_card))) +  "\n"
-            else
-                MainActivity.getStatusCardText(this, widgetData.bitsData)
+            when {
+                widgetData.bitsData.status!! == BitsStatus.UNKNOWN      ->
+                    Html.fromHtml(
+                        SimpleHtml.italic(
+                            "<br>" + getString(R.string.status_retrieve_failure_card) + "<br>"
+                        )
+                    )
+                widgetData.bitsData.message?.message?.isBlank() == true ->
+                    MainActivity.getStatusCardText(
+                        this,
+                        widgetData.bitsData,
+                        "<br>",
+                        "<br>"
+                    )
+                else                                                    ->
+                    MainActivity.getStatusCardText(
+                        this,
+                        widgetData.bitsData
+                    )
+            }
         )
 
         views.setTextViewText(

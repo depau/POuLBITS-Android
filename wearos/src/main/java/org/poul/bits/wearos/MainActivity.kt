@@ -14,7 +14,6 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import eu.depau.kotlet.android.extensions.ui.context.toast
-import eu.depau.kotlet.android.extensions.ui.view.snackbar
 import eu.depau.kotlet.extensions.builtins.round
 import kotlinx.android.synthetic.main.activity_main.*
 import org.poul.bits.android.lib.broadcasts.BitsStatusErrorBroadcast
@@ -238,7 +237,12 @@ class MainActivity : WearableActivity() {
     }
 
     companion object {
-        fun getStatusCardText(context: Context, bitsData: BitsData): Spanned? {
+        fun getStatusCardText(
+            context: Context,
+            bitsData: BitsData,
+            prefix: String = "",
+            suffix: String = ""
+        ): Spanned? {
             bitsData.lastModified ?: return null
             bitsData.modifiedBy ?: return null
 
@@ -262,15 +266,16 @@ class MainActivity : WearableActivity() {
             )
 
             return Html.fromHtml(
-                "$openedclosed ${
-                    html.bold(
-                        html.color(
-                            context,
-                            html.esc(bitsData.modifiedBy!!),
-                            R.color.colorAccent
-                        )
-                    )
-                }<br>" +
+                prefix +
+                        "$openedclosed ${
+                            html.bold(
+                                html.color(
+                                    context,
+                                    html.esc(bitsData.modifiedBy!!),
+                                    R.color.colorAccent
+                                )
+                            )
+                        }<br>" +
                         "${context.getString(R.string.last_changed)} ${
                             html.bold(
                                 html.color(
@@ -280,6 +285,7 @@ class MainActivity : WearableActivity() {
                                 )
                             )
                         }"
+                        + suffix
             )!!
         }
 

@@ -42,6 +42,9 @@ class MainActivity : WearableActivity() {
     private lateinit var appSettings: IAppSettingsHelper
     private lateinit var widgetStorage: SharedPrefsWidgetStorageHelper
 
+    // Toggle set in onCreate to delay starting the MQTT service and reduce startup times
+    private var deferMQTTStartToStopRefresh = false
+
     private val bitsDataReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             when (intent.action) {
@@ -89,6 +92,9 @@ class MainActivity : WearableActivity() {
         }
 
         startRefresh()
+
+        // Activity just created, give the poor thing a break and start MQTT later
+        deferMQTTStartToStopRefresh = true
     }
 
     fun startRefresh() {
@@ -98,6 +104,11 @@ class MainActivity : WearableActivity() {
 
     fun stopRefresh() {
         swiperefreshlayout.isRefreshing = false
+
+        if (deferMQTTStartToStopRefresh) {
+            deferMQTTStartToStopRefresh = false
+            optionallyStartStopMqttService()
+        }
     }
 
 
@@ -231,7 +242,9 @@ class MainActivity : WearableActivity() {
         super.onResume()
         registerReceiver(bitsDataReceiver, bitsDataIntentFilter)
         registerReceiver(bitsDataReceiver, bitsErrorIntentFilter)
-        optionallyStartStopMqttService()
+
+        if (!deferMQTTStartToStopRefresh)
+            optionallyStartStopMqttService()
     }
 
     override fun onPause() {

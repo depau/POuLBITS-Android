@@ -12,6 +12,8 @@ import android.text.Spanned
 import android.text.format.DateUtils
 import android.util.Log
 import android.view.View
+import android.widget.Toast
+import eu.depau.kotlet.android.extensions.ui.context.toast
 import eu.depau.kotlet.android.extensions.ui.view.snackbar
 import eu.depau.kotlet.extensions.builtins.round
 import kotlinx.android.synthetic.main.activity_main.*
@@ -48,7 +50,7 @@ class MainActivity : WearableActivity() {
                 }
                 BitsStatusErrorBroadcast.ACTION -> {
                     updateGuiError()
-                    status_button.snackbar(getString(R.string.check_network_connection))
+                    toast(getString(R.string.check_network_connection), Toast.LENGTH_SHORT)
                     stopRefresh()
                 }
             }

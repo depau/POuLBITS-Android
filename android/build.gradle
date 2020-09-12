@@ -18,14 +18,14 @@ android {
 
     buildTypes {
         debug {
-            minifyEnabled false
-            shrinkResources false  // Avoid conflicts with Instant Run
+            minifyEnabled true
+            shrinkResources true  // Avoid conflicts with Instant Run
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
         release {
             minifyEnabled true
-            shrinkResources false
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

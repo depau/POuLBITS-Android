@@ -28,9 +28,28 @@
     <string name="add_widget">Aggiungi widget</string>
     <string name="app_description">Client Android per B.I.T.S. del Politecnico Open unix Labs</string>
     <string name="pref_ringtone_silent">Silenzioso</string>
-    <string name="settings_http_url_desc">Default: https://bits.poul.org/data</string>
-    <string name="settings_http_presence_img_url_desc">Default: https://bits.poul.org/bits_presence.png</string>
+    <string name="settings_http_url_desc">Predefinito: https://bits.poul.org/data</string>
+    <string name="settings_http_presence_img_url_desc">Predefinito: https://bits.poul.org/bits_presence.png</string>
 
-    <string name="appwidget_text">EXAMPLE</string>
+    <string name="appwidget_text">ESEMPIO</string>
     <string name="configure">Configura</string>
+    <string name="aboutLibraries_description_text">Client POuL B.I.T.S. per Android</string>
+    <string name="library_AndroidX_libraryDescription">AndroidX fornisce grandi migliorie rispetto alla tradizionale Android Support Library e fornisce retrocompatibilità sulle versioni precedenti di Android</string>
+    <string name="library_KotlinStdlib_libraryName">Libreria Standard Kotlin</string>
+    <string name="library_KotlinStdlib_libraryDescription">La Libreria Standard Kotlin fornisce le basi per lavorare con Kotlin</string>
+    <string name="library_Kotlet_libraryDescription">Commons per Kotlin per buttar via il codice di boilerplate</string>
+    <string name="library_KotletAndroid_libraryDescription">Commons per Kotlin per buttar via il codice di boilerplate (componenti per Android)</string>
+    <string name="library_Material_libraryDescription">Sviluppa bei prodotti, rapidamente. Material è un sistema di design, basato su codice aperto, che aiuta i team di sviluppo a creare esperienze digitali</string>
+    <string name="library_SpringAndroid_libraryName">Spring RestTemplate per Android</string>
+    <string name="library_SpringAndroid_libraryDescription">Spring per Android è un\'estensione del Framework Spring che mira a semplificare lo sviluppo di applicazioni native</string>
+    <string name="library_CompoundIconTextView_libraryDescription">Una libreria Android per utilizzare visualizzare immagini vettoriali accanto a del testo sulle versioni di Android precedenti a Lollipop</string>
+    <string name="library_JacksonDatabind_libraryDescription">Funzionalità di data-binding generica e modello ad albero per l\'elaboratore di dati Jackson</string>
+    <string name="library_JacksonKotlinModule_libraryName">Modulo Jackson per Kotlin</string>
+    <string name="library_JacksonKotlinModule_libraryDescription">Modulo che aggiunge il supporto per la (de)serializzazione di classi e classi dati di Kotlin</string>
+    <string name="library_Picasso_libraryDescription">Una potente libreria per scaricare immagini e tenerle nella cache</string>
+    <string name="library_MQTTClient_libraryDescription">Libreria client MQTT scritta in Java, per sviluppare applicazioni per la JVM o altre piattaforme compatibili come Android</string>
+    <string name="tile_data_expire_setting_desc">Le schede non si aggiorneranno più spesso di quanto specificato</string>
+    <string name="tile_data_expire_setting">Aggiorna schede ogni (minuti)</string>
+    <string name="tile">Schede</string>
+    <string name="updating_tiles">Aggiornamento schede…</string>
 </resources>

@@ -3,9 +3,7 @@
     <string name="headquarters_open">HQs OPEN</string>
     <string name="headquarters_closed">HQs CLOSED</string>
     <string name="headquarters_gialla">HQs GIALLA</string>
-    <string name="channel_bits_retrieving_status_description">"Displayed while the app is running in background to
-        retrieve the headquarters status. "
-    </string>
+    <string name="channel_bits_retrieving_status_description">"Displayed while the app is running in background to retrieve the headquarters status. \n    "</string>
     <string name="channel_bits_retrieving_status_name">B.I.T.S. status update service</string>
     <string name="updating_bits_status">Updating B.I.T.S. status</string>
     <string name="updating_bits_desc">Retrieving headquarters state from server</string>

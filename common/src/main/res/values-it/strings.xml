@@ -3,9 +3,7 @@
     <string name="headquarters_open">SEDE APERTA</string>
     <string name="headquarters_closed">SEDE CHIUSA</string>
     <string name="headquarters_gialla">SEDE GIALLA</string>
-    <string name="channel_bits_retrieving_status_description">Mostrato mentre l\'app sta ricevendo lo stato in
-        background.
-    </string>
+    <string name="channel_bits_retrieving_status_description">"Mostrato mentre l'app sta ricevendo lo stato in background.\n    "</string>
     <string name="channel_bits_retrieving_status_name">Servizio di aggiornamento stato B.I.T.S.</string>
     <string name="updating_bits_status">Aggiornamento stato B.I.T.S.</string>
     <string name="updating_bits_desc">Ricezione stato sede dal server</string>

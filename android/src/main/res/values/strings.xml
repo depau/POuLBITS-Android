@@ -47,5 +47,5 @@
     <string name="tile_data_expire_setting_desc">Tiles won\'t update automatically more often than this</string>
     <string name="tile_data_expire_setting">Update tile every (mins)</string>
     <string name="tile">Tile</string>
-    <string name="updating_tiles">Updating tiles...</string>
+    <string name="updating_tiles">Updating tiles…</string>
 </resources>

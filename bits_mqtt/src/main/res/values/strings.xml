@@ -2,7 +2,7 @@
 <resources>
     <string name="mqtt_service_running">MQTT service is running</string>
     <string name="mqtt_notification_desc">Receiving real-time updates from local MQTT server</string>
-    <string name="app_name">POuL BITS (headquarters)</string>
+    <string name="app_name">POuL BITS</string>
     <string name="settings_enable_mqtt">Enable MQTT service</string>
     <string name="settings_enable_mqtt_desc">Subscribe to local MQTT server</string>
     <string name="settings_enable_mqtt_desc_off">Not subscribed to local MQTT server</string>

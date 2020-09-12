@@ -23,11 +23,12 @@ import org.poul.bits.android.lib.model.enum.BitsStatus
 import org.poul.bits.android.lib.services.CHANNEL_BITS_RETRIEVE_STATUS
 import java.util.*
 
-private const val FOREGROUND_MQTT_SERVICE_ID = 5919
+private const val FOREGROUND_MQTT_SERVICE_ID = 1420
 private const val LOG_TAG = "MQTTService"
 
 class MQTTService : IntentService("MQTTService"), MqttCallbackExtended {
     private var shouldStop: Boolean = false
+    private var shouldRestart: Boolean = false
     private lateinit var appSettings: IAppSettingsHelper
     private val gson = Gson()
     private var mqtt: MqttAsyncClient? = null
@@ -54,7 +55,7 @@ class MQTTService : IntentService("MQTTService"), MqttCallbackExtended {
 
     private fun getMQTT(): MqttAsyncClient {
         val broker = "${appSettings.mqttProto}://${appSettings.mqttServer}"
-        val clientId = "bits_android_client"
+        val clientId = "bits_android_client_" + Random().nextInt()
 
         return MqttAsyncClient(broker, clientId, MemoryPersistence())
     }
@@ -138,26 +139,28 @@ class MQTTService : IntentService("MQTTService"), MqttCallbackExtended {
 
     private fun handleActionStart() {
         startForeground(FOREGROUND_MQTT_SERVICE_ID, getForegroundNotification())
+        do {
+            shouldRestart = false
+            Log.i(LOG_TAG, "MQTT service started")
 
-        Log.i(LOG_TAG, "MQTT service started")
+            mqtt = getMQTT().apply {
+                setCallback(this@MQTTService)
+                connect(MqttConnectOptions().apply {
+                    isCleanSession = false
+                    isAutomaticReconnect = false
+                })
+            }
 
-        mqtt = getMQTT().apply {
-            setCallback(this@MQTTService)
-            connect(MqttConnectOptions().apply {
-                isCleanSession = false
-                isAutomaticReconnect = true
-            })
-        }
+            while (!shouldStop && !shouldRestart)
+                Thread.sleep(500)
 
-        while (!shouldStop)
-            Thread.sleep(300)
+            mqtt
+                ?.takeIf { it.isConnected }
+                ?.disconnect()
 
-        mqtt
-            ?.takeIf { it.isConnected }
-            ?.disconnect()
-
-        mqtt = null
-        Log.i(LOG_TAG, "MQTT service stopped")
+            mqtt = null
+            Log.i(LOG_TAG, "MQTT service stopped")
+        } while (shouldRestart)
         stopForeground(true)
     }
 
@@ -172,12 +175,8 @@ class MQTTService : IntentService("MQTTService"), MqttCallbackExtended {
     }
 
     override fun connectionLost(cause: Throwable?) {
-        if (!shouldStop) {
-            Log.w(LOG_TAG, "MQTT connection lost, attempting reconnection in 1 second", cause)
-            Thread.sleep(1000)
-        }
-        if (!shouldStop)
-            handleActionStart()
+        Log.w(LOG_TAG, "MQTT connection lost", cause)
+        shouldRestart = true
     }
 
     override fun deliveryComplete(token: IMqttDeliveryToken?) {}

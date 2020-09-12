@@ -27,6 +27,7 @@ class TileUpdateIntentService : JobIntentService() {
 
         override fun onServiceDisconnected(className: ComponentName?) {
             serviceBound = false
+            unbindService(this)
             stopForeground(true)
             stopSelf()
         }
@@ -51,7 +52,12 @@ class TileUpdateIntentService : JobIntentService() {
             Context.BIND_AUTO_CREATE
         )
 
-        // Work continues in tileProviderConn once the service is bound
+        // Work continues in tileProviderConn once the service is bound, sleep here to prevent warning
+        for (i in 0..20) {
+            if (!serviceBound)
+                return
+            Thread.sleep(50)
+        }
     }
 
     override fun onDestroy() {

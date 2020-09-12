@@ -1,4 +1,10 @@
 <resources>
+
+    <style name="AppTheme.Launcher">
+        <item name="android:windowBackground">@drawable/wear_splash</item>
+        <item name="colorPrimaryDark">@android:color/black</item>
+    </style>
+
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.Wearable">
         <!-- Customize your theme here. -->

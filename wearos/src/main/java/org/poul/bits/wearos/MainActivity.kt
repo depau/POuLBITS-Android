@@ -59,7 +59,9 @@ class MainActivity : WearableActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
+
         appSettings = AppSettingsHelper(this).apply {
             migrate()
         }

@@ -80,6 +80,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme_NoActionBar)
         super.onCreate(savedInstanceState)
 
         SVG.registerExternalFileResolver(SimpleAssetResolver(assets))

@@ -21,6 +21,7 @@ import org.poul.bits.android.lib.broadcasts.BitsStatusReceivedBroadcast
 import org.poul.bits.android.lib.controllers.appsettings.IAppSettingsHelper
 import org.poul.bits.android.lib.controllers.appsettings.enum.TemperatureUnit
 import org.poul.bits.android.lib.controllers.appsettings.impl.AppSettingsHelper
+import org.poul.bits.android.lib.controllers.widgetstorage.impl.SharedPrefsWidgetStorageHelper
 import org.poul.bits.android.lib.misc.*
 import org.poul.bits.android.lib.model.BitsData
 import org.poul.bits.android.lib.model.BitsMessage
@@ -39,6 +40,7 @@ class MainActivity : WearableActivity() {
     private val bitsErrorIntentFilter = IntentFilter(BitsStatusErrorBroadcast.ACTION)
 
     private lateinit var appSettings: IAppSettingsHelper
+    private lateinit var widgetStorage: SharedPrefsWidgetStorageHelper
 
     private val bitsDataReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -61,6 +63,8 @@ class MainActivity : WearableActivity() {
         appSettings = AppSettingsHelper(this).apply {
             migrate()
         }
+        widgetStorage = SharedPrefsWidgetStorageHelper(this)
+
         setAmbientEnabled()
         setContentView(R.layout.activity_main)
 
@@ -68,20 +72,18 @@ class MainActivity : WearableActivity() {
         sensors_card.visibility = View.GONE
         message_card.visibility = View.GONE
 
-        status_button.setOnClickListener {
-            playGialla()
-        }
 
         settings_button.setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
 
-        refresh_button.setOnClickListener {
-            startRefresh()
-        }
+        status_button.setOnClickListener { playGialla() }
+        refresh_button.setOnClickListener { startRefresh() }
+        swiperefreshlayout.setOnRefreshListener { startRefresh() }
 
-        swiperefreshlayout.setOnRefreshListener {
-            startRefresh()
+        // Load last widget/tile data if available
+        if (widgetStorage.lastDataUpdate > -1 && widgetStorage.bitsData.status != BitsStatus.UNKNOWN) {
+            updateGuiWithStatusData(widgetStorage.bitsData)
         }
 
         startRefresh()

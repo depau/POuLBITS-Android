@@ -2,7 +2,7 @@ package org.poul.bits.wearos.tiles
 
 import android.app.PendingIntent
 import android.content.Intent
-import android.util.Log
+import android.text.Html
 import android.util.TypedValue.COMPLEX_UNIT_DIP
 import android.view.View
 import android.widget.RemoteViews
@@ -11,6 +11,7 @@ import com.google.android.clockwork.tiles.TileProviderService
 import eu.depau.kotlet.android.extensions.intent.pendingIntentGetForegroundServiceCompat
 import org.poul.bits.android.lib.controllers.appsettings.impl.AppSettingsHelper
 import org.poul.bits.android.lib.controllers.widgetstorage.impl.SharedPrefsWidgetStorageHelper
+import org.poul.bits.android.lib.misc.SimpleHtml
 import org.poul.bits.android.lib.misc.getTextForStatus
 import org.poul.bits.android.lib.model.BitsData
 import org.poul.bits.android.lib.model.enum.BitsStatus
@@ -74,10 +75,18 @@ class PoulBitsTileProviderService : TileProviderService() {
 
         views.setTextViewTextSize(R.id.status_button, COMPLEX_UNIT_DIP, 13F)
         views.setTextViewTextSize(R.id.message_card, COMPLEX_UNIT_DIP, 13F)
-        if (widgetData.bitsData.message?.message?.isBlank() == true) {
-            views.setTextViewTextSize(R.id.status_card, COMPLEX_UNIT_DIP, 15F)
-        } else {
-            views.setTextViewTextSize(R.id.status_card, COMPLEX_UNIT_DIP, 13F)
+        views.setTextViewTextSize(
+            R.id.status_card,
+            COMPLEX_UNIT_DIP,
+            when {
+                widgetData.bitsData.message?.message?.isBlank() == true -> 15F
+                widgetData.bitsData.status!! == BitsStatus.UNKNOWN      -> 17F
+                else                                                    -> 13F
+            }
+        )
+
+        if (widgetData.bitsData.status!! == BitsStatus.UNKNOWN) {
+            views.setViewVisibility(R.id.message_card, View.GONE)
         }
 
         if (!widgetData.loading) {
@@ -101,7 +110,10 @@ class PoulBitsTileProviderService : TileProviderService() {
 
         views.setTextViewText(
             R.id.status_card,
-            MainActivity.getStatusCardText(this, widgetData.bitsData)
+            if (widgetData.bitsData.status!! == BitsStatus.UNKNOWN)
+                "\n" + Html.fromHtml(SimpleHtml.italic(getString(R.string.status_retrieve_failure_card))) +  "\n"
+            else
+                MainActivity.getStatusCardText(this, widgetData.bitsData)
         )
 
         views.setTextViewText(

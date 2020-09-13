@@ -2,6 +2,7 @@ package org.poul.bits.addon.mqtt.services
 
 import android.app.IntentService
 import android.app.Notification
+import android.app.PendingIntent
 import android.app.job.JobInfo
 import android.app.job.JobScheduler
 import android.content.ComponentName
@@ -64,6 +65,13 @@ class MQTTService : IntentService("MQTTService"), MqttCallbackExtended {
             ?.let { SimpleDateFormat.getDateTimeInstance().format(bitsData.lastModified!!) }
             ?: getString(R.string.last_updated_unknown)
 
+        val pendingIntent = PendingIntent.getActivity(
+            this,
+            FOREGROUND_MQTT_SERVICE_ID,
+            packageManager.getLaunchIntentForPackage(applicationContext.packageName),
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
         return getNotificationBuilder(CHANNEL_BITS_RETRIEVE_STATUS)
             .setOngoing(true)
             .setContentTitle(
@@ -73,6 +81,7 @@ class MQTTService : IntentService("MQTTService"), MqttCallbackExtended {
                     else              -> getString(R.string.hq_gialla_long)
                 }
             )
+            .setContentIntent(pendingIntent)
             .setSubText(getString(if (mqttConnected) R.string.connected else R.string.not_connected))
             .setContentText(getString(R.string.last_updated_at, changedTime))
             .setStyle(

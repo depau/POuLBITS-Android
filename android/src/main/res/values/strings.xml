@@ -65,5 +65,6 @@
     <string name="hq_gialla_long">POuL HQs unknown</string>
     <string name="connected">Connected</string>
     <string name="not_connected">Not connected</string>
+    <string name="tiles_and_complications_reset">Tiles and complications reset</string>
 
 </resources>

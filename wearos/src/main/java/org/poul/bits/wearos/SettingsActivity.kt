@@ -36,7 +36,7 @@ class SettingsActivity : AppCompatActivity() {
             findPreference("reset_tiles_pref").apply {
                 setOnPreferenceClickListener {
                     SharedPrefsWidgetStorageHelper(context).clear()
-                    context.toast("Tiles and complications reset", Toast.LENGTH_SHORT)
+                    context.toast(getString(R.string.tiles_and_complications_reset), Toast.LENGTH_SHORT)
                     true
                 }
             }

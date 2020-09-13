@@ -30,7 +30,6 @@ import eu.depau.kotlet.extensions.builtins.round
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import me.jfenn.attribouter.Attribouter
-import org.poul.bits.android.BuildConfig
 import org.poul.bits.android.R
 import org.poul.bits.android.lib.broadcasts.BitsStatusErrorBroadcast
 import org.poul.bits.android.lib.broadcasts.BitsStatusReceivedBroadcast
@@ -50,7 +49,6 @@ import org.poul.bits.android.lib.model.enum.BitsDataSource
 import org.poul.bits.android.lib.model.enum.BitsSensorType
 import org.poul.bits.android.lib.model.enum.BitsStatus
 import org.poul.bits.android.lib.mqtt_stub.MQTTHelperFactory
-import org.poul.bits.android.lib.mqtt_stub.StubMQTTServiceHelper
 import org.poul.bits.android.lib.services.BitsRetrieveStatusService
 
 class MainActivity : AppCompatActivity() {
@@ -70,7 +68,7 @@ class MainActivity : AppCompatActivity() {
                     } ?: onPresenceImageLoadError()
                     stopRefresh()
                 }
-                BitsStatusErrorBroadcast.ACTION    -> {
+                BitsStatusErrorBroadcast.ACTION -> {
                     updateGuiError()
                     extended_fab.snackbar(getString(R.string.check_network_connection))
                     stopRefresh()
@@ -116,7 +114,7 @@ class MainActivity : AppCompatActivity() {
 
             (card_linearlayout.layoutParams as FrameLayout.LayoutParams).topMargin =
                 when (appSettings.fullscreen) {
-                    true  -> 0
+                    true -> 0
                     false -> resources.getDimension(R.dimen.text_margin).toInt()
                 }
         }
@@ -209,7 +207,8 @@ class MainActivity : AppCompatActivity() {
             italic(getString(R.string.status_retrieve_failure_card))
         )
 
-        extended_fab.backgroundTintList = resources.getColorStateListCompat(R.color.colorHQsGialla, theme)
+        extended_fab.backgroundTintList =
+            resources.getColorStateListCompat(R.color.colorHQsGialla, theme)
         extended_fab.text = getString(R.string.headquarters_gialla)
     }
 
@@ -244,28 +243,30 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getSensorValueWithUserPreferredUnit(reading: BitsSensorData): Double = when (reading.type!!) {
-        BitsSensorType.TEMPERATURE ->
-            when (appSettings.temperatureUnit) {
-                TemperatureUnit.CELSIUS    -> reading.value
-                TemperatureUnit.FAHRENHEIT -> celsiusToFahrenheit(reading.value)
-                TemperatureUnit.KELVIN     -> celsiusToKelvin(reading.value)
-            }
-        BitsSensorType.HUMIDITY    ->
-            reading.value
-    }
+    private fun getSensorValueWithUserPreferredUnit(reading: BitsSensorData): Double =
+        when (reading.type!!) {
+            BitsSensorType.TEMPERATURE ->
+                when (appSettings.temperatureUnit) {
+                    TemperatureUnit.CELSIUS    -> reading.value
+                    TemperatureUnit.FAHRENHEIT -> celsiusToFahrenheit(reading.value)
+                    TemperatureUnit.KELVIN     -> celsiusToKelvin(reading.value)
+                }
+            BitsSensorType.HUMIDITY ->
+                reading.value
+        }
 
-    private fun getUserPreferredUnitStringForSensorReading(reading: BitsSensorData): String = when (reading.type!!) {
-        BitsSensorType.TEMPERATURE ->
-            when (appSettings.temperatureUnit) {
-                TemperatureUnit.CELSIUS    -> "°C"
-                TemperatureUnit.FAHRENHEIT -> "°F"
-                TemperatureUnit.KELVIN     -> "K"
+    private fun getUserPreferredUnitStringForSensorReading(reading: BitsSensorData): String =
+        when (reading.type!!) {
+            BitsSensorType.TEMPERATURE ->
+                when (appSettings.temperatureUnit) {
+                    TemperatureUnit.CELSIUS    -> "°C"
+                    TemperatureUnit.FAHRENHEIT -> "°F"
+                    TemperatureUnit.KELVIN     -> "K"
 
-            }
-        BitsSensorType.HUMIDITY    ->
-            "%"
-    }
+                }
+            BitsSensorType.HUMIDITY ->
+                "%"
+        }
 
     @SuppressLint("SetTextI18n")
     fun updateSensorCardWithTempData(bitsData: BitsData) {
@@ -276,8 +277,8 @@ class MainActivity : AppCompatActivity() {
         sensorDataLoop@ for (reading in sensorData) {
             val view = when (reading.type) {
                 BitsSensorType.TEMPERATURE -> temperature_textview
-                BitsSensorType.HUMIDITY    -> humidity_textview
-                null                       -> continue@sensorDataLoop
+                BitsSensorType.HUMIDITY -> humidity_textview
+                null -> continue@sensorDataLoop
             }
 
             val value = getSensorValueWithUserPreferredUnit(reading).round(1)
@@ -306,7 +307,7 @@ class MainActivity : AppCompatActivity() {
             return stopMqttService()
 
         val mqttHelper = MQTTHelperFactory.getMqttHelper(appSettings)
-        if (mqttHelper is StubMQTTServiceHelper) {
+        if (!mqttHelper.hasMQTTService) {
             Log.w(
                 "MainActivity",
                 "Stub MQTT service is in use and you're running the MQTT build flavor"
@@ -332,7 +333,9 @@ class MainActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         unregisterReceiver(bitsDataReceiver)
-        stopMqttService()
+
+        if (!appSettings.mqttStartOnBoot)
+            stopMqttService()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -351,7 +354,7 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, SettingsActivity::class.java))
                 true
             }
-            R.id.action_about    -> {
+            R.id.action_about -> {
                 Attribouter
                     .from(this)
                     .show()
@@ -386,14 +389,24 @@ class MainActivity : AppCompatActivity() {
             )
 
             return Html.fromHtml(
-                "$openedclosed ${bold(color(context, esc(bitsData.modifiedBy!!), R.color.colorAccent))}<br>" +
-                        "${context.getString(R.string.last_changed)} ${bold(
-                            color(
-                                context,
-                                changedTime,
-                                R.color.colorAccent
+                "$openedclosed ${
+                    bold(
+                        color(
+                            context,
+                            esc(bitsData.modifiedBy!!),
+                            R.color.colorAccent
+                        )
+                    )
+                }<br>" +
+                        "${context.getString(R.string.last_changed)} ${
+                            bold(
+                                color(
+                                    context,
+                                    changedTime,
+                                    R.color.colorAccent
+                                )
                             )
-                        )}"
+                        }"
             )!!
         }
 
@@ -408,19 +421,23 @@ class MainActivity : AppCompatActivity() {
             )
 
             return Html.fromHtml(
-                "${context.getString(R.string.last_msg_from)} ${bold(
-                    color(
-                        context,
-                        esc(bitsData.user),
-                        R.color.colorAccent
+                "${context.getString(R.string.last_msg_from)} ${
+                    bold(
+                        color(
+                            context,
+                            esc(bitsData.user),
+                            R.color.colorAccent
+                        )
                     )
-                )}, ${bold(
-                    color(
-                        context,
-                        esc(sentTime),
-                        R.color.colorAccent
+                }, ${
+                    bold(
+                        color(
+                            context,
+                            esc(sentTime),
+                            R.color.colorAccent
+                        )
                     )
-                )} $br" +
+                } $br" +
                         italic("“${esc(bitsData.message)}”")
             )!!
         }

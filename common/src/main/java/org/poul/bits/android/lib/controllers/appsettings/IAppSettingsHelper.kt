@@ -12,6 +12,7 @@ interface IAppSettingsHelper {
     var presenceVectorUri: String
 
     var mqttEnabled: Boolean
+    var mqttStartOnBoot: Boolean
     var mqttProto: String
     var mqttServer: String
     var mqttSedeTopic: String

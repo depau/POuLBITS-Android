@@ -33,6 +33,10 @@ class AppSettingsHelper(val context: Context) : IAppSettingsHelper {
         get() = sharedPrefs.getBoolean("enable_mqtt", false)
         set(value) = sharedPrefs.edit { putBoolean("enable_mqtt", value) }
 
+    override var mqttStartOnBoot: Boolean
+        get() = sharedPrefs.getBoolean("bootup_mqtt", false)
+        set(value) = sharedPrefs.edit { putBoolean("bootup_mqtt", value) }
+    
     override var mqttProto: String
         get() = sharedPrefs.getString("mqtt_proto", "wss")!!
         set(value) = sharedPrefs.edit { putString("mqtt_proto", value) }

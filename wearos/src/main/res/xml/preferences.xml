@@ -41,6 +41,15 @@
             android:defaultValue="false"
             />
 
+        <SwitchPreference
+            android:title="Start MQTT on boot"
+            android:summary="If you want to receive real-time updates"
+            android:summaryOff="You won't receive real-time updates"
+            android:summaryOn="You will receive real-time updates"
+            android:key="bootup_mqtt"
+            android:defaultValue="false"
+            />
+
         <ListPreference
             android:title="@string/settings_mqtt_proto_title"
             android:summary="@string/settings_mqtt_proto_desc"

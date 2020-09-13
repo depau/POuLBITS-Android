@@ -30,7 +30,6 @@ import org.poul.bits.android.lib.model.enum.BitsDataSource
 import org.poul.bits.android.lib.model.enum.BitsSensorType
 import org.poul.bits.android.lib.model.enum.BitsStatus
 import org.poul.bits.android.lib.mqtt_stub.MQTTHelperFactory
-import org.poul.bits.android.lib.mqtt_stub.StubMQTTServiceHelper
 import org.poul.bits.android.lib.services.BitsRetrieveStatusService
 import org.poul.bits.android.lib.misc.SimpleHtml as html
 
@@ -222,7 +221,7 @@ class MainActivity : WearableActivity() {
             return stopMqttService()
 
         val mqttHelper = MQTTHelperFactory.getMqttHelper(appSettings)
-        if (mqttHelper is StubMQTTServiceHelper) {
+        if (!mqttHelper.hasMQTTService) {
             Log.w(
                 "MainActivity",
                 "Stub MQTT service is in use and you're running the MQTT build flavor"
@@ -250,7 +249,9 @@ class MainActivity : WearableActivity() {
     override fun onPause() {
         super.onPause()
         unregisterReceiver(bitsDataReceiver)
-        stopMqttService()
+
+        if (!appSettings.mqttStartOnBoot)
+            stopMqttService()
     }
 
     companion object {

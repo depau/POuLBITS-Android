@@ -2,11 +2,17 @@ package org.poul.bits.addon.mqtt.services
 
 import android.app.IntentService
 import android.app.Notification
+import android.app.job.JobInfo
+import android.app.job.JobScheduler
+import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.util.Log
 import com.google.gson.Gson
 import eu.depau.kotlet.android.extensions.notification.buildCompat
 import eu.depau.kotlet.android.extensions.ui.context.getNotificationBuilder
+import eu.depau.kotlet.android.extensions.ui.context.startForegroundServiceCompat
 import org.eclipse.paho.client.mqttv3.*
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence
 import org.poul.bits.addon.mqtt.Constants.ACTION_START
@@ -191,4 +197,22 @@ class MQTTService : IntentService("MQTTService"), MqttCallbackExtended {
         super.onDestroy()
     }
 
+    companion object {
+        fun ensureService(context: Context) {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                context.startForegroundServiceCompat(
+                    Intent(context, MQTTService::class.java)
+                        .apply { action = ACTION_START }
+                )
+            } else {
+                val jobScheduler = context.getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
+                jobScheduler.schedule(
+                    JobInfo.Builder(1, ComponentName(context, MQTTShimJobService::class.java))
+                        .setOverrideDeadline(0)
+                        .setPersisted(true)
+                        .build()
+                )
+            }
+        }
+    }
 }

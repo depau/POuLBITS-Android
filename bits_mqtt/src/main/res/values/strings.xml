@@ -17,6 +17,13 @@
     <string name="settings_mqtt_temptopic_desc">MQTT topic on which temperature readings are provided</string>
     <string name="settings_mqtt_humtopic_title">Humidity topic</string>
     <string name="settings_mqtt_humtopic_desc">MQTT topic on which humidity readings are provided</string>
+    <string name="hq_open_long">POuL headquarters open</string>
+    <string name="hq_closed_long">POuL headquarters closed</string>
+    <string name="hq_gialla_long">POuL headquarters status unknown</string>
+    <string name="connected">Connected to MQTT</string>
+    <string name="not_connected">Not connected to MQTT</string>
+    <string name="last_updated_at">Last updated on %s</string>
+    <string name="last_updated_unknown">that time when JackV made something not Verde Pisello™</string>
 
     <string-array name="settings_mqtt_proto_titles">
         <item>TCP</item>

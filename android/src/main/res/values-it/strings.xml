@@ -57,4 +57,9 @@
     <string name="complication_opened_at">Aperto %s</string>
     <string name="complication_closed_at">Chiuso %s</string>
     <string name="headquarters_status">Stato sede</string>
+    <string name="hq_open_long">Sede aperta</string>
+    <string name="hq_closed_long">Sede chiusa</string>
+    <string name="hq_gialla_long">Sede gialla</string>
+    <string name="connected">Connesso</string>
+    <string name="not_connected">Non connesso</string>
 </resources>

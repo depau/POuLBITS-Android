@@ -9,6 +9,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.util.Log
+import androidx.core.app.NotificationManagerCompat
 import com.google.gson.Gson
 import eu.depau.kotlet.android.extensions.notification.buildCompat
 import eu.depau.kotlet.android.extensions.ui.context.getNotificationBuilder
@@ -27,6 +28,7 @@ import org.poul.bits.android.lib.model.enum.BitsDataSource
 import org.poul.bits.android.lib.model.enum.BitsSensorType
 import org.poul.bits.android.lib.model.enum.BitsStatus
 import org.poul.bits.android.lib.services.CHANNEL_BITS_RETRIEVE_STATUS
+import java.text.SimpleDateFormat
 import java.util.*
 
 private const val FOREGROUND_MQTT_SERVICE_ID = 1420
@@ -38,6 +40,7 @@ class MQTTService : IntentService("MQTTService"), MqttCallbackExtended {
     private lateinit var appSettings: IAppSettingsHelper
     private val gson = Gson()
     private var mqtt: MqttAsyncClient? = null
+    private var lastBitsData: BitsData? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -52,10 +55,37 @@ class MQTTService : IntentService("MQTTService"), MqttCallbackExtended {
         }
     }
 
-    private fun getForegroundNotification(): Notification {
+    private fun getForegroundNotification(
+        bitsData: BitsData?,
+        mqttConnected: Boolean
+    ): Notification {
+
+        val changedTime = bitsData?.lastModified
+            ?.let { SimpleDateFormat.getDateTimeInstance().format(bitsData.lastModified!!) }
+            ?: getString(R.string.last_updated_unknown)
+
         return getNotificationBuilder(CHANNEL_BITS_RETRIEVE_STATUS)
-            .setContentTitle(getString(R.string.mqtt_service_running))
-            .setContentText(getString(R.string.mqtt_notification_desc))
+            .setOngoing(true)
+            .setContentTitle(
+                when (bitsData?.status) {
+                    BitsStatus.OPEN   -> getString(R.string.hq_open_long)
+                    BitsStatus.CLOSED -> getString(R.string.hq_closed_long)
+                    else              -> getString(R.string.hq_gialla_long)
+                }
+            )
+            .setSubText(getString(if (mqttConnected) R.string.connected else R.string.not_connected))
+            .setContentText(getString(R.string.last_updated_at, changedTime))
+            .setStyle(
+                Notification.BigTextStyle()
+                    .bigText(getString(R.string.last_updated_at, changedTime))
+            )
+            .setSmallIcon(
+                when (bitsData?.status) {
+                    BitsStatus.OPEN   -> R.drawable.ic_door_open
+                    BitsStatus.CLOSED -> R.drawable.ic_door_closed
+                    else              -> R.drawable.ic_door_unknown
+                }
+            )
             .buildCompat()
     }
 
@@ -113,17 +143,28 @@ class MQTTService : IntentService("MQTTService"), MqttCallbackExtended {
             BitsDataSource.MQTT
         )
 
+    private fun updateNotification() {
+        with(NotificationManagerCompat.from(this)) {
+            notify(
+                FOREGROUND_MQTT_SERVICE_ID,
+                getForegroundNotification(lastBitsData, mqtt?.isConnected ?: false)
+            )
+        }
+    }
+
     private fun handleStatusMessage(message: MqttMessage) {
         try {
             val statusMessage =
                 gson.fromJson(String(message.payload), BitsMQTTSedeMessage::class.java)
 
+            lastBitsData = mqttMessageToBitsData(statusMessage)
+
+            // Update notification
+            updateNotification()
+
             // Ugly hack to wait for the HTTP server to get in sync
             Thread.sleep(500)
-
-            BitsStatusReceivedBroadcast.broadcast(
-                this, mqttMessageToBitsData(statusMessage)
-            )
+            BitsStatusReceivedBroadcast.broadcast(this, lastBitsData!!)
 
         } catch (e: Exception) {
             Log.e(LOG_TAG, "Error parsing MQTT status JSON: ${String(message.payload)}", e)
@@ -144,7 +185,7 @@ class MQTTService : IntentService("MQTTService"), MqttCallbackExtended {
     }
 
     private fun handleActionStart() {
-        startForeground(FOREGROUND_MQTT_SERVICE_ID, getForegroundNotification())
+        startForeground(FOREGROUND_MQTT_SERVICE_ID, getForegroundNotification(null, false))
         do {
             shouldRestart = false
             Log.i(LOG_TAG, "MQTT service started")
@@ -183,6 +224,7 @@ class MQTTService : IntentService("MQTTService"), MqttCallbackExtended {
     override fun connectionLost(cause: Throwable?) {
         Log.w(LOG_TAG, "MQTT connection lost", cause)
         shouldRestart = true
+        updateNotification()
     }
 
     override fun deliveryComplete(token: IMqttDeliveryToken?) {}
@@ -190,6 +232,7 @@ class MQTTService : IntentService("MQTTService"), MqttCallbackExtended {
     override fun connectComplete(reconnect: Boolean, serverURI: String?) {
         println("Connect complete")
         mqtt?.subscribeTopics()
+        updateNotification()
     }
 
     override fun onDestroy() {

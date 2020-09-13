@@ -17,4 +17,11 @@
     <string name="settings_mqtt_temptopic_desc">Topic MQTT su cui è fornita la temperatura</string>
     <string name="settings_mqtt_humtopic_title">Topic umidità</string>
     <string name="settings_mqtt_humtopic_desc">Topic MQTT su cui è fornita l\'umidità</string>
+    <string name="hq_open_long">Sede POuL aperta</string>
+    <string name="hq_closed_long">Sede POuL chiusa</string>
+    <string name="hq_gialla_long">Stato sede POuL sconosciuto</string>
+    <string name="connected">Connesso a MQTT</string>
+    <string name="not_connected">Non connesso a MQTT</string>
+    <string name="last_updated_at">Ultimo aggiornamento %s</string>
+    <string name="last_updated_unknown">quella volta che JackV ha fatto una cosa non Verde Pisello™</string>
 </resources>

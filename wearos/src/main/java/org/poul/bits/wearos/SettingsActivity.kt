@@ -7,7 +7,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.preference.*
 import android.text.TextUtils
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import eu.depau.kotlet.android.extensions.ui.context.toast
+import org.poul.bits.android.lib.controllers.widgetstorage.impl.SharedPrefsWidgetStorageHelper
 
 class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +29,17 @@ class SettingsActivity : AppCompatActivity() {
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             addPreferencesFromResource(R.xml.preferences)
+        }
+
+        override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+            super.onViewCreated(view, savedInstanceState)
+            findPreference("reset_tiles_pref").apply {
+                setOnPreferenceClickListener {
+                    SharedPrefsWidgetStorageHelper(context).clear()
+                    context.toast("Tiles and complications reset", Toast.LENGTH_SHORT)
+                    true
+                }
+            }
         }
     }
 

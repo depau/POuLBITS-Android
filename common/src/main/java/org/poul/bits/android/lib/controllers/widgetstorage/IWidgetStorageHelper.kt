@@ -9,4 +9,6 @@ interface IWidgetStorageHelper {
     var lastDataUpdate: Long
     fun getWidgetHeightCells(appWidgetId: Int): Int
     fun setWidgetHeightCells(appWidgetId: Int, cells: Int)
+
+    fun clear()
 }

@@ -2,95 +2,93 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:title="@string/settings_appearance">
         <ListPreference
-                android:title="@string/settings_temp_unit"
-                android:summary="@string/settings_temp_unit_desc"
-                android:entries="@array/settings_temperature_unit_titles"
-                android:entryValues="@array/settings_temperature_unit_values"
-                android:key="temp_unit"
-                android:defaultValue="CELSIUS"
-        />
+            android:defaultValue="CELSIUS"
+            android:entries="@array/settings_temperature_unit_titles"
+            android:entryValues="@array/settings_temperature_unit_values"
+            android:key="temp_unit"
+            android:summary="@string/settings_temp_unit_desc"
+            android:title="@string/settings_temp_unit" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/tile">
         <EditTextPreference
-            android:title="@string/tile_data_expire_setting"
-            android:summary="@string/tile_data_expire_setting_desc"
+            android:defaultValue="15"
             android:inputType="number"
             android:key="wear_tile_data_expire_timeout"
-            android:defaultValue="15"
-            />
+            android:summary="@string/tile_data_expire_setting_desc"
+            android:title="@string/tile_data_expire_setting" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_http">
         <EditTextPreference
-                android:title="@string/settings_http_url"
-                android:summary="@string/settings_http_url_desc"
-                android:key="http_json_status_url"
-                android:inputType="textUri"
-                android:defaultValue="https://bits.poul.org/data"
-        />
+            android:defaultValue="https://bits.poul.org/data"
+            android:inputType="textUri"
+            android:key="http_json_status_url"
+            android:summary="@string/settings_http_url_desc"
+            android:title="@string/settings_http_url" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="MQTT">
         <SwitchPreference
-            android:title="@string/settings_enable_mqtt"
+            android:defaultValue="false"
+            android:key="enable_mqtt"
             android:summary="@string/settings_enable_mqtt_desc"
             android:summaryOff="@string/settings_enable_mqtt_desc_off"
             android:summaryOn="@string/settings_enable_mqtt_desc_on"
-            android:key="enable_mqtt"
-            android:defaultValue="false"
-            />
+            android:title="@string/settings_enable_mqtt" />
 
         <SwitchPreference
-            android:title="Start MQTT on boot"
+            android:defaultValue="false"
+            android:key="bootup_mqtt"
             android:summary="If you want to receive real-time updates"
             android:summaryOff="You won't receive real-time updates"
             android:summaryOn="You will receive real-time updates"
-            android:key="bootup_mqtt"
-            android:defaultValue="false"
-            />
+            android:dependency="enable_mqtt"
+            android:title="Start MQTT on boot" />
 
         <ListPreference
-            android:title="@string/settings_mqtt_proto_title"
-            android:summary="@string/settings_mqtt_proto_desc"
+            android:defaultValue="wss"
             android:entries="@array/settings_mqtt_proto_titles"
             android:entryValues="@array/settings_mqtt_proto_values"
             android:key="mqtt_proto"
-            android:defaultValue="wss"/>
+            android:summary="@string/settings_mqtt_proto_desc"
+            android:title="@string/settings_mqtt_proto_title" />
 
         <EditTextPreference
-            android:title="@string/settings_mqtt_server_title"
-            android:summary="@string/settings_mqtt_server_desc"
-            android:key="mqtt_server"
-            android:inputType="textUri"
-            android:hint="bits.poul.org/mqtt"
             android:defaultValue="bits.poul.org/mqtt"
-            />
+            android:hint="bits.poul.org/mqtt"
+            android:inputType="textUri"
+            android:key="mqtt_server"
+            android:summary="@string/settings_mqtt_server_desc"
+            android:title="@string/settings_mqtt_server_title" />
 
         <EditTextPreference
-            android:title="@string/settings_mqtt_statustopic_title"
-            android:summary="@string/settings_mqtt_statustopic_desc"
-            android:key="mqtt_status_topic"
-            android:inputType="textUri"
             android:defaultValue="sede/status"
-            />
+            android:inputType="textUri"
+            android:key="mqtt_status_topic"
+            android:summary="@string/settings_mqtt_statustopic_desc"
+            android:title="@string/settings_mqtt_statustopic_title" />
 
         <EditTextPreference
-            android:title="@string/settings_mqtt_temptopic_title"
-            android:summary="@string/settings_mqtt_temptopic_desc"
-            android:key="mqtt_temperature_topic"
-            android:inputType="textUri"
             android:defaultValue="sede/sensors/si7020/temperature"
-            />
+            android:inputType="textUri"
+            android:key="mqtt_temperature_topic"
+            android:summary="@string/settings_mqtt_temptopic_desc"
+            android:title="@string/settings_mqtt_temptopic_title" />
 
 
         <EditTextPreference
-            android:title="@string/settings_mqtt_humtopic_title"
-            android:summary="@string/settings_mqtt_humtopic_desc"
-            android:key="mqtt_humidity_topic"
-            android:inputType="textUri"
             android:defaultValue="sede/sensors/si7020/humidity"
-            />
+            android:inputType="textUri"
+            android:key="mqtt_humidity_topic"
+            android:summary="@string/settings_mqtt_humtopic_desc"
+            android:title="@string/settings_mqtt_humtopic_title" />
+
+        <Preference
+            android:icon="@drawable/ic_refresh_white_24dp"
+            android:summary="@string/reset_tiles_desc"
+            android:key="reset_tiles_pref"
+            android:title="@string/reset_tiles_title" />
 
     </PreferenceCategory>
 </PreferenceScreen>

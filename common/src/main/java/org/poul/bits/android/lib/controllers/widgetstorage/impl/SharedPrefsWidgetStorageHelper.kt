@@ -61,4 +61,8 @@ class SharedPrefsWidgetStorageHelper(val context: Context) : IWidgetStorageHelpe
     override var lastDataUpdate: Long
         get() = sharedPrefs.getLong("app_widget_data_last_update", -1)
         set(value) = sharedPrefs.edit { putLong("app_widget_data_last_update", value) }
+
+    override fun clear() {
+        sharedPrefs.edit { clear() }
+    }
 }

@@ -54,6 +54,10 @@
     <string name="complication_opened_at">Opened %s</string>
     <string name="complication_closed_at">Closed %s</string>
     <string name="headquarters_status">Headquarters status</string>
+    <string name="reset_widgets">Reset widgets</string>
+    <string name="widget_clean_message">Widget data cleaned up</string>
+    <string name="reset_tiles_desc">In case they\'re acting up</string>
+    <string name="reset_tiles_title">Reset tiles/complications</string>
 
     <!-- Override for watch since the space is limited -->
     <string name="hq_open_long">POuL HQs open</string>
@@ -61,4 +65,5 @@
     <string name="hq_gialla_long">POuL HQs unknown</string>
     <string name="connected">Connected</string>
     <string name="not_connected">Not connected</string>
+
 </resources>

@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintSet
 import com.caverock.androidsvg.SVG
 import com.caverock.androidsvg.SimpleAssetResolver
+import com.google.android.material.snackbar.Snackbar
 import eu.depau.kotlet.android.extensions.ui.activity.navigationBarHeight
 import eu.depau.kotlet.android.extensions.ui.activity.statusBarHeight
 import eu.depau.kotlet.android.extensions.ui.context.getColorStateListCompat
@@ -36,6 +37,7 @@ import org.poul.bits.android.lib.broadcasts.BitsStatusReceivedBroadcast
 import org.poul.bits.android.lib.controllers.appsettings.IAppSettingsHelper
 import org.poul.bits.android.lib.controllers.appsettings.enum.TemperatureUnit
 import org.poul.bits.android.lib.controllers.appsettings.impl.AppSettingsHelper
+import org.poul.bits.android.lib.controllers.widgetstorage.impl.SharedPrefsWidgetStorageHelper
 import org.poul.bits.android.lib.misc.*
 import org.poul.bits.android.lib.misc.SimpleHtml.bold
 import org.poul.bits.android.lib.misc.SimpleHtml.br
@@ -358,6 +360,15 @@ class MainActivity : AppCompatActivity() {
                 Attribouter
                     .from(this)
                     .show()
+                true
+            }
+            R.id.reset_widgets -> {
+                SharedPrefsWidgetStorageHelper(this).clear()
+                extended_fab.snackbar(
+                    getString(R.string.widget_clean_message),
+                    Snackbar.LENGTH_SHORT
+                )
+                startRefresh()
                 true
             }
             else                 -> super.onOptionsItemSelected(item)

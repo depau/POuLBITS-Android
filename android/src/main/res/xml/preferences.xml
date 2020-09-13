@@ -57,6 +57,7 @@
             android:summaryOff="You won't receive real-time updates"
             android:summaryOn="You will receive real-time updates"
             android:key="bootup_mqtt"
+            android:dependency="enable_mqtt"
             android:defaultValue="false"
             />
 

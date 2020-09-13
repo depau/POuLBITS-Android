@@ -7,6 +7,11 @@
           android:orderInCategory="100"
           app:showAsAction="never"/>
 
+    <item android:id="@+id/reset_widgets"
+        android:title="@string/reset_widgets"
+        android:orderInCategory="100"
+        app:showAsAction="never"/>
+
     <item android:id="@+id/action_about"
           android:title="@string/action_about"
           android:orderInCategory="100"

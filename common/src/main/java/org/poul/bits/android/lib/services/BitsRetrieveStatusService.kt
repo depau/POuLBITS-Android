@@ -60,8 +60,10 @@ class BitsRetrieveStatusService : IntentService("BitsRetrieveStatusService") {
 
     private fun getForegroundNotification(): Notification {
         return getNotificationBuilder(CHANNEL_BITS_RETRIEVE_STATUS)
+            .setOngoing(true)
             .setContentTitle(getString(R.string.updating_bits_status))
             .setContentText(getString(R.string.updating_bits_desc))
+            .setSmallIcon(R.drawable.ic_refresh_white_24dp)
             .buildCompat()
     }
 

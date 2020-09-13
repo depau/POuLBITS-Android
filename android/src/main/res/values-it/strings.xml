@@ -52,4 +52,9 @@
     <string name="tile_data_expire_setting">Aggiorna schede ogni (minuti)</string>
     <string name="tile">Schede</string>
     <string name="updating_tiles">Aggiornamento schede…</string>
+    <string name="complication_closed">CHIUSO</string>
+    <string name="complication_open">APERTO</string>
+    <string name="complication_opened_at">Aperto %s</string>
+    <string name="complication_closed_at">Chiuso %s</string>
+    <string name="headquarters_status">Stato sede</string>
 </resources>

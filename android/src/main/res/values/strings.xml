@@ -48,4 +48,10 @@
     <string name="tile_data_expire_setting">Update tile every (mins)</string>
     <string name="tile">Tile</string>
     <string name="updating_tiles">Updating tiles…</string>
+    <string name="complication_gialla" translatable="false">GIALLA</string>
+    <string name="complication_closed">CLOSED</string>
+    <string name="complication_open">OPEN</string>
+    <string name="complication_opened_at">Opened %s</string>
+    <string name="complication_closed_at">Closed %s</string>
+    <string name="headquarters_status">Headquarters status</string>
 </resources>

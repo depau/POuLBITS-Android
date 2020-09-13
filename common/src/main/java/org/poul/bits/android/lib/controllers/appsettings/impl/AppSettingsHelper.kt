@@ -11,7 +11,7 @@ const val APP_PREFS_FILE = "app"
 const val APP_PREFS_MODE = 0
 
 class AppSettingsHelper(val context: Context) : IAppSettingsHelper {
-    val LATEST_VERSION = 1
+    val LATEST_VERSION = 2
     private val LOG_TAG = "AppSettingsHelp"
     private val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
 
@@ -36,13 +36,13 @@ class AppSettingsHelper(val context: Context) : IAppSettingsHelper {
     override var mqttStartOnBoot: Boolean
         get() = sharedPrefs.getBoolean("bootup_mqtt", false)
         set(value) = sharedPrefs.edit { putBoolean("bootup_mqtt", value) }
-    
+
     override var mqttProto: String
         get() = sharedPrefs.getString("mqtt_proto", "wss")!!
         set(value) = sharedPrefs.edit { putString("mqtt_proto", value) }
 
     override var mqttServer: String
-        get() = sharedPrefs.getString("mqtt_hostname", "bits.poul.org/ws")!!
+        get() = sharedPrefs.getString("mqtt_hostname", "bits.poul.org/mqtt")!!
         set(value) = sharedPrefs.edit { putString("mqtt_server", value) }
 
     override var mqttSedeTopic: String
@@ -140,6 +140,11 @@ class AppSettingsHelper(val context: Context) : IAppSettingsHelper {
                     mqttProto = if (useTls) "ssl" else "tcp"
                     mqttServer = "$host:$port"
                     version = 1
+                }
+                1 -> {
+                    if (mqttServer == "bits.poul.org/ws")
+                        mqttServer = "bits.poul.org/mqtt"
+                    version = 2
                 }
                 else           -> {
                     Log.w(LOG_TAG, "Deleting all settings since version is greater than latest")

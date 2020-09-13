@@ -63,8 +63,8 @@
             android:summary="@string/settings_mqtt_server_desc"
             android:key="mqtt_server"
             android:inputType="textUri"
-            android:hint="bits.poul.org/ws"
-            android:defaultValue="bits.poul.org/ws"
+            android:hint="bits.poul.org/mqtt"
+            android:defaultValue="bits.poul.org/mqtt"
             />
 
         <EditTextPreference
